@@ -1,0 +1,235 @@
+
+% ----------------------------------------------------------------------
+%                   LATEX TEMPLATE FOR PhD THESIS
+% ----------------------------------------------------------------------
+
+% based on Harish Bhanderi's PhD/MPhil template, then Uni Cambridge
+% http://www-h.eng.cam.ac.uk/help/tpl/textprocessing/ThesisStyle/
+% corrected and extended in 2007 by Jakob Suckale, then MPI-CBG PhD programme
+% and made available through OpenWetWare.org - the free biology wiki
+
+
+%: Style file for Latex
+% Most style definitions are in the external file PhDthesisPSnPDF.
+% In this template package, it can be found in ./Latex/Classes/
+\documentclass[a4paper, twoside,11pt, openright]{Latex/Classes/PhDthesisPSnPDF}
+
+\usepackage[polish]{babel}
+\usepackage{polski}
+\usepackage{url}	
+\usepackage{amssymb,amsmath}
+\usepackage{verbatim} 
+\usepackage{amsmath}
+\usepackage{array}
+\usepackage{graphics}
+\usepackage{subfigure}
+\usepackage[utf8]{inputenc}
+%% for code listings
+\usepackage{listings}
+\lstset{language=Java,captionpos=b,tabsize=3,frame=lines,keywordstyle=\color{black},commentstyle=\color{black},stringstyle=\color{black},breaklines=true,showstringspaces=false,basicstyle=\footnotesize,aboveskip={1.5\baselineskip},belowskip={1.5\baselineskip}}
+
+
+%: Macro file for Latex
+% Macros help you summarise frequently repeated Latex commands.
+% Here, they are placed in an external file /Latex/Macros/MacroFile1.tex
+% An macro that you may use frequently is the figuremacro (see introduction.tex)
+\include{Latex/Macros/MacroFile1}
+
+%: --------------------------------------------------------------
+%:                  FRONT MATTER: dedications, abstract,..
+% --------------------------------------------------------------
+
+\begin{document}
+
+
+\def\tablename{Tabela}
+%\def\prefacename{Przedmowa}%
+%\def\refname{Literatura}%
+%\def\abstractname{Streszczenie}%
+%\def\bibname{Bibliografia}%
+%\def\chaptername{Rozdzia\l}%
+%\def\appendixname{Dodatek}%
+%\def\contentsname{Spistre\'sci}% spis treści
+%\def\listfigurename{Spisrysunk\'ow}% spis rysunków
+\def\listtablename{Spis tabel}% spis tablic
+%\def\indexname{Indeks}%
+%\def\figurename{Rysunek}%
+%\def\tablename{Tablica}%
+%\def\partname{Cz\eob{}\'s\'c}% część
+%\def\enclname{Za\l\aob{}cznik}% załącznik
+%\def\ccname{Kopie:}%
+%\def\headtoname{Do}%
+%\def\pagename{Strona}%
+%\def\seename{Por\'ownaj}% porównaj
+%\def\alsoname{Por\'ownajtak\.ze}% porównaj także
+%\def\proofname{Dow\'od}% dowód
+%\def\glossaryname{Glossary}
+
+%\language{polish}
+
+% sets line spacing
+\renewcommand\baselinestretch{1.2}
+\baselineskip=18pt plus1pt
+
+
+%: ----------------------- generate cover page ------------------------
+
+
+\thispagestyle{empty}
+
+\begin{center}
+Akademia Górniczo - Hutnicza im. Stanisława Staszica w Krakowie \\
+Wydział Elektrotechniki, Automatyki, Informatyki i Elektroniki \\
+Katedra Informatyki
+% \\ Akademii Górniczo Hutniczej w Krakowie
+\rule{\textwidth}{.1mm}
+\end{center}
+
+\begin{figure}[hkp!]
+ \centering
+% \includegraphics[width=50pt]{agh_znak}
+ \includegraphics[bb=0 0 64 124]{logo}
+ \label{fig:orzel_agh}
+\end{figure}
+
+\begin{center}
+{\bf \large Tytuł pracy}
+\vskip 10pt
+{\bf \Large Integracja systemów przetwarzania mowy wśrodowisku zgodnym z paradygmatem SOA}
+\end{center}
+
+\vskip 60pt
+\begin{center}
+{\Large \bf Rafał Fronczyk, Konrad Dziedzic}\\
+{rfronczyk@gmail.com, konraddziedzic@gmail.com}
+\end{center}
+
+\vskip 50pt
+\begin{center}
+{\bf
+    Promotor pracy: dr inż. Łukasz Czekierda
+}
+\end{center}
+
+\noindent
+\rule{\textwidth}{.1mm}
+\begin{center}
+Kraków, 2012
+\end{center}
+
+
+%: ----------------------- oswiadczenie -------------------
+
+
+\input{oswiadczenie.tex}
+\clearpage
+
+
+
+%: ----------------------- abstract ------------------------
+
+% Your institution may have specific regulations if you need an abstract and where it is to be placed in the document. The default here is just after title.
+
+\include{0_frontmatter/abstract}
+
+% The original template provides and abstractseparate environment, if your institution requires them to be separate. I think it's easier to print the abstract from the complete thesis by restricting printing to the relevant page.
+% \begin{abstractseparate}
+%   \input{Abstract/abstract}
+% \end{abstractseparate}
+
+
+%: ----------------------- contents ------------------------
+
+\setcounter{secnumdepth}{3} % organisational level that receives a numbers
+\setcounter{tocdepth}{3}    % print table of contents for level 3
+\tableofcontents            % print the table of contents
+% levels are: 0 - chapter, 1 - section, 2 - subsection, 3 - subsection
+
+
+
+%: --------------------------------------------------------------
+%:                  MAIN DOCUMENT SECTION
+% --------------------------------------------------------------
+
+% the main text starts here with the introduction, 1st chapter,...
+\mainmatter
+
+\renewcommand{\chaptername}{} % uncomment to print only "1" not "Chapter 1"
+
+
+%: ----------------------- subdocuments ------------------------
+
+% Parts of the thesis are included below. Rename the files as required.
+% But take care that the paths match. You can also change the order of appearance by moving the include commands.
+
+\include{1_introduction/introduction}	% background information
+\include{2/aims}						% aims of the project
+
+\include{3/XYZ}			
+\include{4/XYZ}	
+\include{5/XYZ}
+\include{6/XYZ}
+
+\include{7/discussion}               % discussion of results
+
+\include{8/materials_methods}        % description of lab methods
+
+
+
+
+% --------------------------------------------------------------
+%:                  BACK MATTER: appendices, refs,..
+% --------------------------------------------------------------
+
+% the back matter: appendix and references close the thesis
+
+
+%: ----------------------- bibliography ------------------------
+
+% The section below defines how references are listed and formatted
+% The default below is 2 columns, small font, complete author names.
+% Entries are also linked back to the page number in the text and to external URL if provided in the BibTex file.
+
+% PhDbiblio-url2 = names small caps, title bold & hyperlinked, link to page 
+%\begin{multicols}{1} % \begin{multicols}{ # columns}[ header text][ space]
+%\begin{tiny} % tiny(5) < scriptsize(7) < footnotesize(8) < small (9)
+
+\bibliographystyle{Latex/Classes/PhDbiblio-url2} % Title is link if provided
+\renewcommand{\bibname}{Bibliografia} % changes the header; default: Bibliography
+
+\bibliography{9_backmatter/references} % adjust this to fit your BibTex file
+
+%\end{tiny}
+%\end{multicols}
+
+% --------------------------------------------------------------
+% Various bibliography styles exit. Replace above style as desired.
+
+% in-text refs: (1) (1; 2)
+% ref list: alphabetical; author(s) in small caps; initials last name; page(s)
+%\bibliographystyle{Latex/Classes/PhDbiblio-case} % title forced lower case
+%\bibliographystyle{Latex/Classes/PhDbiblio-bold} % title as in bibtex but bold
+%\bibliographystyle{Latex/Classes/PhDbiblio-url} % bold + www link if provided
+
+%\bibliographystyle{Latex/Classes/jmb} % calls style file jmb.bst
+% in-text refs: author (year) without brackets
+% ref list: alphabetical; author(s) in normal font; last name, initials; page(s)
+
+%\bibliographystyle{plainnat} % calls style file plainnat.bst
+% in-text refs: author (year) without brackets
+% (this works with package natbib)
+
+
+% --------------------------------------------------------------
+
+% according to Dresden med fac summary has to be at the end
+%\include{0_frontmatter/abstract}
+
+
+%: ----------------------- list of figures/tables ------------------------
+
+\listoffigures	% print list of figures
+
+\listoftables  % print list of tables
+
+\end{document}
