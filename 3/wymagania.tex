@@ -58,6 +58,24 @@ Jest to aplikacja webowa, które głównym celem jest odczytywanie użytkownikow
 	\item Możliwość ustawienia odstępów czasowych pomędzy sprawdzaniem przez system źródeł
 	\item Automatyczne Odczytanie użytkownikowi nowych wiadomości (w przypadku istnienia) 
 \end{enumerate}  
+\subsection{LektorsSMS}
+Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskazuje służy ona do automatycznego odczytywania wiadomości SMS zaraz po ich otrzymaniu. Jest bardzo przydatna w czasie jazdy samochodem, wiadomo, że używanie telefonu komórkowego jest zabronione z powodu bezpieczeństwa, tym bardziej własnoręczne odczytywanie wiadomości tekstowych jeszcze w większym stopniu niż rozmowa przez telefon prowadzi do odwrócenia uwagi kierowcy od sytuacji na drodze. Istnienie i użyteczność tej aplikacji pokazuje, że stworzony na potrzeby tej pracy serwis UniversalSynthesizer jest bardzo użyteczny, aplikacje mogące z niego korzystać mogą być tworzone na różne platformy.
+\subsection{Przypadki użycia}
+\includegraphics[scale=0.55]{useCaseLektorSMS.png} 
+\subsection{Wymagania funkcjonalne}
+\begin{enumerate}
+	\item Poprawne działanie na dowolnym urządzenie z systemem Android z dostępem do sieci
+	\item Możliwość aktywacji i dezaktywacji aplikacji
+	\item Możliwość ustawienia języka w którym będzie odczytywana treść wiadomości
+	\item Możliwość filtrowania obsługiwanych wiadomości SMS po numerach nadawców 
+	\item Obsługiwanie więcej niż jednego języka wiadomości
+		\begin{enumerate}
+			\item polski
+			\item angielski
+			\item francuski
+		\end{enumerate}
+	\item Automatyczne odczytywanie otrzymanych wiadomości
+\end{enumerate}
 
 
 % ---------------------------------------------------------------------------
