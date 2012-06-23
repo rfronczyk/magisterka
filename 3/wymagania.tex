@@ -20,7 +20,7 @@ Tem rodział opisuje wymagania które powinny być spełniane przez poszczególn
 \section{Wymagania funkcjonalne}
 
 \subsection{Automatyczne dyktando}
-Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internetowej. Jej głównym celem jest wykorzystanie funkcji UniversalSynthesizer do dyktowania treści którą użytkownik zapisuje. Po odczytaniu całego tekstu i wysłaniu przez użytkownika formularza, jest on porównywany z tekstem oryginalnym w ten sposób może ćwiczyć swoją ortografie. Duża zaletą jest to, że aplikacja ta nie jest ograniczona do jednego języka oraz fakt, że użytkownik sam podaje tekst.
+Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internetowej. Jej głównym celem jest wykorzystanie funkcji UniversalSynthesizer do dyktowania treści którą użytkownik zapisuje. Po odczytaniu całego tekstu i wysłaniu przez użytkownika formularza, jest on porównywany z tekstem oryginalnym w ten sposób może ćwiczyć swoją ortografie. Dużą zaletą jest to, że aplikacja ta nie jest ograniczona do jednego języka oraz fakt, że użytkownik sam podaje tekst.
 \subsubsection {Przypadki użycia} 
 \includegraphics[scale=0.55]{useCaseDictando.png} 
 \subsubsection{Wymagania funkcjonalne}
@@ -40,8 +40,24 @@ Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internet
 	\item Umożliwienie użytkownikowi wprowadzania tekstu jednocześnie z odsłuchiwaniem
 	\item Wygenerowanie i wyświetlenie raportu o ilości błędów popełnionych przez użytkownika
 \end{enumerate}
-
-
+\subsection{Lektor RSS}
+Jest to aplikacja webowa, które głównym celem jest odczytywanie użytkownikowi wiadomości RSS pobieranych z podanych przez niego źródeł. Należy zwrócić uwagę na duża zaletę tej aplikacji jaką jest fakt, że w zależności od języka wiadomości RSS jest ona odczytywana przez lektora odpowiedzialnego za ten język, oczywiście przy założeniu, że UniversalSynthesizer obłusguje język wiadomości.
+\subsubsection{Przypadki użycia}
+\includegraphics[scale=0.55]{useCaseRSS.png} 
+\subsubsection{Wymagania funkcjonalne}
+\begin{enumerate}
+	\item Możliwość dodania źródła RSS
+	\item Możliwość usunięcia źródła RSS
+	\item Obsługiwanie więcej niż jednego języka wiadomości
+		\begin{enumerate}
+			\item polski
+			\item angielski
+			\item francuski
+		\end{enumerate}
+	\item Automatyczne sprawdzanie czy któreś ze źródeł nie zawiera nowej wiadomości
+	\item Możliwość ustawienia odstępów czasowych pomędzy sprawdzaniem przez system źródeł
+	\item Automatyczne Odczytanie użytkownikowi nowych wiadomości (w przypadku istnienia) 
+\end{enumerate}  
 
 
 % ---------------------------------------------------------------------------
