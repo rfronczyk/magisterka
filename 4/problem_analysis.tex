@@ -1,0 +1,91 @@
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+%: ----------------------- name of chapter  -------------------------
+\chapter{Analiza problemu} % top level followed by section, subsection
+
+
+%: ----------------------- paths to graphics ------------------------
+
+% change according to folder and file names
+\ifpdf
+    \graphicspath{{X/figures/PNG/}{X/figures/PDF/}{X/figures/}}
+\else
+    \graphicspath{{X/figures/EPS/}{X/figures/}}
+\fi
+
+%: ----------------------- contents from here ------------------------
+
+
+W tym rozdziale przanalizujemy przedstawione w poprzednim rozdziale przykładowe systemy pod kątem wyznaczenia części wspólnej, co pozwoli nam na uproszczenie i przyspieszenie implementacji tych systemów. W pierwszej części przedyskutujemy wymagania stawiane tym systemom, które z nich są ogólnymi wymaganiami aplikacji wykorzystujących synteze mowy, a które są szczególnymi wymaganiami danej aplikacji. W kolejnej części przedstawimy możliwe rozwiązania, przeanalizujemy je pod względem spełniania postawionych wymagań, a także przedstawimy wady i zalety każdego z nich.
+
+\section {Analiza wymagań}
+
+\section {Analiza dostępnych silników syntezy mowy}
+
+Jako, że celem naszej pracy nie jest stworzenie własnego silnika syntezy mowy, lecz stworzenie systemów, które takie to silnik będą wykorzystywać w celu implementacji swojej logiki biznesowej, kolejnym krokiem jest analiza dostępnych na rynku rozwiązań syntezy mowy. 
+
+Dostępne na rynku rozwiązania można podzielić wzgłędem wileu różnych kryterii, takich jak:
+\begin{itemize}
+	\item sposób dostępu
+	\item ilość obsługiwanych języków
+	\item jakość generowanego dźwięku
+	\item cena
+\end{itemize}
+
+Ze względu na tematyke naszej pracy, pierwsze kryterium ma dla nas największą wagę. Pod względem sposób dostępu, silniki syntezy mowy dzielimy następująco:
+
+\begin{itemize}
+	\item rozwiązania zintegrowane - rozwiązania wintegrowane w urządzenię, pozawalające na synteze tylko we wcześniej przewdizianych przez producenta scenariuszach
+		\begin{itemize}
+			\item  Amazon Kindle
+			\item  PocketBook eReader Pro
+		\end{itemize}
+	\item rozwiązania stacjonarne - rozwiązania pozwalające na generację dźwięku w obrębie jednego urządzenia, zazwyczaj dostępne jako odrębne aplikacje lub biblioteki
+		\begin{itemize}
+			\item Festival Speech Synthesis System
+			\item FreeTTS
+			\item Loquendo Mobile
+			\item Loquendo Multimedia
+		\end{itemize}
+	\item rozwiązania serwerowe - gotowe rozwiązania serwerowe, wykorzystujące specjalistyczne protokoły w celu zwiększenia wydajności 
+		\begin{itemize}
+			\item IVONA Telecom
+			\item IVONA Speech Server
+			\item Loquendo Speech Server
+		\end{itemize}
+	\item rozwiązania SaaS
+		\begin{itemize}
+			\item IVONA Speech Cloud
+		\end{itemize}
+\end{itemize}
+
+
+\section {Projekt}
+
+Znając wymagania które muszą spełniać przedstawione systemy mozemy przejść do projektowania architektóry tych systemów. 
+
+Przedstawienie jak to wyglada( kropki serwisy , komunikują sie z roznymi innymi serwisami, dodatokwe serisy: accounting itd)
+
+Wymagania stawiane rozwiazaniom integracyjnym , Czy warto integrować ? (book1.pdf chapter 2)
+
+Integracja systemow multimedialnych ??
+
+Rozwiazania ?
+
+Brak integracji
+
+integracja EAI - hub and spikes (scentralizowany punk, single point of failure. słabo scalowalne)
+
+SOA - ESB 
+
+
+
+
+service activator (request od clienta)
+
+
+% ---------------------------------------------------------------------------
+%: ----------------------- end of thesis sub-document ------------------------
+% ---------------------------------------------------------------------------
+
