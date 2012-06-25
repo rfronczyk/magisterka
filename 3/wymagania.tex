@@ -40,7 +40,7 @@ Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internet
 	\item Umożliwienie użytkownikowi wprowadzania tekstu jednocześnie z odsłuchiwaniem
 	\item Wygenerowanie i wyświetlenie raportu o ilości błędów popełnionych przez użytkownika
 \end{enumerate}
-\subsection{Lektor RSS}
+\subsection{LektorRSS}
 Jest to aplikacja webowa, które głównym celem jest odczytywanie użytkownikowi wiadomości RSS pobieranych z podanych przez niego źródeł. Należy zwrócić uwagę na duża zaletę tej aplikacji jaką jest fakt, że w zależności od języka wiadomości RSS jest ona odczytywana przez lektora odpowiedzialnego za ten język, oczywiście przy założeniu, że UniversalSynthesizer obłusguje język wiadomości.
 \subsubsection{Przypadki użycia}
 \includegraphics[scale=0.55]{useCaseRSS.png} 
@@ -60,11 +60,10 @@ Jest to aplikacja webowa, które głównym celem jest odczytywanie użytkownikow
 \end{enumerate}  
 \subsection{LektorsSMS}
 Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskazuje służy ona do automatycznego odczytywania wiadomości SMS zaraz po ich otrzymaniu. Jest bardzo przydatna w czasie jazdy samochodem, wiadomo, że używanie telefonu komórkowego jest zabronione z powodu bezpieczeństwa, tym bardziej własnoręczne odczytywanie wiadomości tekstowych jeszcze w większym stopniu niż rozmowa przez telefon prowadzi do odwrócenia uwagi kierowcy od sytuacji na drodze. Istnienie i użyteczność tej aplikacji pokazuje, że stworzony na potrzeby tej pracy serwis UniversalSynthesizer jest bardzo użyteczny, aplikacje mogące z niego korzystać mogą być tworzone na różne platformy.
-\subsection{Przypadki użycia}
+\subsubsection{Przypadki użycia}
 \includegraphics[scale=0.55]{useCaseLektorSMS.png} 
-\subsection{Wymagania funkcjonalne}
+\subsubsection{Wymagania funkcjonalne}
 \begin{enumerate}
-	\item Poprawne działanie na dowolnym urządzenie z systemem Android z dostępem do sieci
 	\item Możliwość aktywacji i dezaktywacji aplikacji
 	\item Możliwość ustawienia języka w którym będzie odczytywana treść wiadomości
 	\item Możliwość filtrowania obsługiwanych wiadomości SMS po numerach nadawców 
@@ -77,6 +76,27 @@ Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskaz
 	\item Automatyczne odczytywanie otrzymanych wiadomości
 \end{enumerate}
 
+\section{Wymagania niefunkcjonalne}
+\subsection{Automatyczne dyktando}
+\subsubsection{Wymagania niefunkcjonalne}
+\begin{enumerate}
+	\item Bezpieczeństwo - użytkownik i tylko on powinien móc widzieć swoje wyniki
+	\item Wydajność - dyktowanie tekstu powinno przebiegać płynnie
+	\item Niezawodność - użytkownik powinien zawsze otrzymać wynik który jest poprawny i jest jego wynikiem
+\end{enumerate}
+\subsection{Lektor RSS}
+\begin{enumerate}
+	\item Bezpieczeństwo - użytkownik i tylko on powinien mieć dostęp do swojej listy źródeł RSS
+	\item Niezawodność - użytkownik powinien zostać poinformowany o każdej nowej wiadomości ze źródeł
+	\item Szybkość - różnica czasu pomiędzy udostępnieniem nowej wiadomości w którymś ze źródeł a otrzymaniem jej przez użytkownika nie powinna być zbyt duża
+	\item Możliwość personalizacji - użytkownik powinien móc dodać dowolną ilość różnych źródeł
+\end{enumerate}
+\subsection{LektorsSMS}
+\begin{enumerate}
+	\item Bezpieczeństwo - dostęp do apikacji musi być chroniony hasłem
+	\item Użyteczność - poprawne działanie na dowolnym urządzenie z systemem Android posiadającym dostęp do sieci
+	\item Wydajność - musi działać na starszych i słabszych telefonach
+\end{enumerate}
 
 % ---------------------------------------------------------------------------
 %: ----------------------- end of thesis sub-document ------------------------
