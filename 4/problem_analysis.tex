@@ -25,18 +25,24 @@ W tym rozdziale przanalizujemy przedstawione w poprzednim rozdziale przykładowe
 
 Jako, że celem naszej pracy nie jest stworzenie własnego silnika syntezy mowy, lecz stworzenie systemów, które takie to silnik będą wykorzystywać w celu implementacji swojej logiki biznesowej, kolejnym krokiem jest analiza dostępnych na rynku rozwiązań syntezy mowy. 
 
-Dostępne na rynku rozwiązania można podzielić wzgłędem wileu różnych kryterii, takich jak:
+Dostępne rozwiązania są charakteryzowane przez następujące cechy:
 \begin{itemize}
 	\item sposób dostępu
 	\item ilość obsługiwanych języków
 	\item jakość generowanego dźwięku
 	\item cena
+	\begin{itemize}
+		\item koszty początkowe(cena zakupu)
+		\item koszty użytkowania (opłata za każde użycie)
+	\end{itemize}
+	\item perspektywy rozwoju
+	\item łatwość użycia
 \end{itemize}
 
-Ze względu na tematyke naszej pracy, pierwsze kryterium ma dla nas największą wagę. Pod względem sposób dostępu, silniki syntezy mowy dzielimy następująco:
+Większość z tych cech jest jasna i nie wymaga dalszego opisu. Jedyną cechą która nie dokońca przemawia za siebie jest sposób dostępu. Sposób dostępu określa w jaki sposób możemy uzywać danego rozwiązania, można powiedzieć, że definiuję interfejs jaki dane rozwiązanie posiada. Pod względem sposobu dostępu, silniki syntezy mowy dzielimy następująco:
 
 \begin{itemize}
-	\item rozwiązania zintegrowane - rozwiązania wintegrowane w urządzenię, pozawalające na synteze tylko we wcześniej przewdizianych przez producenta scenariuszach
+	\item rozwiązania zintegrowane  - rozwiązania wbudowane w urządzenię, pozawalające na synteze tylko we wcześniej przewdizianych przez producenta scenariuszach - 
 		\begin{itemize}
 			\item  Amazon Kindle
 			\item  PocketBook eReader Pro
@@ -60,10 +66,17 @@ Ze względu na tematyke naszej pracy, pierwsze kryterium ma dla nas największą
 		\end{itemize}
 \end{itemize}
 
+Sposób dostępu jednoznacznie wyznacza stopień trudności integracji rozwiązania w środowisku SOA. Na początku listy znajdują się rozwiązania, które ciężko zastosować do tworzenia rozbudowanych systemów(rozwiązania zintegrowane), natomiast na końcu rozwiązania który z łatwością można wykorzystać do budowanie wszelakiego rodzaju systemów (rozwiązania SaaS).
 
-\section {Projekt}
+Podjęcię decyzji, którego rozwiązania będziemy używać, jak każda inna decyzja dotycząca architekury systemu, nie jest łatwa. Dodatkowo, zdecydowanie sie na jedno rozwiązanie bardzo często wymusi na nas wykorzystanie konkretnych technologii (np IVONA Telecom > MRCP), a także może nas pozbawić możliwości zmiany decyzji w przyszłości (przez brak standardów, wymiana jednego rozwiązania na inne moze wymagać dużego nakładu pracy).
 
-Znając wymagania które muszą spełniać przedstawione systemy mozemy przejść do projektowania architektóry tych systemów. 
+\section {Architektura}
+
+Znając wymagania które muszą spełniać przedstawione systemy, a także dostępne możliwości jeżeli chodzi o silniki syntezy mowy,  mozemy przejść do projektowania architektóry tych systemów.
+
+\subsection {Wyspecjalizowane rozwiązania}
+\subsection {Podejscie " hub-and-spoke"}
+\subsection {Szyna} 
 
 Przedstawienie jak to wyglada( kropki serwisy , komunikują sie z roznymi innymi serwisami, dodatokwe serisy: accounting itd)
 
