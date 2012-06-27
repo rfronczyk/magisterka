@@ -1,0 +1,47 @@
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+\chapter{Technologie} % top level followed by section, subsection
+
+
+% ----------------------- contents from here ------------------------
+
+\section{Apache ServiceMix}
+Integracja systemów informatycznych jest jednym z największych wyzwań stojących przed nowoczesnymi przedsiębiorstwami. Apache ServiceMix pomaga rozwiązać ten problem będąc bazującym na standardach, lekkim oraz stosującym paradygmat "luźnego powiązania" narzędziem. Dzięki bazowaniu na standardch w sposób drastyczny zmniejsza szanse na uzależnienie się od konkretnego dostawcy oprogramowania, przez sotowanie luźnego-powiązania zmniejsza złożoność integracji. 
+Jest to otwarta implementacja ESB, zbudowana w oparciu o JBI i wydana na licencji Apache, od wersji 4 ServiceMix wykorzystuje OSGi do uproszczenia podziału aplikacji na komponenty. 	
+Architekturę ServiceMix'a można podzielić na 3 warstwy:
+\begin{enumerate}
+	\item Warstwa jądra
+	\item Warstwa serwisów
+	\item Warstwa aplikacji
+\end{enumerate}  
+Każda z tych warstw ma inne zadania i odpowiada za inne czynności.
+\begin{itemize}
+	\item Warstwa jądra - bazuje na Apache Karaf czyli implementacji OSGi będącą lekkim kontenerem do którego można wdrożyć różne komponenty i aplikacje. Warstwa ta wspólpracuje z warstwą serwisów w celu stworzenia, skoordynowania, utrzymania i zarządzania logowaniem, bezpieczeństwem oraz transakcjami. Najważniejsze funkcje dostarczane przez tą warstwę to:
+	\begin{itemize}
+		\item Osadzanie - umożliwia zarówno manualne jak i automatyczne osadzanie bibliotek
+		\item Kontener OSGi - ServiceMix 4 wspiera 2 różne kontenery OSGi a mianowicie Eclipse Equinox i Apache Felix
+		\item Wstrzykiwania zależnośći - wykorzystuje 2 różne frameworki:
+			\begin{itemize}
+				\item Blueprint
+				\item Spring DI
+			\end{itemize}   
+		\item Automatyczna konfiguracja - dokonując zmian w pliku z właściwościami można dokonać zmian "w locie", bez restartowania serwera
+		\item Bezpieczeństwo - framework odpowiadający za bezpieczeństwo bazuje na JAAS, dostarcza kilka różnych, odizolowanych poziomów:
+			\begin{itemize}
+				\item kontenera OSGi
+				\item wbudowanej instancja serwisu wiadomości
+				\item osadzonych instancji serwisow router'a i integracyjnego
+			\end{itemize} 
+		\item Logowanie - dynamiczne logowanie wspierające różne interfejsy takie jak: JCL, SLF4J, Avalon, łatwo konfigurowalne poprzez pliki z właściwościami
+		\item Konsola - umożliwia zarządzanie i pełną kontrolę nad cała aplikacją
+	\end{itemize}  
+\end{itemize}
+
+
+
+
+
+% ---------------------------------------------------------------------------
+% ----------------------- end of thesis sub-document ------------------------
+% ---------------------------------------------------------------------------
