@@ -21,8 +21,14 @@ Tem rodział opisuje wymagania które powinny być spełniane przez poszczególn
 
 \subsection{Automatyczne dyktando}
 Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internetowej. Jej głównym celem jest wykorzystanie funkcji UniversalSynthesizer do dyktowania treści którą użytkownik zapisuje. Po odczytaniu całego tekstu i wysłaniu przez użytkownika formularza, jest on porównywany z tekstem oryginalnym w ten sposób może ćwiczyć swoją ortografie. Dużą zaletą jest to, że aplikacja ta nie jest ograniczona do jednego języka oraz fakt, że użytkownik sam podaje tekst.
-\subsubsection {Przypadki użycia} 
-\includegraphics[scale=0.55]{useCaseDictando.png} 
+\newpage
+\subsubsection{Przypadki użycia} 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{useCaseDictando.png} 
+	\caption{Przypadek użycia - Automatyczne dyktando }
+\end{figure}
+
 \subsubsection{Wymagania funkcjonalne}
 \begin{enumerate}
 	\item Obsługiwanie więcej niż jednego języka
@@ -43,7 +49,12 @@ Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internet
 \subsection{LektorRSS}
 Jest to aplikacja webowa, które głównym celem jest odczytywanie użytkownikowi wiadomości RSS pobieranych z podanych przez niego źródeł. Należy zwrócić uwagę na duża zaletę tej aplikacji jaką jest fakt, że w zależności od języka wiadomości RSS jest ona odczytywana przez lektora odpowiedzialnego za ten język, oczywiście przy założeniu, że UniversalSynthesizer obłusguje język wiadomości.
 \subsubsection{Przypadki użycia}
-\includegraphics[scale=0.55]{useCaseRSS.png} 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{useCaseRSS.png} 
+	\caption{Przypadek użycia - LektorRSS}
+\end{figure}
+
 \subsubsection{Wymagania funkcjonalne}
 \begin{enumerate}
 	\item Możliwość dodania źródła RSS
@@ -60,8 +71,14 @@ Jest to aplikacja webowa, które głównym celem jest odczytywanie użytkownikow
 \end{enumerate}  
 \subsection{LektorsSMS}
 Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskazuje służy ona do automatycznego odczytywania wiadomości SMS zaraz po ich otrzymaniu. Jest bardzo przydatna w czasie jazdy samochodem, wiadomo, że używanie telefonu komórkowego jest zabronione z powodu bezpieczeństwa, tym bardziej własnoręczne odczytywanie wiadomości tekstowych jeszcze w większym stopniu niż rozmowa przez telefon prowadzi do odwrócenia uwagi kierowcy od sytuacji na drodze. Istnienie i użyteczność tej aplikacji pokazuje, że stworzony na potrzeby tej pracy serwis UniversalSynthesizer jest bardzo użyteczny, aplikacje mogące z niego korzystać mogą być tworzone na różne platformy.
+\newpage
 \subsubsection{Przypadki użycia}
-\includegraphics[scale=0.55]{useCaseLektorSMS.png} 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{useCaseLektorSMS.png} 
+	\caption{Przypadek użycia - LektorRSS}
+\end{figure}
+
 \subsubsection{Wymagania funkcjonalne}
 \begin{enumerate}
 	\item Możliwość aktywacji i dezaktywacji aplikacji
