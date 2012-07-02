@@ -80,6 +80,38 @@ Według niezależnej amerykańskiej organizacji Voice Information Assiociates sy
 	\caption{Dokładność IvonaTTS w porównaniu do konkurencji}
 \end{figure}
 
+\section{FreeTTS}
+FreeTTS jest syntezatorem mowy, dostępnym na licencji opensource, w całości napisanym w języku Java. Bazuje na silniku Flite stworznym i rozwijanym przez Carnegie Mellon University. Mimo swojej prostoty jego zaletami są duża wydajność, bardzo dobre radzenie sobie z językiem angielskim oraz częściowe wsparcie dla JSAPI 1.0(jako, że jest to syntezator nie wspiera częsci specyfikacji odpowiedzialnej za rozpoznawanie mowy). Dzięki temu ostatniemu w łatwy sposób umożliwia integrację z różnymi, wieloplatformowymi aplikacjami działającymi wewnątrz JVM. Przy opisywaniu tego syntezatora nie można zapomnieć o tym, że posiada dość dobrą dokumentację oraz liczne, łatwe do uruchomienia oraz działające dema. Standardowo oferuje 3 różne głosy, wszystkie w języku angielskim, umożliwia jednak rozszerzenie liczby głosów poprzez import nowych stworzonych przy pomocy narzedzi takich jak:
+	\begin{itemize}
+		\item FestVox,
+		\item MBROLA,
+		\item CMU Arctic.
+	\end{itemize}    
+
+\section{Spring}
+Spring jest framework'iem przeznaczonym do tworzenia aplikacji w językach działających na JVM. Dostarcza gotowe rozwiązania dla wielu zagadnień technicznych napotykanych przez programistów. Najważniejszym elementem Spring'a jest wsparcie infratrukturalne na poziomie aplikacji. Spring skupia się na integracji elementów aplikacji, dzięki czemu programiści mogą skupić się na logice biznesowej.Framework ten można rozważać jako zbiór szablonów, większość z nich może pracować niezależnie, jakkolwiek dzięki połączeniu ich można uzyskać większą funkcjonalność. 
+\newpage
+Najważniejsze funkcje wspomnianych modułów to:
+  \begin{itemize}
+	\item Zarządzanie transakcjami - zapewnie wszechstronne, spójne wsparcie dla transakcj poprzez utworzenie odpowiedniej warstwy abstrakcji, która posiada następujące zalety:
+	\begin{itemize}
+		\item udostępnia generyczne, zwięzły model programowania pomiędzy różnymi interfejsami takimi jaki: JTA, JDBC, JPA itd.,
+		\item bardzo łatwo integruje się z różnymi interfejsami dostępu do danych,
+		\item wspiera deklaratywne zarządzanie transakcjami
+	\end{itemize}
+	\item Spring DI - szablon odpowiedzialny za wstrzykiwanie zależności, prawdopodobnie najbardziej popularna obecnie funkcja Spring'a, dopuszcza zarówno konfigurację za pomocą plików w formacie XML jak i przez adnotacje,
+	
+	\item Zaawansowane wsparcie dla programowania orientowanego aspektowo - dostarcza możliwość zaimplementowania wspólnej logiki, która następnie odwołuje się do konkretnych, potrzebnych w danej chwili modułów, umożliwia łatwe dodanie nowych modułów,
+	\item Wsparcie dla elementów Java EE - dostarcza warstwę abstrakcji do pracy ze standardowymi elementami Java EE takimi jak JDBC, JTA, JMS czy JPA,
+	\item Wsparcie dla testów - oferuje wsparcie dla testów jednostkowych jak i integracyjnych.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{springArchitektura.png} 
+	\caption{Architektura Spring'a}
+\end{figure}
+Kolejną bardzo ważną cechą tego framework'u jest fakt, że wspiera wiele różnych platform, może działać jako osobna aplikacja, być osadzony w wielu różnych kontenerach, od najprostszego Tomcat'a do najbardziej zaawansowanych wersji WebSphere'a lub też działać w chmurze, takiej jak Heroku czy Google App Engine.  
+\end{itemize}
+
 
 
 % ---------------------------------------------------------------------------
