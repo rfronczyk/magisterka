@@ -16,10 +16,7 @@
 
 %: ----------------------- contents from here ------------------------
 
-
-W tym rozdziale przanalizujemy przedstawione w poprzednim rozdziale przykładowe systemy pod kątem wyznaczenia części wspólnej, co pozwoli nam na uproszczenie i przyspieszenie implementacji tych systemów. W pierwszej części przedyskutujemy wymagania stawiane tym systemom, które z nich są ogólnymi wymaganiami aplikacji wykorzystujących synteze mowy, a które są szczególnymi wymaganiami danej aplikacji. W kolejnej części przedstawimy możliwe rozwiązania, przeanalizujemy je pod względem spełniania postawionych wymagań, a także przedstawimy wady i zalety każdego z nich.
-
-\section {Analiza wymagań}
+Rozdział ten jest podzielonu na dwie części. W Pierwszej, analizujemy dostępne silniki syntezy mowy - dostępne rodzaje, ich cechy, a takze wpływ jaki one mogą mieć na powstające systemy. W części drugiej przenalizujemy różne podejscia integracyjne. Przedyskutujemy ich wady i zalety, a także przedstawimy przykładowe architektury dla każdego podejścia. 
 
 \section {Analiza dostępnych silników syntezy mowy}
 
@@ -69,7 +66,7 @@ Większość z tych cech jest jasna i nie wymaga dalszego opisu. Jedyną cechą 
 
 Sposób dostępu jednoznacznie wyznacza stopień trudności integracji syntezatora w środowisku SOA. Na początku listy znajdują się silniki syntezy mowy, które ciężko zastosować do tworzenia rozbudowanych systemów(rozwiązania zintegrowane), natomiast na końcu rozwiązania który z łatwością można wykorzystać do budowanie wszelakiego rodzaju systemów (rozwiązania SaaS).
 
-Podjęcię decyzji, którego syntezatora będziemy używać, jak każda inna decyzja dotycząca architekury systemu, nie jest łatwa. Dodatkowo, zdecydowanie sie na jedno rozwiązanie bardzo często wymusi na nas wykorzystanie konkretnych technologii (np IVONA Telecom > MRCP), a także może nas pozbawić możliwości zmiany decyzji w przyszłości (przez brak standardów, wymiana jednego rozwiązania na inne moze wymagać dużego nakładu pracy).
+Podjęcię decyzji, którego syntezatora będziemy używać, jak każda inna decyzja dotycząca architekury systemu, nie jest łatwa. Dodatkowo, zdecydowanie sie na jedno rozwiązanie bardzo często wymusi na nas wykorzystanie konkretnych technologii (np IVONA Telecom - MRCP), a także może nas pozbawić możliwości zmiany decyzji w przyszłości (przez brak standardów, wymiana jednego rozwiązania na inne moze wymagać dużego nakładu pracy).
 
 \section {Architektura}
 
@@ -88,6 +85,7 @@ Wadą takiego rozwiązania jest nakład pracy potrzebny do stworzenia wszystkich
 
 Ważna kwestią do przemyslenia, podczas projektowania jest też kwestia rozbudowy systemu. Dotychczas poruszaliśmy tylko temat sytezy mowy,  jednak jeżeli myślimy o stworzeniu w pełni wartościowego produktu, musimy zastanowić sie nad rozszerzeniem naszego systemu o dodatkową funkcjonalność taką jak:
 
+\label{list:uslugi}
 \begin{itemize}
 	\item autentykacja
 	\item autoryzacja
@@ -96,7 +94,7 @@ Ważna kwestią do przemyslenia, podczas projektowania jest też kwestia rozbudo
 	\item monitoring
 \end{itemize}
 
-Jeżeli uznamy, że nasze systemy potrzebują którejś z wymienionych funkcjonalności mamy do wyboru dwa wyjścia implementacje tych funckjonalności od zera, albo skorzystanie z gotowych, dostępnych usłgu dostarczających takich funkcjonalności. Wypisane wyżej funkcjonalności są same w sobie dość złożonymi problemami wymagajacymi dużych nakładów pracy, dlatego lepiej odrazu skupić sie na dostępnych usługach, które to są wykorzstywane przez wielu użytkowników, przez co mozemy być bardziej pewnie co do poprawności ich działania. Przy podejściu utonomicznych systemów, będzeimy musili osobno zintegrować każdy system, z usługami których on wymaga. I tak przy założeniu, że tworzymy \begin{math}n\end{math} systemów, i kazdy z nich będzie korzystał z \begin{math}m\end{math} usług to liczba połączeń system-usługa, które musimy stworzyć wynosi \begin{math}n*m\end{math}. Jak widać ilość pracy rośnie liniowo wraz z liczbą systemów i wraz z liczbą usług którtych te systemy chciały by wykorzystywać.
+Jeżeli uznamy, że nasze systemy potrzebują którejś z wymienionych funkcjonalności mamy do wyboru dwa wyjścia implementacje tych funckjonalności od zera, albo skorzystanie z gotowych, dostępnych usłgu dostarczających takich funkcjonalności. Wypisane wyżej funkcjonalności są same w sobie dość złożonymi problemami wymagajacymi dużych nakładów pracy, dlatego lepiej odrazu skupić sie na dostępnych usługach, które to są wykorzstywane przez wielu użytkowników, przez co mozemy być bardziej pewnie co do poprawności ich działania. Przy podejściu utonomicznych systemów, będzeimy musili osobno zintegrować każdy system, z usługami których on wymaga. I tak przy założeniu, że tworzymy \begin{math}n\end{math} systemów, i kazdy z nich będzie korzystał z \begin{math}m\end{math} usług to liczba połączeń system-usługa, które musimy stworzyć wynosi \begin{math}n*m\end{math}. Dodanie nowego systemu korzystającego ze wszystkich dostępnych usług wiąże sie z tworzeniem dodatkowych  \begin{math}m\end{math} połączeń, natomiast dodanie nowej usługi wykorzystywanej przez wszystkie systemy z dodaniem \begin{math}n\end{math} nowych połączeń. Jak widać ilość pracy rośnie liniowo wraz z liczbą systemów i wraz z liczbą usług którtych te systemy chciały by wykorzystywać.
 
  Przykładową architekturę w w tym podejściu dla tworzonych systemów przedstawia rysunek \ref{fig:autonomiczne_systemy}
 
@@ -112,7 +110,7 @@ Podejście autonomicznych aplikacji jest  skupione na konkretnych systemach, a n
 
 %: ##################### HUB and Spoke #########################################
 \subsection {Podejscie zorientowane na usługi}
-Dzięki postępowi technologicznemu przepustowość łączy internetowych wciąż wzrasta, dzięki temu to co pare lat temu było nie osiągalne dzis jest normą. Powstają nowe rodzaje usług, które kiedyś nie mogły by zostać zrealizowane, przy tworzeniu zaś niektórych aplikacji, to co kiedyś było problemem i na czym skupiali swój wysiłek twórcy oprogramowania, dzisiaj schodzi na drugi plan. Z drugiej jednak strony zwiększają sie wymagania użytkowników co do jakości multimediów, są wprowadzane coraz to nowe formaty, który wymagają ogromnych przepustowość. Czasami jednak systemy mulitmedialne nie mają takich scisłych wymagań co do wielkości opóźnienia. W ich przypadku opóźnienie nawet rzędu kilkudziesięciu sekund nie stanowi problemu i jest akceptowalny przez użytkowników. W takim wypadku nie trzeba sie skupiać na szukaniu idealnego rozwiązania dla danego problemu, lecz można sie skupić na stworzeniu architektóry która ułatwi i przyspieszy budowanie systemów zpełniających dane wymagania.
+Dzięki postępowi technologicznemu przepustowość łączy internetowych wciąż wzrasta, dzięki temu to co pare lat temu było nie osiągalne dzis jest normą. Powstają nowe rodzaje usług, które kiedyś nie mogły by zostać zrealizowane, przy tworzeniu zaś niektórych aplikacji, to co kiedyś było problemem i na czym skupiali swój wysiłek twórcy oprogramowania, dzisiaj schodzi na drugi plan. Z drugiej jednak strony zwiększają sie wymagania użytkowników co do jakości multimediów, są wprowadzane coraz to nowe formaty, które wymagają ogromnych przepustowość. Czasami jednak systemy mulitmedialne nie mają takich scisłych wymagań co do wielkości opóźnienia. W ich przypadku opóźnienie nawet rzędu kilkudziesięciu sekund nie stanowi problemu i jest akceptowalne przez użytkowników. W takim wypadku nie trzeba sie skupiać na szukaniu idealnego rozwiązania dla danego problemu, lecz można skupić się na stworzeniu architektóry która ułatwi i przyspieszy budowanie systemów spełniających dane wymagania.
 
 Przy takim podejściu do tworzenia systemu zazwyczaj pojawia sie problem integracji budowanego systemu z istniejącymi już usługami. Często też, budowany system jest całkowicie problemem integracyjnym, czyli wszystkie składowe usługi potrzebne do realizacji celu biznesowego są dostępne, a jedyne zadanie stawiane budowanemu systemowi to opdowiednia integracja tych usług. Podejście takie ułatwia parę kwesti, ale w zamian wprowadza także nowe, specyficzne dla siebie problemy. Głownym problememe jest różnorodność dostępnych podsystemów. Każdy z nich może być stworzony przy użyciu innych technologii (Java, COM, .Net, CORBA, ICE, itp.) działać na innej platformie (MS WINDOWS, LINUX, SOLARIS) i co najważniejsze mogą wykorzystywać inne protokoły do komunikacji (RPC, SOAP, własnościowe protokoły, itp). Z tego powodu decyzja o podejsiu integracyjnym nie powinna być podejmowana zbyt pochopnie i powinna być podjęta bazując na pewnych kryteriach. Przykładowe kryteria:  \cite{hohpewoolf2003} 
 
@@ -126,35 +124,76 @@ Przy takim podejściu do tworzenia systemu zazwyczaj pojawia sie problem integra
 	\item \textbf{poziom niezawodności} - komunikacja zdalna jest nie tylko wolniejsza, ale również bardziej zawodna niż lokalne wywołania funkcji. Kiedy procedura wywołują podprocedurę w obrębie jednej aplikacji, jest pewne, że ta podprocedura jest dostępna. Takie założenie nie musi być spełnione jeżeli chodzi o zdalne wywołania - zdalna aplikacja moze nie działać w chwili wywołania, albo połączenie z siecią może być chwilowo niedostępne.
 \end{itemize}
 
+Do wyboru mamy mnóstwo różnych technologii integracyjnych. Niektóre z nich są niezależne od platforym, inne zaś wymagają specyficznego systemu operacyjnego. Niektóre z nich sa darmowe i otwarte, inne zaś płatne i oparte na własnościowych patentach i protokołach. Każda z nich ma swoje plusy i minusy dlatego trzeba wybrać tą która najlepiej nada sie dla określonego celu. Dotatkową opcją jest tworzenie swojego systemu integracji od zera. Jednak z wzgledu na to iż takie rozwiązanie jest czasochłonne, a także celowość takiego podejścia stoi pod znakiem zapytania, to nie jest ono brane pod uwagę pod uwagę podczas projektowania systemu. 
+Dostępne rozwiązania można podzielić na cztery grupy: \cite{chappell2004}
+
+\begin{itemize}
+	\item serwery aplikacji
+	\item brokerzy EAI
+	\item własne rozwiązania oparte na  MOM
+	\item ESB
+\end{itemize}
+
+Pierwsze dwie grupy rozwiązań oparte są na modelu piasty i szprych (\textit{"Hub and Spoke"}) w modelu tym połączenia ułożone są na wzór koła rowerowego, w którym przebieg danych odbywa sie wzdłuż szprych połączonych z położoną w centrum piastą. Zaleta takiego rozwiązania jest scentralizowanie takich funkcji systemu jak: zarządzanie, routowanie wiadomości, logika biznesowa, które to są zaimplementeowane w węźle centralnym(piascie). Dzięki temu poszczególne węzły - szprychy są wyposażone tylko w niezbędną dla nich funkcjonalność. Kolejną zeletą jest ilość połączeń którą trzeba zrealizować w takim modelu. Przy założeniu, że tworzymy \begin{math}n\end{math} systemów i każdy z nich jest musi komunikować sie z resztą to suma połączeń które trzeba zrealizować wynosi \begin{math}n\end{math} - złożoność powstałej sieci wynosi \begin{math}O(n)\end{math}. Złożoność powstałej sieci połączeń jest znacznie lepszy niż przy połączeniach punk-punkt miedzy każdym systemem. Przy połączeniach system-system  ilość potrzebnych połączeń wynosi  \begin{math}\frac{n (n- 1)}{2}\end{math}, a złożoność takiej sieci połączeń wynosi  \begin{math}O(n^2)\end{math}. Wadami takiego rozwiązania jest skłaba skalowalność, istnienie pojedyńczego punktu w awarii w postaci węzła-piasty oraz wprowadzenie dodatkowego opóźnienia - jeden dodatkowy przeskok w porównani z komunikacją system-system).
+
+\setlength\fboxsep{20pt}
+\setlength\fboxrule{1pt}
+\begin{figure}[!h]
+	\centering
+	\fbox{\includegraphics[scale=0.35]{hub_and_spoke_model.png} }
+	\caption{Model "piasta i szprychy"}\label{fig:hub_and_spoke}
+\end{figure}
+
+Rozwiązania oparte na serwerach aplikacji upraszczają impementacje komunikacji ponieważ serwery te zazwyczaj są wyposarzone w obsługę standardowych protokołów takich jak HTTP czy SOAP. Minusem tych rozwiązań jest to, że logika integracyjna i logika biznesowa przeplatają sie nawzajem, a także poszczególne części systemu są dość mocno ze sobą powiązane co zmniejsza elastyczność systemu.
+
+ Brokerzy EAI wypadają lepiej od serwerów aplikacji ponieważ rozdzielają logike integracyjną od logiki biznesowej. Jednak rozwiązanie to posiada wszystkie wady związane z modelem piasty i szprych na którym jest oparte.
+
+Rozwiązania oparte na MOM pozwalają na luźne łączenie poszczególnych systemów a także na asynchroniczną komunikację między nimi. Rozwiązania te zazwyczaj nie posiadają wysoko poziomowej warstwy abstrakcji nad logiką routowania co fragmentami wymusza programowanie na dość niskim poziomie. Z tego też powódu, rozwiązania te, podobnie jak rozwiązania oparte na serwerach aplikacji cierpią z powodu przeplatającecj sie logiki integracyjnej z logiką biznesową, co utrudnia utrzymywanie i rozwijanie takiego systemu.
+
+Ostatnia grupa rozwiązań jest oparta na ESB. Jest to najnowsza z wyżej opisanych technologii. Dzięki doświadczeniu zdobytemu przy użytkowaniu wyżej opisanych technologii, udało sie stworzyć technologię, która nie posiada tych samych wad co jej przeprzedniczki. Technologia ESB dostarcza mocno rozproszone środowisko, które pozwala na tworzenie dobrze skalowalnych systemów. Kolejnym plusem tej technologii jest oddzielenie logiki biznesowej od logiki integracyjnej takiej jak routing czy transformacja danych, dzięki czemu tworzone systemy są łatwiejsze w utrzymaniu i rozbudowie, a także nie są ściśle związane z jedną technologią. 
+
+\setlength\fboxsep{20pt}
+\setlength\fboxrule{1pt}
+\begin{figure}[!h]
+	\centering
+	\fbox{\includegraphics{podejscia_integracyjne.png} }
+	\caption{Różne podejścia integracyjne  \cite{chappell2004}}\label{fig:podejscia_integracyjne}
+\end{figure}
 
 
-ksiazka ESB strony 4,5 
-
-opiszemy to podejscie i potem opiszemy, ze jest bardzo fajne, opiszemy rodzaje, jak ewoluowało, i na koncu opiszemy esb, a potem konkrety dla naszej aplikacji. Obrazki w ksiazce ESB
-ESB strona 34 - czemu własnościowe rozwiązania sa do dupy 
-
-
-
-\subsection {Szyna} 
-
-Przedstawienie jak to wyglada( kropki serwisy , komunikują sie z roznymi innymi serwisami, dodatokwe serisy: accounting itd)
-
-Wymagania stawiane rozwiazaniom integracyjnym , Czy warto integrować ? (book1.pdf chapter 2)
-
-Integracja systemow multimedialnych ??
-
-Rozwiazania ?
-
-Brak integracji
-
-integracja EAI - hub and spikes (scentralizowany punk, single point of failure. słabo scalowalne)
-
-SOA - ESB 
+\newpage
+\section*{Podsumowanie}
+W powyższym rozdziale zostały przedstawione różne podejście do problemu integracji aplikacji. Z powódu dużej ich różnorodności, ciężko stwierdzić, że któreś z podejść jest najlepsze. Decyzja o wyborzo konkretnej techlnologii powinna być dopasowana do rozwiązywanego problemu. Dzięki opisaniu wad i zalet każdego z podejścia można lepiej wybrać to które najlepiej będzie odpowiadać stawianym wymaganiom. Z pośród 4 wyzej opisanych podejść, autorzy wybrali podejście ESB jako najlepiej spełniające wymagania stawiane tworzonemu systemowi. Jeżeli chodzi o silniki mowy, autorzy pracy nie chcą skupiać sie na jednym  konkretnym, lecz stworzyć system, który pozwoli w łatwy sposób na integracje dowolnego silnika syntezy mowy. Powyższy rodział daje solidne podstawy do rozpoczęcia projektowania i implementacji systemu z godnie z wybranym podejściem.
 
 
 
+%ksiazka ESB strony 4,5 
 
-service activator (request od clienta)
+%opiszemy to podejscie i potem opiszemy, ze jest bardzo fajne, opiszemy rodzaje, jak ewoluowało, i na koncu opiszemy esb, a potem konkrety dla naszej aplikacji. Obrazki w ksiazce ESB
+%ESB strona 34 - czemu własnościowe rozwiązania sa do dupy 
+
+
+
+%\subsection {Szyna} 
+
+%Przedstawienie jak to wyglada( kropki serwisy , komunikują sie z roznymi innymi serwisami, dodatokwe serisy: accounting itd)
+
+%Wymagania stawiane rozwiazaniom integracyjnym , Czy warto integrować ? (book1.pdf chapter 2)
+
+%Integracja systemow multimedialnych ??
+
+%Rozwiazania ?
+
+%Brak integracji
+
+%integracja EAI - hub and spikes (scentralizowany punk, single point of failure. słabo scalowalne)
+
+%SOA - ESB 
+
+
+
+
+%service activator (request od clienta)
 
 
 % ---------------------------------------------------------------------------
