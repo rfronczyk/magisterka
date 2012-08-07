@@ -1,7 +1,5 @@
 % this file is called up by thesis.tex
 % content in this file will be fed into the main document
-\usepackage[polish]{babel}
-\usepackage{polski}
 
 %: ----------------------- name of chapter  -------------------------
 \chapter{Analiza problemu integracji} % top level followed by section, subsection
@@ -19,58 +17,65 @@
 %: ----------------------- contents from here ------------------------
 
 
-Rozdział ten jest podzielony na dwie części. W Pierwszej, analizujemy dostępne silniki syntezy mowy - dostępne rodzaje, ich cechy, a także wpływ jaki one mogą mieć na powstające systemy. W części drugiej przeanalizujemy różne podejścia integracyjne. Przedyskutujemy ich wady i zalety, a także przedstawimy przykładowe architektury dla każdego podejścia. 
+Rozdział ten jest podzielony na dwie części. W części pierwszej, zostaną przeanalizowane dostępne syntezatory mowy. Zostaną przedstawione cechy, którymi się charakteryzują oraz ich wady i zalety. W części drugiej zostaną zaprezentowane różne podejścia integracyjne, ich wady i zalety, a także przykładowe architektury dla każdego podejścia. 
 
 \section {Analiza dostępnych silników syntezy mowy}
 
-Jako, że celem naszej pracy nie jest stworzenie własnego syntezatora mowy, lecz stworzenie systemów, które to będą wykorzystywać syntezatory mowy w celu implementacji swojej logiki biznesowej, kolejnym krokiem jest analiza dostępnych na rynku rozwiązań. 
+Tematem tej pracy jest stworzenie platformy, która ułatwi tworzenie i integracje różnego rodzaju aplikacji wykorzystujących syntezę mowy. Tworzenie własnego syntezatora mowy z myślą o tym celu wykracza poza temat, dlatego też platforma zostanie oparta o gotowe syntezatory mowy. Pierwszym krokiem, który został podjęty w celu znalezienia rozwiązań nadających się do użycia, było wyodrębnienie cech opisujących poszczególne syntezatory. Przykładowy zestaw cech, który według autorów dobrze opisuje tego rodzaju systemy znajduje się poniżej: 
 
-Dostępne syntezatory są charakteryzowane przez następujące cechy:
 \begin{itemize}
-	\item sposób dostępu
-	\item ilość obsługiwanych języków
-	\item jakość generowanego dźwięku
-	\item cena
+	\item \textbf{rodzaj interfejsu}
+	\item \textbf{obsługiwana platforma}
+	\item \textbf{wydajność}
+	\item \textbf{ilość obsługiwanych języków}
+	\item \textbf{jakość generowanego dźwięku}
+	\item \textbf{cena}
 	\begin{itemize}
 		\item koszty początkowe(cena zakupu)
 		\item koszty użytkowania (opłata za każde użycie)
 	\end{itemize}
-	\item perspektywy rozwoju
-	\item łatwość użycia
+	\item \textbf{perspektywy rozwoju}
+	\item \textbf{łatwość użycia}
 \end{itemize}
 
-Większość z tych cech jest jasna i nie wymaga dalszego opisu. Jedyną cechą która nie do końca przemawia za siebie jest sposób dostępu. Sposób dostępu określa w jaki sposób możemy używać danego syntezatora, można powiedzieć, że definiuję interfejs jaki dany syntezator posiada. Pod względem sposobu dostępu, syntezatory mowy dzielimy następująco:
+Ze względu na integrację najważniejszą rolę odgrywa pierwsza z wypisanych cech, a mianowicie rozdaj interfejsu. Ze względu na tą cechę, dostępne syntezatory mowy, można podzielić na następujące grupy: 
 
 \begin{itemize}
-	\item syntezatory zintegrowane  - rozwiązania wbudowane w urządzenie, pozwalające na syntezę tylko we wcześniej przewidzianych przez producenta scenariuszach - 
+	\item lokalne wywołanie
 		\begin{itemize}
-			\item  Amazon Kindle
-			\item  PocketBook eReader Pro
+			\item niestandardowe API
+			\item standardowe API - JSAPI, SAPI
 		\end{itemize}
-	\item syntezatory stacjonarne - rozwiązania pozwalające na generację dźwięku w obrębie jednego urządzenia, zazwyczaj dostępne jako odrębne aplikacje lub biblioteki
-		\begin{itemize}
-			\item Festival Speech Synthesis System
-			\item FreeTTS
-			\item Loquendo Mobile
-			\item Loquendo Multimedia
-			\item Android TTS
-		\end{itemize}
-	\item syntezatory serwerowe - gotowe rozwiązania serwerowe, wykorzystujące specjalistyczne protokoły w celu zwiększenia wydajności 
-		\begin{itemize}
-			\item IVONA Telecom
-			\item IVONA Speech Server
-			\item Loquendo Speech Server
-		\end{itemize}
-	\item sytezatory SaaS
-		\begin{itemize}
-			\item IVONA Speech Cloud
-		\end{itemize}
+	\item komunikacja na poziomie systemu operacyjnego - sockety
+	\item protokoły warstwy transportowej modelu TCP/IP - TCP, UDP
+	\item specjalistyczne protokoły - MRCP
+	\item protokoły ogólnego użytku - HTTP, SOAP, REST
 \end{itemize}
 
-Sposób dostępu jednoznacznie wyznacza stopień trudności integracji syntezatora w środowisku SOA. Na początku listy znajdują się silniki syntezy mowy, które ciężko zastosować do tworzenia rozbudowanych systemów(rozwiązania zintegrowane), natomiast na końcu rozwiązania który z łatwością można wykorzystać do budowanie wszelakiego rodzaju systemów (rozwiązania SaaS).
 
-Podjecie decyzji, którego syntezatora będziemy używać, jak każda inna decyzja dotycząca architektury systemu, nie jest łatwa. Dodatkowo, zdecydowanie się na jedno rozwiązanie bardzo często wymusi na nas wykorzystanie konkretnych technologii (np IVONA Telecom - MRCP), a także może nas pozbawić możliwości zmiany decyzji w przyszłości (przez brak standardów, wymiana jednego rozwiązania na inne może wymagać dużego nakładu pracy).
+Syntezatory należące do pierwszej grupy zazwyczaj działają w obrębie jednej maszyny/urządzenia przez co nie nadają się zbytnio do zastosowania w środowiskach rozproszonych. Co więcej, silniki z podgrupy stosującej niestandardowe API uniemożliwiają szybką ich podmianę jeżeli zajdzie taka potrzeba. 
+Grupa druga posiada te same minusy co pierwsza. Dodatkowo, silniki należące do tej grupy, przez zastosowanie niskopoziomowej komunikacji są trudne w użyciu i mogą być mocno uzależnione od konkretnej platformy.
+Kolejna grupa w kolejności nadaję się już do zastosowania w środowisku rozproszonym, jednak przez stosowanie protokołów niskopoziomowych zastosowanie rozwiązań z tej grupy jest dość trudne. Dodatkowo, mogą się pojawić problemy z używaniem niestandardowych portów - komunikacja taka może zostać zatrzymana przez firewall. Jednak takie podejście ma też swoje plusy - protokoły te nie zwiększają rozmiaru przesyłanych danych przez dodatkowe nagłówki przez co nie rosną wymagania co do przepustowości sieci.
+Rozwiązania należące do następnej w kolejności grupy, przez stosowanie ustandaryzowanych protokołów maja większe szanse na nawiązanie połączenia, nawet w obecności firewalla. Dodatkowym plusem jest fakt, że protokoły te są wyższego poziomu niż protokoły warstwy transportowej, przez co używanie ich jest prostsze. Minusem tych syntezatorów jest mała popularność wykorzystywanych protokołów, przez co znalezienie odpowiednich bibliotek implementujących je, może być trudnym zadaniem.
+Ostatnia grupa syntezatorów nadaje się najlepiej ze wszystkich do tworzenia rozproszonej platformy. Posiada ona wszystkie plusy grupy poprzedniej, a dodatkowo protokoły używane przez silniki z tej grupy są na tyle popularne, że znalezienie bibliotek ułatwiających ich obsługę nie stanowi problemu. 
 
+Często się też zdarza, że jeden silnik syntezy mowy posiada wiele interfejsów, przez co jego wartość integracyjna wzrasta. Poniżej znajduje się przykładowa lista dostępnych syntezatorów wraz z interfejsami, które obsługują:
+
+\begin{itemize}
+	\item \textbf{Android TTS} - niestandardowe API
+	\item \textbf{Festival Speech Synthesis System} - niestandardowe API, JSAPI
+	\item \textbf{FreeTTS} - niestandardowe API, JSAPI
+	\item \textbf{IVONA SDK} - niestandardowe API, SAPI, TCP, sockety systemu UNIX
+	\item \textbf{IVONA Speech Server}  - SAPI, sockety systemu UNIX, TCP
+	\item \textbf{IVONA Telecom} - SAPI, MRCP
+	\item \textbf{IVONA Speech Cloud} - SOAP, REST
+	\item \textbf{Loquendo TTS} - niestandardowe API, SAPI
+	\item \textbf{Loquendo embedded TTS} - niestandardowe API, SAPI
+	\item \textbf{Loquendo MRCP Server} - MRCP
+\end{itemize}
+
+
+Podjecie decyzji, który syntezator będzie wykorzystany, jak każda inna decyzja dotycząca architektury systemu, nie jest łatwa. Trzeba mieć też na uwadze, że decyzja ta może mieć wpływ na resztę projektu. Autorzy pracy zdecydowali się na stworzenie platformy nie w oparciu o jeden syntezator, czy też o grupę syntezatorów posiadających ten sam interfejs, lecz na stworzenie jej w taki sposób, aby było możliwe zastosowanie w niej różnorodnych silników. 
 \section {Architektura}
 
 Znając wymagania które muszą spełniać przedstawione systemy, a także dostępne możliwości jeżeli chodzi o silniki syntezy mowy,  możemy przejść do projektowania architektury tych systemów.
@@ -98,7 +103,6 @@ Ważną kwestią do przemyślenia podczas projektowania jest też rozbudowy syst
 \end{itemize}
 
 
-##################################
 Wymienione funkcjonalności mogą być implementowane od zera, dla każdej aplikacji z osobną, lecz wiąże się to z dużym nakładem pracy. Można też skorzystać z gotowych, dostępnych usług dostarczających potrzebnych funkcji. Takie podejście może wiązać się z pewnymi kosztami, ale pozwala na użycie gotowego, sprawdzonego i rozwijanego oprogramowania. Podjęcie decyzji o użyciu zewnętrznych usług, przy zachowaniu autonomiczności każdego z budowanych systemów, wiąże się z integracją każdej usługi ze wszystkimi systemami, które jej wymagają z osobna. Przy założeniu, że tworzone jest \begin{math}n\end{math} aplikacji, i każda z nich będzie korzystała z \begin{math}m\end{math} usług to liczba połączeń aplikacja-usługa, które trzeba stworzyć wynosi  \begin{math}n*m\end{math}, a złożoność tak powstałej sieci wynosi \begin{math}O(nm)\end{math}. Przy założeniu, ze liczba aplikacji jest równa liczbie usług czyli \begin{math}m = n\end{math}, złożoność ta wynosi \begin{math}O(n^2)\end{math}.
 
  Przykładową architekturę w tym podejściu dla tworzonych systemów przedstawia rysunek \ref{fig:autonomiczne_systemy}
