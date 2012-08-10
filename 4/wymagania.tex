@@ -1,0 +1,121 @@
+% this file is called up by thesis.tex
+% content in this file will be fed into the main document
+
+%: ----------------------- name of chapter  -------------------------
+\chapter{Analiza wymagań} % top level followed by section, subsection
+
+
+%: ----------------------- paths to graphics ------------------------
+
+% change according to folder and file names
+\ifpdf
+    \graphicspath{{4/figures/PNG/}{4/figures/PDF/}{4/figures/}}
+\else
+    \graphicspath{{4/figures/EPS/}{4/figures/}}
+\fi
+
+%: ----------------------- contents from here ------------------------
+
+Tem rodział opisuje wymagania które powinny być spełniane przez poszczególne, przykładowe aplikacje korzystające z serwisu UniversalSynthesizer. Podstawową funkcją serwisu jest udostępnianie usługi zamiany tekstu na mowę. Zaletą niniejszego systemu jest jego otwartość, możliwość wykorzystania innych niż proponowane syntezatorów mowy, łatwy dostęp przez web service, stosunkowo prosty sposób rozbudowy oraz możliwość jego wykorzystania do różnych celów na różnych platformach. Cechy te należy zademonstrować na przykładzie kilku prostych aplikacji, które muszą spełniać pewne jasno określone wymagania funkcjonalne i niefunkcjonalne opisane poniżej. 
+\section{Wymagania funkcjonalne}
+
+\subsection{Automatyczne dyktando}
+Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internetowej. Jej głównym celem jest wykorzystanie funkcji UniversalSynthesizer do dyktowania treści którą użytkownik zapisuje. Po odczytaniu całego tekstu i wysłaniu przez użytkownika formularza, jest on porównywany z tekstem oryginalnym w ten sposób może ćwiczyć swoją ortografie. Dużą zaletą jest to, że aplikacja ta nie jest ograniczona do jednego języka oraz fakt, że użytkownik sam podaje tekst.
+\newpage
+\subsubsection{Przypadki użycia} 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{useCaseDictando.png} 
+	\caption{Przypadek użycia - Automatyczne dyktando }
+\end{figure}
+
+\subsubsection{Wymagania funkcjonalne}
+\begin{enumerate}
+	\item Obsługiwanie więcej niż jednego języka
+		\begin{enumerate}
+			\item polski
+			\item angielski
+			\item francuski
+		\end{enumerate}
+	\item Możliwość podania tekstu źródłowego
+		\begin{enumerate}
+			\item w formie tekstu wpisywanego na stronie
+			\item jako plik tekstowy, wysyłany na serwer
+		\end{enumerate}
+	\item Umożliwienie użytkownikowi odsłuchania wysłanego tekstu w wybranym przez niego języku
+	\item Umożliwienie użytkownikowi wprowadzania tekstu jednocześnie z odsłuchiwaniem
+	\item Wygenerowanie i wyświetlenie raportu o ilości błędów popełnionych przez użytkownika
+\end{enumerate}
+\subsection{LektorRSS}
+Jest to aplikacja webowa, które głównym celem jest odczytywanie użytkownikowi wiadomości RSS pobieranych z podanych przez niego źródeł. Należy zwrócić uwagę na duża zaletę tej aplikacji jaką jest fakt, że w zależności od języka wiadomości RSS jest ona odczytywana przez lektora odpowiedzialnego za ten język, oczywiście przy założeniu, że UniversalSynthesizer obłusguje język wiadomości.
+\subsubsection{Przypadki użycia}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{useCaseRSS.png} 
+	\caption{Przypadek użycia - LektorRSS}
+\end{figure}
+
+\subsubsection{Wymagania funkcjonalne}
+\begin{enumerate}
+	\item Możliwość dodania źródła RSS
+	\item Możliwość usunięcia źródła RSS
+	\item Obsługiwanie więcej niż jednego języka wiadomości
+		\begin{enumerate}
+			\item polski
+			\item angielski
+			\item francuski
+		\end{enumerate}
+	\item Automatyczne sprawdzanie czy któreś ze źródeł nie zawiera nowej wiadomości
+	\item Możliwość ustawienia odstępów czasowych pomiędzy sprawdzaniem przez system źródeł
+	\item Automatyczne Odczytanie użytkownikowi nowych wiadomości (w przypadku istnienia) 
+\end{enumerate}  
+\subsection{LektorsSMS}
+Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskazuje służy ona do automatycznego odczytywania wiadomości SMS zaraz po ich otrzymaniu. Jest bardzo przydatna w czasie jazdy samochodem, wiadomo, że używanie telefonu komórkowego jest zabronione z powodu bezpieczeństwa, tym bardziej, używanie rąk i skupianie wzrodku na odczytywanej wiadomości tekstowej jeszcze w większym stopniu niż rozmowa przez telefon prowadzi do odwrócenia uwagi kierowcy od sytuacji na drodze. Istnienie i użyteczność tej aplikacji pokazuje, że stworzony na potrzeby tej pracy serwis UniversalSynthesizer jest bardzo użyteczny, aplikacje mogące z niego korzystać mogą być tworzone na różne platformy.
+\newpage
+\subsubsection{Przypadki użycia}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{useCaseLektorSMS.png} 
+	\caption{Przypadek użycia - LektorRSS}
+\end{figure}
+
+\subsubsection{Wymagania funkcjonalne}
+\begin{enumerate}
+	\item Możliwość aktywacji i dezaktywacji aplikacji
+	\item Możliwość ustawienia języka w którym będzie odczytywana treść wiadomości
+	\item Możliwość filtrowania obsługiwanych wiadomości SMS po numerach nadawców 
+	\item Obsługiwanie więcej niż jednego języka wiadomości
+		\begin{enumerate}
+			\item polski
+			\item angielski
+			\item francuski
+		\end{enumerate}
+	\item Automatyczne odczytywanie otrzymanych wiadomości
+\end{enumerate}
+
+\section{Wymagania niefunkcjonalne}
+\subsection{Automatyczne dyktando}
+\subsubsection{Wymagania niefunkcjonalne}
+\begin{enumerate}
+	\item Bezpieczeństwo - użytkownik i tylko on powinien móc widzieć swoje wyniki
+	\item Wydajność - dyktowanie tekstu powinno przebiegać płynnie
+	\item Niezawodność - użytkownik powinien zawsze otrzymać wynik który jest poprawny i jest jego wynikiem
+\end{enumerate}
+\subsection{Lektor RSS}
+\begin{enumerate}
+	\item Bezpieczeństwo - użytkownik i tylko on powinien mieć dostęp do swojej listy źródeł RSS
+	\item Niezawodność - użytkownik powinien zostać poinformowany o każdej nowej wiadomości ze źródeł
+	\item Szybkość - różnica czasu pomiędzy udostępnieniem nowej wiadomości w którymś ze źródeł a otrzymaniem jej przez użytkownika nie powinna być zbyt duża
+	\item Możliwość personalizacji - użytkownik powinien móc dodać dowolną ilość różnych źródeł
+\end{enumerate}
+\subsection{LektorsSMS}
+\begin{enumerate}
+	\item Bezpieczeństwo - dostęp do apikacji musi być chroniony hasłem
+	\item Użyteczność - poprawne działanie na dowolnym urządzenie z systemem Android posiadającym dostęp do sieci
+	\item Wydajność - musi działać na starszych i słabszych telefonach
+\end{enumerate}
+
+% ---------------------------------------------------------------------------
+%: ----------------------- end of thesis sub-document ------------------------
+% ---------------------------------------------------------------------------
+
