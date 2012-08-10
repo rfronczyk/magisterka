@@ -2,7 +2,7 @@
 % content in this file will be fed into the main document
 
 %: ----------------------- name of chapter  -------------------------
-\chapter{Analiza problemu integracji} % top level followed by section, subsection
+\chapter{Analiza problemu integracji systemów przetwarzania mowy} % top level followed by section, subsection
 
 
 %: ----------------------- paths to graphics ------------------------
@@ -16,6 +16,45 @@
 
 %: ----------------------- contents from here ------------------------
 
+Rozdział ten podzielony jest na dwie części. Celem pierwszej jest zdefiniowanie pojęcia przetwarzania mowy, natomiast celem drugiej jest analiza różnych, możliwych sposobów integracji.
+
+\subsection{Przetwarzanie mowy}
+Mowa jest naturalnym, wybranym przez człowieka, w procesie ewolucji, sposobem komunikacji. Jej niewątpliwe zalety to:
+\begin{itemize}
+	\item brak konieczności stosowania sprzętu
+	\item komunikacja mimo braku fizycznego kontaktu
+	\item nie istnienie potrzeby widzenia rozmówcy
+	\item umożliwianie komunikacji w czasie wykonywania innych czynności
+\end{itemize}
+Wraz z rozwojem cywylizacyjnym, ewoluował także sposób komunikacji i jej format. Najpierw zaczęto mowę spisywać ręcznie, następnie stworzono maszyny drukarskie, aż w końcu zaczęto stosować do tego celu zapis cyfrowy i komputery. Użycie tych ostatnich umożliwia nie tylko przechowywanie mowy ale także jej przetwarzanie. Pod tym pojęciem może kryć się wiele różnych procesów. Najważniejsze oraz najczęsciej stosowane z nich to:
+\begin{itemize}
+	\item rozpoznawanie mowy, często oznaczane skrótem ASR ( z języka angielskiego automatic speech recognition)
+	\item synteza mowy, oznaczane jako TTS ( z języka angielskiego Text To Speech)
+	\item optyczne rozpoznawanie tekstu (tekst można traktować jako zapis mowy), oznaczane skrótem OCR (z języka angielskiego Optical Character Recognition)
+	\item tłumaczenie mowy
+\end{itemize} 
+Rozpoznawanie mowy jest to technologia umożliwiająca komputerowi wyposażonemu w odpowiednie urządzenie na przykład mikrofon interpretować ludzką mowę i zamieniać ją na tekst. Systemy oferujące przetwarzanie mowy można rozróżniąc według dwóch różnych kryteriów:
+\begin{itemize}
+	\item sposobu uczenia się
+	\item sposobu rozpoznawania mowy
+\end{itemize}
+Stosując pierwsze kryterium, aplikacje można podzielić na
+\begin{itemize}
+	\item zależne od lektora
+	\item niezależne od lektora
+\end{itemize}
+Systemy należące do pierwszej grupy uczą się poprzez sesje w czasie których lektor czyta porcje tekstu, aplikacje analizują głos, ton oraz tępo  w efekcie czego mogą dostosować się do danego lektora w efekcie czego uzyskują potem o wiele dokładniejsze wyniki, w przedziale 95-100%, oczywiście przy założeniu, że lektor ma podobny głos.  Systemy należące do drugiej grupy uczy się przy wykorzystaniu różnych lektorów. Uzyskiwane przez nie wyniki rzadko przekracają 75% jednak są dużo bardziej stabilne, to znaczy nie zależnie od lektora wyniki są w tej okolicy. 
+Stosując kryterium drugie wyrózniamy następujące grupy systemów:
+\begin{itemize}
+	\item Rozpoznające izolowane słowa - są to dość proste systemy, posiadające dwa stany: nasłuchujący i nie nasłuchujący,  wymagające ciszy na początku i na końcu każdej wypowiedzi,  akceptują jedno słowo lub krótką wypowiedź 
+	\item Rozpoznające łączone słowa - podobne do systemów z grupy powyżej, charakteryzują się znacznie większą czułoscią na przerwy pomiędzy kolejnymi słowami czyli umożliwiają osobnym wypowiedziom występować tylko, z minimalnymi przerwami pomiędzy nimi
+	\item Rozpoznające mowę ciągłą -  systemy z tej grupy umożliwiają użytkownikowi mówienie w sposób niemal naturalny w czasie gdy one rozpoznają zawartość. Są to najnowsze i najbardziej zaawansowane systemy.
+\end{itemize}   
+
+
+\subsection{Sposoby integracji}
+
+-------------------------------------%%-----------------------------------------------------\\
 Rozdział ten jest podzielonu na dwie części. W Pierwszej, analizujemy dostępne silniki syntezy mowy - dostępne rodzaje, ich cechy, a takze wpływ jaki one mogą mieć na powstające systemy. W części drugiej przenalizujemy różne podejscia integracyjne. Przedyskutujemy ich wady i zalety, a także przedstawimy przykładowe architektury dla każdego podejścia. 
 
 \section {Analiza dostępnych silników syntezy mowy}
