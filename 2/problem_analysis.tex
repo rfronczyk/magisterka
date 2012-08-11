@@ -18,7 +18,7 @@
 
 Rozdział ten podzielony jest na trzy części. Celem pierwszej jest zdefiniowanie pojęcia przetwarzania mowy, celem drugiej jest analiza różnych, możliwych sposobów integracji natomiast celem częsci trzeciej jest opisanie jak specyficzna dziedzina, jaką jest przetwarzanie mowy, wpływa na wybór sposobu integracji.
 
-\subsection{Przetwarzanie mowy}
+\section{Przetwarzanie mowy}
 Mowa jest naturalnym, wybranym przez człowieka, w procesie ewolucji, sposobem komunikacji. Jej niewątpliwe zalety to:
 \begin{itemize}
 	\item brak konieczności stosowania sprzętu
@@ -33,6 +33,7 @@ Wraz z rozwojem cywylizacyjnym, ewoluował także sposób komunikacji i jej form
 	\item optyczne rozpoznawanie tekstu (tekst można traktować jako zapis mowy), oznaczane skrótem OCR (z języka angielskiego Optical Character Recognition)
 	\item tłumaczenie mowy
 \end{itemize} 
+\subsection{Rozpoznawanie mowy}
 Rozpoznawanie mowy jest to technologia umożliwiająca komputerowi wyposażonemu w odpowiednie urządzenie na przykład mikrofon interpretować ludzką mowę i zamieniać ją na tekst. Systemy oferujące przetwarzanie mowy można rozróżniąc według dwóch różnych kryteriów:
 \begin{itemize}
 	\item sposobu uczenia się
@@ -49,7 +50,8 @@ Stosując kryterium drugie wyrózniamy następujące grupy systemów:
 	\item Rozpoznające izolowane słowa - są to dość proste systemy, posiadające dwa stany: nasłuchujący i nie nasłuchujący,  wymagające ciszy na początku i na końcu każdej wypowiedzi,  akceptują jedno słowo lub krótką wypowiedź 
 	\item Rozpoznające łączone słowa - podobne do systemów z grupy powyżej, charakteryzują się znacznie większą czułoscią na przerwy pomiędzy kolejnymi słowami czyli umożliwiają osobnym wypowiedziom występować tylko, z minimalnymi przerwami pomiędzy nimi
 	\item Rozpoznające mowę ciągłą -  systemy z tej grupy umożliwiają użytkownikowi mówienie w sposób niemal naturalny w czasie gdy one rozpoznają zawartość. Są to najnowsze i najbardziej zaawansowane systemy.
-\end{itemize}   
+\end{itemize}
+\subsection{Synteza mowy}   
 Synteza mowy jest sztuczną produkcją ludzkiej mowy. Syntezatory, czyli systemy komputerowe, które dokonują syntezy można podzielić na grupy stosując dwa różne kryteria:
 \begin{itemize}
 	\item sposób implementacji
@@ -79,23 +81,44 @@ Ze względu na sposób tworzenia mowy, systemy można podzielić na:
 	\item Syntezatory korzystające z metody konkatenacyjnej korzystają z dużej bazy oznaczonych próbek prawdziwego głosu lektora, proces syntezy sprowadza się do wybranie, modyfikacji i konkatenacji tych nagrań. 
 	\item Syntezatory alofoniczne, w czasie działania składają potrzebne słowa z dźwięków elementarnych przechowywanych w pamięci i wywoływanych w odpowiedniej chwili. 
 \end{itemize}
-Optyczne rozpoznawanie tekstu, dużo częściej występujące w wersji skróconej OCR, to mechaniczna lub elektroniczna konwersja obrazu pisma ręcznego, maszynowego lub wydrukowanego tekstu do postaci tekstu przechowywanego w pamięci komputera. Podobnie jak w przypadku syntezatorów mowy systemy OCR można podzielić na:
+\subsection{Optyczne rozpoznawanie tekstu}
+Optyczne rozpoznawanie tekstu, dużo częściej występujące w wersji skróconej OCR, to mechaniczna lub elektroniczna konwersja obrazu pisma ręcznego, maszynowego lub wydrukowanego tekstu do postaci zakodowanych maszynowo słów przechowywanych w pamięci komputera. Podobnie jak w przypadku syntezatorów mowy systemy OCR można podzielić na:
 \begin{itemize}
 	\item implementowane programowo
 	\item implementowane sprzętowo
 \end{itemize}
-Niezależnie od implementacji sposób ich działania oraz algorytm pozostają podobne. Podstawowe kroki jakie system musi podjąc w celu rozpoznania tekstu to:
+Podobnie jak przy syntezatorach zaletą implementacji sprzętowej jest szybkość oraz wydajność co umożliwia pracę w czasie rzeczywistym. Niezależnie od implementacji, sposyb ich działania oraz algorytmy pozostają podobne. Podstawowe kroki jakie system musi podjąc w celu rozpoznania tekstu to:
 \begin{enumerate}
 	\item Wczytanie obrazu jako mapy bitowej z podanego źródła.
 	\item Rozpoznanie najważniejszych cech obrazu takich jak rozdzielczość i inwersja. Wiele algorytmów spodziewa się kolorów i rozmiaru czcionki w ramach predefiniowanego przedziału dlatego też obraz musi być przeskalowany i znormalizowany przed dalszą obróbką. Na tym etapie rozpoznawane również są pozycje i typy najważniejszych części obrazu.
 	\item Wiele algorytmów wymaga by obraz był dwu kolorowy, dlatego kolorowy albo szary obraz musi być przekonwertowany do biało czarnej postaci, to bardzo istotny krok algorytmu ponieważ błędy w tej części mogą powodować poważne problemy w dalszych etapach.
 	\item Kolejnym ważnym krokiem jest usunięcię wszystkich podkreśleń obramowań itd. w dalej kolejności umożliwia to rozpoznanie linii tekstu co jest jednym z kluczowych kroków poprawnego alborytmu.
 	\item Po podzieleniu tekstu na linie, algorytm stara się rozpoznać błedne znaki, to znaczy takie które stykają się z innymi albo są podzielone na kilka części (np. w wyniku konwersji do bialo czarnej postaci), i je dopasować do znanej mu puli.
-	\item Ostatnim i najważniejszym krokiem jest rozpoznanie pojedynczych znaków, sukces tego kroku zależy od poprzednich etapów. Najpierw każdemu znakowi próbuje się dopasować kod znaku, czasami nie jest możliwe dopasowanie tylko jednego kodu, np. w przypadku litery "\textbf{I}" większość algorytmów rozpona ją jako "\textbf{I}", "\textbf{|}", "\textbf{1}" lub "\textbf{i}". W takim przypadku należy skorzystać ze słownika, posiadanie bogatej bazy słów, może, w sposób znaczący poprawić efektywność algorytmu.
+	\item Ostatnim i najważniejszym krokiem jest rozpoznanie pojedynczych znaków, sukces tego kroku zależy od poprzednich etapów. Najpierw każdemu znakowi próbuje się dopasować kod znaku, czasami nie jest możliwe dopasowanie tylko jednego kodu, np. w przypadku litery \textbf{I} większość algorytmów rozpona ją jako \textbf{I}, \textbf{|}, \textbf{1} lub \textbf{i}. W takim przypadku należy skorzystać ze słownika, posiadanie bogatej bazy słów, może, w sposób znaczący poprawić efektywność algorytmu.
 \end{enumerate}
-Nie jest to kompletna lista kroków, istnieje dużo innych mniejszych lub większych etapów, jednak każdy z wymienionych jest bardzo ważny, cały proces nie zakończyc się sukcesem jeżeli zawiedzie którykolwiek z nich. 
-
-
+Nie jest to kompletna lista kroków, istnieje dużo innych mniejszych lub większych etapów, jednak każdy z wymienionych jest bardzo ważny, cały proces nie zakończy się sukcesem jeżeli zawiedzie którykolwiek z nich. 
+\subsection{Translacja mowy}
+Translacja mowy to tłumaczenie z jednego języka na inny. Aplikacje tłumaczące często nazywane są translatorami. Mimo, że z pozoru mogłoby się wydawać, że jest to czynność prostsza niż OCR czy też ASR to tak nie jest. Proces tłumaczenia jest bardzo trudny i do tej pory nie istnieją aplikacje nie popełniające błedów. W zasadzie można wyróżnić dwa typy translatorów, bazując na algorytmach jakie stosują co do tłumaczonego tekstu:
+\begin{itemize}
+	\item algorytmy oparte na zasadach gramatyki
+	\item algorytmy bazujące na podejściu statystycznym
+	\item algorytmy stosujące translacje opartą o przykłady
+\end{itemize}
+W podejściu pierwszym przeprowadza się tłumaczenie bazując na informacjach językowych na temat języka źródłowego i docelowego. Algorytm rozkłada zdanie na części pierwsze, analizuje je, następnie bazując na bazie wiedzy którą posiada, a w skład której wchodzą informacje na temat składni, budowy zdań, odmian oraz słownik dwujęzyczny, buduje zdanie w języku docelowym. Technika ta wymaga ogromnej mocy obliczeniowej oraz dużych zasobów danych, według ekspertów w dziedzinie translacji, takich jak Franz Josef Och, jest nieefektywna.
+W podejściu statystycznym tłumaczenia dokonuje się w oparciu o statystyczny model którego parametry są wyliczane na podstawie analizy tekstu. Jest do podejście mające bardzo mocne oparcie w teorii informacji. W chwili obecnej wydaje się, że jest ono najbardziej efektywne o czym może świadczyć fakt, że podejście to zostało zastosowane przez Google'a przy tworzeniu Google Translator, który wygrał międzynarodowe zawody w tłumaczeniu z angielskiego na arabski i angielskiego na chiński.
+Stosowanie algorytmów opartych o analogie jest najprostszym z możliwych podejść, może być postrzegane jako implementacja uczenia maszynowego w podejściu CRB. Uważa się, że podejście to najbardziej dokładnie oddaje proces myślowy człowieka tłumaczącego tekst, to znaczy najpierw następuje dekompozycja zdania na mniejsze frazy, następnie tłumaczy się te frazy pojedynczo i odpowiedno łączy tworząc zdanie w języku docelowym. Traslator bazujący na takim podejściu musi przejść fazę uczenia, polegającą na podawaniu na wejście podobnych zdań w dwóch językach różniących się tylko nieznacznie, stosując dwa proste zdania w językach angielski i japońskim: 
+ \begin{itemize}
+	\item ang: \verb"How much is that red umbrella?" jap: \verb"Ano akai kasa wa ikura desu ka?"
+	\item ang: \verb"How much is that small camera?" jap: \verb"Ano chiisai kamera wa ikura desu ka?"
+\end{itemize} 
+system nauczy się, że:
+ \begin{enumerate}
+	\item \verb"How much is X?" odpowiada \verb"Ano X wa ikura desu ka?"
+	\item \verb"red umbrella" odpowiada \verb"akai kasa"
+	\item \verb"small camera" odpowiada \verb"chiisai kamera"
+\end{enumerate} 
+Następnie aplikacja może zastosować w ten sposób nabytą wiedzę w bardziej zaawansowanych przypadkach.
+\\ Jak widać przetwarzanie mowy samo w sobie jest bardzo obszernym i skomplikowanym tematem, w skład którego wchodzi wiele różnych procesów które można zintegrować tworząc efektywne i bardzo funkcjonalne systemy.
 
 
 \subsection{Sposoby integracji}
