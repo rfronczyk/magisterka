@@ -32,6 +32,7 @@ Wraz z rozwojem cywylizacyjnym, ewoluował także sposób komunikacji i jej form
 	\item synteza mowy, oznaczane jako TTS ( z języka angielskiego Text To Speech)
 	\item optyczne rozpoznawanie tekstu (tekst można traktować jako zapis mowy), oznaczane skrótem OCR (z języka angielskiego Optical Character Recognition)
 	\item tłumaczenie mowy
+	\item rozpoznawanie języka
 \end{itemize} 
 \subsection{Rozpoznawanie mowy}
 Rozpoznawanie mowy jest to technologia umożliwiająca komputerowi wyposażonemu w odpowiednie urządzenie na przykład mikrofon interpretować ludzką mowę i zamieniać ją na tekst. Systemy oferujące przetwarzanie mowy można rozróżniąc według dwóch różnych kryteriów:
@@ -118,12 +119,83 @@ system nauczy się, że:
 	\item \verb"small camera" odpowiada \verb"chiisai kamera"
 \end{enumerate} 
 Następnie aplikacja może zastosować w ten sposób nabytą wiedzę w bardziej zaawansowanych przypadkach.
-\\ Jak widać przetwarzanie mowy samo w sobie jest bardzo obszernym i skomplikowanym tematem, w skład którego wchodzi wiele różnych procesów które można zintegrować tworząc efektywne i bardzo funkcjonalne systemy.
+\subsection{Rozpoznawanie języka}
+Rozpoznawanie języka to proces którego celem jest stwierdzenie w jakim języku naturalnym jest podany na wejście tekst. Tradycyjne podejście, stosowane np. w księgarniach, opiera się na ręcznym zidentyfikowaniu najczęściej występujących słów i liter które są charakterystyczne dla danego języka i sprawdzenie ich w odpowiednich tabelach. Implementacja algorytmów działących na podobnej zasadzie jest możliwa jednak jest to rozwiązanie mało efektywne. Obecnie stosuje się kilka różnych podejść bazujących na statystyce:
+ \begin{itemize}
+	\item Bardzo prostą techniką jest porównywanie jakości kompresji badanego tekstu z jakością kompresji tekstów w znanych językach, im bardziej zbliżone wyniki tym większe prawdopodobieństwo, że teksty są w tym samym języku. Podejście to nazywa się miarą odległości wzajemnej informacji.
+	\item Bardziej zaawansowanym algorytmem jest ten zaproponowany przez Panów Cavnar'a i Trenkle'a w 1994 roku pod nazwą: "N-Gram-Based Text Categorization". Najpierw należy utworzyć znakowy n-gramowy model języka na podstawie materiałów treningowych dla każdego z języków które mają być obsługiwane. Następnie dla każdego tekstu którego język ma być zidentyfikowany, tworzy się podobny model i porównuje z modelami bazowymi. Im bardziej są do siebie podobne tym więszka szansa, że to ten sam język. Problematyczne w tym podejściu są języki dla których nie można skonstruować takiego modelu. 
+	\item Rozszerzeniem poprzedniego algorytmu jest technika zaproponowa przez Panów Rehurek i Kolkus. Największymi zaletami ulepszonej wersji jest fakt, że nie zawodzi ona w sytuacji w które próbka tekstu jest napisana w wielu językach, a także nie stanowi dla niej problemu rozróżnianie języków należących do tej samej rodziny (np. polski i słowacki). 
+\end{itemize} 
+Jak widać przetwarzanie mowy samo w sobie jest bardzo obszernym i skomplikowanym tematem, w skład którego wchodzi wiele różnych procesów które można zintegrować tworząc efektywne i bardzo funkcjonalne systemy.
 
 
-\subsection{Sposoby integracji}
+\section{Sposoby integracji}
+Dzięki postępowi technologicznemu przepustowość łączy internetowych wciąż wzrasta, dzięki temu to co pare lat temu było nie osiągalne dzis jest normą. Powstają nowe rodzaje usług, które kiedyś nie mogły by zostać zrealizowane, przy tworzeniu zaś niektórych aplikacji, to co kiedyś było problemem i na czym skupiali swój wysiłek twórcy oprogramowania, dzisiaj schodzi na drugi plan. Z drugiej jednak strony zwiększają sie wymagania użytkowników co do jakości, są wprowadzane coraz to nowe formaty, które wymagają ogromnych przepustowość. Czasami jednak systemy nie mają takich scisłych wymagań co do wielkości opóźnienia. W ich przypadku opóźnienie nawet rzędu kilkudziesięciu sekund nie stanowi problemu i jest akceptowalne przez użytkowników. W takim wypadku nie trzeba sie skupiać na szukaniu idealnego rozwiązania dla danego problemu, lecz można skupić się na stworzeniu architektóry która ułatwi i przyspieszy budowanie systemów spełniających dane wymagania.
+
+Przy takim podejściu do tworzenia systemu zazwyczaj pojawia sie problem integracji budowanego systemu z istniejącymi już usługami. Często też, budowany system jest całkowicie problemem integracyjnym, czyli wszystkie składowe usługi potrzebne do realizacji celu biznesowego są dostępne, a jedyne zadanie stawiane budowanemu systemowi to opdowiednia integracja tych usług. Podejście takie ułatwia parę kwesti, ale w zamian wprowadza także nowe, specyficzne dla siebie problemy. Głownym problememe jest różnorodność dostępnych podsystemów. Każdy z nich może być stworzony przy użyciu innych technologii (Java, COM, .Net, CORBA, ICE, itp.) działać na innej platformie (MS WINDOWS, LINUX, SOLARIS) i co najważniejsze mogą wykorzystywać inne protokoły do komunikacji (RPC, SOAP, własnościowe protokoły, itp). Z tego powodu decyzja o podejściu integracyjnym nie może byc podejmowana zbyt szybko, ai powinna być podjęta bazując na pewnych kryteriach:  \cite{hohpewoolf2003} 
+
+\begin{itemize}
+	\item \textbf{powiązanie aplikacji} - integracja aplikacji powinna minimalizować powiązania i zależności między nimi, co pozwoli na swobodne rozwijanie każdej aplikacji z osobna. Sciśle powiązane aplikacje współdziałają przy wielu założeniach z każdej ze stron. Jeżeli któraś z aplikacji zostanie zmieniona i założenia co do niej nie będą już spełnione wtedy cała integracja przestanie działać. Dlatego też, projektowane interfejsy powinny być na tyle specyficzne aby umożliwiały implementacje użytecznych funkcjonalności, lecz także na tyle ogólne aby umożliwiały zmiane implementacji, jeżeli zajdzie taka potrzeba.
+	\item \textbf{poziom ingerencji} - podczas integracji aplikacji, powinno się minimalizować zarówno zmiany w samej aplikacji jak i ilość kodu tworzonego na rzecz integracji. Jednak bardzo często zarówno zmiany w aplikacji jak i tworzenie dodatkowe kodu odpowiadającego za integracje jest nieuniknione aby uzyskać odpowiednią funkcjonalność. Rozwiązania mniej ingerujące w aplikacje mogą nie zapewniać integracji w odpowiednim stopniu.
+	\item \textbf{wybór technologii} - do wyboru mamy mnóstwo technologii integracyjnych, które różnią się od siebie wymaganiami zarówno co do specjalistycznego sprzętu jak i oprogramowania. Nie które z nich są wymienne między sobą, natomiast wybranie innych może doprowadzić do zamknięcia sie na dane rozwiązanie. Jeżeli podejmie się decyzję o zastosowaniu którejś z gotowych technologii integracjnych może ona znacząco zwiększyć koszt całego system. Z drugiej strony, integracja od podstaw zazwyczaj kończy się wiekszym nakładem pracy niż początkowo planowano i może oznaczać odkrywanie koła na nowo.
+	\item \textbf{format danych} - integrowane aplikacje muszą posługiwać sie tym samym formatem podczas wymiany danych. Dostosowywanie istniejących aplikacji do jednolitego formatu danych może być bardzo trudne, albo wręcz nie możliwe. Inną opcją jest wprowadzenie elementu pośredniego, którego celem będzie tłumaczenie danych z jednego formatu na drugi. Problemem powiązanym z opisanym w tym podpunkcie jest rozszerzalność i rozwój formatu danych - jak może sie zmieniać z biegiem czasu i jak te zmiany wpłyną na aplikacje.
+	\item \textbf{żywotność danych} - integracja powinna minimalizować czas pomiędzy udąstępnieniem danych przez jedną aplikację, a pobraniem tych danych przez drugą aplikacje. Można to osiągnąć poprzez częstą wymianę małych porcji danych, jednakże takie podejście moze zmniejszyć wydajność całego systemu. Opóźnienia związane z wymiąną daynch muszą zostać wzięte pod uwagę podczas planowania integracji. W idealnym systemie, aplikacja odbiorcza zostanie poinformowana jak tylko dane będą dostępne. Im dłuższy czas miedzy publikacją a konsumpcją danych tym większa szansa, że aplikacje ulegną rozsynchronizowaniu.
+	\item \textbf{rodzaj komunikacji} - przetwarzanie komputerowe jest w dużej mierze synchroniczne - to znaczy, że jedna procedura wywołuje drugą ( podprocedurę) i czeka na jej wykonanie. W systemach rozproszonych, wywołania mają charakter zdalny, co powoduję, że są o wiele wolniejsze od wywołań lokalnych. Z tego powodu, oczekiwanie na zakończenie wywołania, jest często nieporządane. W takim wypadku można wykorzystać podejście asynchroniczne - prrocedura wywołują podprocedurę, lecz nie czeka na jej zakończenie, tak jak to było przy wywołaniu synchronicznym, tylko wraca do swojego przetwarzania. Kiedy podpprocedura zakończy przetwarzanie, informuję o tym procedurę wywołująca i zwraca jej wynik. Komunikacja asynchroniczna może zwiększyć wydajność całego systemu, ale również moze uczynić go bardziej złożonym.
+	\item \textbf{poziom niezawodności} - komunikacja zdalna jest nie tylko wolniejsza, ale również bardziej zawodna niż lokalne wywołania funkcji. Kiedy procedura wywołuje podprocedurę w obrębie jednej aplikacji, jest pewne, że ta podprocedura jest dostępna. Takie założenie nie musi być spełnione jeżeli chodzi o zdalne wywołania - zdalna aplikacja moze nie działać w chwili wywołania, albo połączenie z siecią może być tymczasowo niedostępne.
+\end{itemize}
+
+Do wyboru mamy mnóstwo różnych technologii integracyjnych. Niektóre z nich są niezależne od platforym, inne zaś wymagają specyficznego systemu operacyjnego. Jedne są darmowe i otwarte, inne zaś płatne i oparte na własnościowych patentach i protokołach. Każda z nich ma swoje plusy i minusy dlatego trzeba wybrać tą która najlepiej nada sie dla określonego celu. Dotatkową opcją jest tworzenie swojego systemu integracji od zera. Jednak rozwiązanie takie jest czasochłonne, kosztowne a także jego celowość stoi pod znakiem zapytania więc bardzo często nie jest ono brane pod uwagę pod uwagę.
+Dostępne rozwiązania można podzielić na cztery grupy: \cite{chappell2004}
+
+\begin{itemize}
+	\item serwery aplikacji
+	\item EAI brokers
+	\item własne rozwiązania oparte na  MOM
+	\item ESB
+\end{itemize}
+
+Pierwsze dwie grupy rozwiązań oparte są na modelu \textbf{"Hub and Spoke"}  w modelu tym połączenia ułożone są na wzór koła rowerowego, w którym przebieg danych odbywa sie wzdłuż szprych (spoke) połączonych z położoną w centrum piastą (hub). Zaletą takiego rozwiązania jest scentralizowanie takich funkcji systemu jak: zarządzanie, routowanie wiadomości, logika biznesowa, które to są zaimplementeowane w węźle centralnym (hub). Dzięki temu poszczególne węzły - szprychy są wyposażone tylko w niezbędną dla nich funkcjonalność. Kolejną zaletą jest ilość połączeń którą trzeba zrealizować w takim modelu. Przy założeniu, że tworzymy \begin{math}n\end{math}  systemów i każdy z nich musi komunikować sie z resztą to suma połączeń które trzeba zrealizować wynosi  \begin{math}n\end{math}  złożoność powstałej sieci wynosi  \begin{math}O(n)\end{math}  Jak widać ostateczna złożoność jest znacznie lepsza niż przy połączeniach punk-punkt miedzy każdym systemem. Przy połączeniach system-system  ilość potrzebnych połączeń wynosi   \begin{math}\frac{n (n- 1)}{2}\end{math}  Złożoność takiej sieci połączeń wynosi  \begin{math}O(n^2)\end{math}  Wadami takiego rozwiązania jest słaba skalowalność, istnienie pojedynczego punktu awarii w postaci węzła-hub'a oraz wprowadzenie dodatkowego opóźnienia, a mianowicie jednego dodatkowego przeskoku w porównani z komunikacją system-system).
+
+\setlength\fboxsep{20pt}
+\setlength\fboxrule{1pt}
+\begin{figure}[!h]
+	\centering
+	\fbox{\includegraphics[scale=0.24]{hub_and_spoke_model.png} }
+	\caption{Model "Hub and spoke"}\label{fig:hub_and_spoke}
+\end{figure}
+
+Rozwiązania oparte na serwerach aplikacji upraszczają impementacje komunikacji ponieważ serwery te zazwyczaj są wyposażone w obsługę standardowych protokołów takich jak HTTP czy SOAP. Minusem tych rozwiązań jest to, że logika integracyjna i logika biznesowa przeplatają sie nawzajem, a także poszczególne części systemu są dość mocno ze sobą powiązane co zmniejsza elastyczność systemu.
+
+EAI brokers wypadają lepiej od serwerów aplikacji ponieważ rozdzielają logike integracyjną od logiki biznesowej. Jednak rozwiązanie to posiada wszystkie wady związane z modelem hub and spoke na którym jest oparte.
+
+Rozwiązania bazujące na MOM pozwalają na luźne łączenie poszczególnych systemów a także na asynchroniczną komunikację między nimi. Rozwiązania te zazwyczaj nie posiadają wysoko poziomowej warstwy abstrakcji nad logiką routowania co fragmentami wymusza programowanie na dość niskim poziomie. Z tego też powódu, rozwiązania te, podobnie jak rozwiązania oparte na serwerach aplikacji cierpią z powodu przeplatającecj sie logiki integracyjnej z logiką biznesową, co utrudnia utrzymywanie i rozwijanie takiego systemu.
+
+Ostatnia grupa rozwiązań jest oparta na ESB. Jest to zdecydowanie najnowsza z wyżej opisanych technologii. Dzięki doświadczeniu zdobytemu przy użytkowaniu poprzedników, udało sie stworzyć technologię, która nie posiada tych samych wad. Technologia ESB dostarcza mocno rozproszone środowisko, które pozwala na tworzenie dobrze skalowalnych systemów. Kolejnym plusem tej technologii jest oddzielenie logiki biznesowej od logiki integracyjnej takiej jak routing czy transformacja danych, dzięki czemu tworzone systemy są łatwiejsze w utrzymaniu i rozbudowie, a także nie są ściśle związane z jedną technologią. 
+
+\setlength\fboxsep{20pt}
+\setlength\fboxrule{1pt}
+\begin{figure}[!h]
+	\centering
+	\fbox{\includegraphics{podejscia_integracyjne.png} }
+	\caption{Różne podejścia integracyjne  \cite{chappell2004}}\label{fig:podejscia_integracyjne}
+\end{figure}
+
+\newpage
+
+\section{Inegracja systemów przetwarzania mowy}
 
 -------------------------------------%%-----------------------------------------------------\\
+
+%: ##################### HUB and Spoke #########################################
+\subsection {Podejscie zorientowane na usługi}
+ 
+
+
+
+\newpage
+\section*{Podsumowanie}
+W powyższym rozdziale zostały przedstawione różne podejście do problemu integracji aplikacji. Z powódu dużej ich różnorodności, ciężko stwierdzić, że któreś z podejść jest najlepsze. Decyzja o wyborzo konkretnej techlnologii powinna być dopasowana do rozwiązywanego problemu. Dzięki opisaniu wad i zalet każdego z podejścia można lepiej wybrać to które najlepiej będzie odpowiadać stawianym wymaganiom. Z pośród 4 wyzej opisanych podejść, autorzy wybrali podejście ESB jako najlepiej spełniające wymagania stawiane tworzonemu systemowi. Jeżeli chodzi o silniki mowy, autorzy pracy nie chcą skupiać sie na jednym  konkretnym, lecz stworzyć system, który pozwoli w łatwy sposób na integracje dowolnego silnika syntezy mowy. Powyższy rodział daje solidne podstawy do rozpoczęcia projektowania i implementacji systemu z godnie z wybranym podejściem.
+
 Rozdział ten jest podzielonu na dwie części. W Pierwszej, analizujemy dostępne silniki syntezy mowy - dostępne rodzaje, ich cechy, a takze wpływ jaki one mogą mieć na powstające systemy. W części drugiej przenalizujemy różne podejscia integracyjne. Przedyskutujemy ich wady i zalety, a także przedstawimy przykładowe architektury dla każdego podejścia. 
 
 \section {Analiza dostępnych silników syntezy mowy}
@@ -215,63 +287,6 @@ Jeżeli uznamy, że nasze systemy potrzebują którejś z wymienionych funkcjona
 \end{figure}
 
 Podejście autonomicznych aplikacji jest  skupione na konkretnych systemach, a nie na intergracji ich w istniejącym środowisku. Można nawet powiedzieć, że w tym podejściu w ogóle nie występuje element integracji. Jednakże, rozwiązanie to ma też swoje plusy. Przy tym podejściu, powstające systemy są lepiej dostosowane do stawianych przed nimi zadań, ale też wymagają wiekszych nakładów pracy i są cieżkie w rozbudowie. Kolejne podejście, które zostanie zaprezentowane  patrzy na problem z troche innej perspektywy. Nie jest oneaż tak  skupione na tworzonych systemach, lecz na ich współistnieniu z współpracy wraz z innymi systemami w środowisku SOA.
-
-%: ##################### HUB and Spoke #########################################
-\subsection {Podejscie zorientowane na usługi}
-Dzięki postępowi technologicznemu przepustowość łączy internetowych wciąż wzrasta, dzięki temu to co pare lat temu było nie osiągalne dzis jest normą. Powstają nowe rodzaje usług, które kiedyś nie mogły by zostać zrealizowane, przy tworzeniu zaś niektórych aplikacji, to co kiedyś było problemem i na czym skupiali swój wysiłek twórcy oprogramowania, dzisiaj schodzi na drugi plan. Z drugiej jednak strony zwiększają sie wymagania użytkowników co do jakości multimediów, są wprowadzane coraz to nowe formaty, które wymagają ogromnych przepustowość. Czasami jednak systemy mulitmedialne nie mają takich scisłych wymagań co do wielkości opóźnienia. W ich przypadku opóźnienie nawet rzędu kilkudziesięciu sekund nie stanowi problemu i jest akceptowalne przez użytkowników. W takim wypadku nie trzeba sie skupiać na szukaniu idealnego rozwiązania dla danego problemu, lecz można skupić się na stworzeniu architektóry która ułatwi i przyspieszy budowanie systemów spełniających dane wymagania.
-
-Przy takim podejściu do tworzenia systemu zazwyczaj pojawia sie problem integracji budowanego systemu z istniejącymi już usługami. Często też, budowany system jest całkowicie problemem integracyjnym, czyli wszystkie składowe usługi potrzebne do realizacji celu biznesowego są dostępne, a jedyne zadanie stawiane budowanemu systemowi to opdowiednia integracja tych usług. Podejście takie ułatwia parę kwesti, ale w zamian wprowadza także nowe, specyficzne dla siebie problemy. Głownym problememe jest różnorodność dostępnych podsystemów. Każdy z nich może być stworzony przy użyciu innych technologii (Java, COM, .Net, CORBA, ICE, itp.) działać na innej platformie (MS WINDOWS, LINUX, SOLARIS) i co najważniejsze mogą wykorzystywać inne protokoły do komunikacji (RPC, SOAP, własnościowe protokoły, itp). Z tego powodu decyzja o podejsiu integracyjnym nie powinna być podejmowana zbyt pochopnie i powinna być podjęta bazując na pewnych kryteriach. Przykładowe kryteria:  \cite{hohpewoolf2003} 
-
-\begin{itemize}
-	\item \textbf{powiązanie aplikacji} - integracja aplikacji powinna minimalizować powiązania i zależności między nimi, co pozwoli na swobodne rozwijanie każdej aplikacji z osobna. Sciśle powiązane aplikacje współdziałają przy wielu założeniach z każdej ze stron. Jeżeli któraś z aplikacji zostanie zmieniona i założenia co do niej nie będą już spełnione wtedy cała integracja przestanie działać. Dlatego też, projektowane interfejsy powinny być na tyle specyficzne aby umożliwiały implementacje użytecznych funkcjonalności, lecz także na tyle ogólne aby umożliwiały zmiane implementacji, jeżeli zajdzie taka potrzeba.
-	\item \textbf{poziom ingerencji} - podczas integracji aplikacji, powinno się minimalizować zarówno zmiany w samej aplikacji jak i ilość kodu tworzonego na rzecz integracji. Jednak bardzo często zarówno zmiany w aplikacji jak i tworzenie dodatkowe kodu odpowiadającego za integracje jest nie uniknione aby uzyskać odpowiednią funkcjonalność. Rozwiązania mniej ingerujące w aplikacje mogą nie zapewniać integracji w odpowiednim stopniu.
-	\item \textbf{wybór technologii} - do wyboru mamy mnóstwo technologii integracyjnych, które różnią się od siebie wymaganiami co do specjalistycznego sprzętu i do oprogramowania. Nie które z nich są wymienne między sobą, natomiast wybranie innych może prowadzić na zamknięcie sie na dane rozwiązanie. Jeżeli podejmie sie decyzje o zastosowaniu którejś z gotowych technologii integracji może ona znacząco zwiększyć koszt całego system. Z drugiej strony, integracja od podstaw zazwyczaj kończy się wiekszym nakładem pracy niż początkowo planowano i może oznaczać odkrywanie koła na nowo.
-	\item \textbf{format danych} - integrowane aplikacje muszą posługiwać sie tym samym formatem podczas wymiany danych. Dostosowywanie istniejących aplikacji do jednolitego formatu danych może być bardzo trudne, albo wręcz nie możliwe. Inną opcją jest wprowadzenie elementu pośredniego, którego celem będzie tłumaczenie danych z jednego formatu na drugi. Problemem powiązanym z opisanym w tym podpunkcie jest problem rozszerzalność i rozwój formatu danych - jak format danych może sie zmieniać z biegiem czasu i jak te zmiany wpłyną na aplikacje.
-	\item \textbf{żywotność danych} - integracja powinna minimalizować czas pomiędzy udąstępnieniem danych przez jedną aplikację, o pobraniem tych danych przez drugą aplikacje. Można to osiągnąć poprzez częstą wymianę małych porcji danych, jednakże takie podejście moze zmniejszyć wydajność całego systemu. Opuźnienia związane z wymiąną daynch muszą zostać wzięte pod uwagę podczas planowania integracji. W idealnym systemie, aplikacja odbiorca zostanie poinformowana jak tylko dane będą dostępne. Im dłuższy czas miedzy publikacja a konsumpcją danych tym większa szansa, że aplikacje ulegną rozsynchronizowaniu.
-	\item \textbf{rodzaj komunikacji} - przetwarzanie komputerowe jest w dużej większości synchroniczne - to znaczy, że jedna procedura wywołuje drugą ( podprocedurę) i czeką na jej wykonanie. W systemach rozproszonych, wywołania mają charakter zdalny, co powoduję, że są o wiele wolniejsze od wywołań lokalnych. Z tego powodu, oczekiwanie na zakończenie wywołania, jest często nie porządane. W takim wypadku można wykorzystać podejście asynchroniczne - prrocedura wywołują podprocedurę, lecz nie czeka na jej zakończenie jak to było w wypadku wywołania synchronicznego, tylko wraca do swojego przetwarzania. Kiedy podpprocedura zakończy przetwarzanie, informuję o tym procedurę wywołująca i zwraca jej wynik. Komunikacja asynchroniczna może zwiększyć wydajność całego systemu, ale również moze uczynić go bardziej złożonym.
-	\item \textbf{poziom niezawodności} - komunikacja zdalna jest nie tylko wolniejsza, ale również bardziej zawodna niż lokalne wywołania funkcji. Kiedy procedura wywołują podprocedurę w obrębie jednej aplikacji, jest pewne, że ta podprocedura jest dostępna. Takie założenie nie musi być spełnione jeżeli chodzi o zdalne wywołania - zdalna aplikacja moze nie działać w chwili wywołania, albo połączenie z siecią może być chwilowo niedostępne.
-\end{itemize}
-
-Do wyboru mamy mnóstwo różnych technologii integracyjnych. Niektóre z nich są niezależne od platforym, inne zaś wymagają specyficznego systemu operacyjnego. Niektóre z nich sa darmowe i otwarte, inne zaś płatne i oparte na własnościowych patentach i protokołach. Każda z nich ma swoje plusy i minusy dlatego trzeba wybrać tą która najlepiej nada sie dla określonego celu. Dotatkową opcją jest tworzenie swojego systemu integracji od zera. Jednak z wzgledu na to iż takie rozwiązanie jest czasochłonne, a także celowość takiego podejścia stoi pod znakiem zapytania, to nie jest ono brane pod uwagę pod uwagę podczas projektowania systemu. 
-Dostępne rozwiązania można podzielić na cztery grupy: \cite{chappell2004}
-
-\begin{itemize}
-	\item serwery aplikacji
-	\item brokerzy EAI
-	\item własne rozwiązania oparte na  MOM
-	\item ESB
-\end{itemize}
-
-Pierwsze dwie grupy rozwiązań oparte są na modelu piasty i szprych (\textit{"Hub and Spoke"}) w modelu tym połączenia ułożone są na wzór koła rowerowego, w którym przebieg danych odbywa sie wzdłuż szprych połączonych z położoną w centrum piastą. Zaleta takiego rozwiązania jest scentralizowanie takich funkcji systemu jak: zarządzanie, routowanie wiadomości, logika biznesowa, które to są zaimplementeowane w węźle centralnym(piascie). Dzięki temu poszczególne węzły - szprychy są wyposażone tylko w niezbędną dla nich funkcjonalność. Kolejną zeletą jest ilość połączeń którą trzeba zrealizować w takim modelu. Przy założeniu, że tworzymy \begin{math}n\end{math} systemów i każdy z nich jest musi komunikować sie z resztą to suma połączeń które trzeba zrealizować wynosi \begin{math}n\end{math} - złożoność powstałej sieci wynosi \begin{math}O(n)\end{math}. Złożoność powstałej sieci połączeń jest znacznie lepszy niż przy połączeniach punk-punkt miedzy każdym systemem. Przy połączeniach system-system  ilość potrzebnych połączeń wynosi  \begin{math}\frac{n (n- 1)}{2}\end{math}, a złożoność takiej sieci połączeń wynosi  \begin{math}O(n^2)\end{math}. Wadami takiego rozwiązania jest skłaba skalowalność, istnienie pojedyńczego punktu w awarii w postaci węzła-piasty oraz wprowadzenie dodatkowego opóźnienia - jeden dodatkowy przeskok w porównani z komunikacją system-system).
-
-\setlength\fboxsep{20pt}
-\setlength\fboxrule{1pt}
-\begin{figure}[!h]
-	\centering
-	\fbox{\includegraphics[scale=0.35]{hub_and_spoke_model.png} }
-	\caption{Model "piasta i szprychy"}\label{fig:hub_and_spoke}
-\end{figure}
-
-Rozwiązania oparte na serwerach aplikacji upraszczają impementacje komunikacji ponieważ serwery te zazwyczaj są wyposarzone w obsługę standardowych protokołów takich jak HTTP czy SOAP. Minusem tych rozwiązań jest to, że logika integracyjna i logika biznesowa przeplatają sie nawzajem, a także poszczególne części systemu są dość mocno ze sobą powiązane co zmniejsza elastyczność systemu.
-
- Brokerzy EAI wypadają lepiej od serwerów aplikacji ponieważ rozdzielają logike integracyjną od logiki biznesowej. Jednak rozwiązanie to posiada wszystkie wady związane z modelem piasty i szprych na którym jest oparte.
-
-Rozwiązania oparte na MOM pozwalają na luźne łączenie poszczególnych systemów a także na asynchroniczną komunikację między nimi. Rozwiązania te zazwyczaj nie posiadają wysoko poziomowej warstwy abstrakcji nad logiką routowania co fragmentami wymusza programowanie na dość niskim poziomie. Z tego też powódu, rozwiązania te, podobnie jak rozwiązania oparte na serwerach aplikacji cierpią z powodu przeplatającecj sie logiki integracyjnej z logiką biznesową, co utrudnia utrzymywanie i rozwijanie takiego systemu.
-
-Ostatnia grupa rozwiązań jest oparta na ESB. Jest to najnowsza z wyżej opisanych technologii. Dzięki doświadczeniu zdobytemu przy użytkowaniu wyżej opisanych technologii, udało sie stworzyć technologię, która nie posiada tych samych wad co jej przeprzedniczki. Technologia ESB dostarcza mocno rozproszone środowisko, które pozwala na tworzenie dobrze skalowalnych systemów. Kolejnym plusem tej technologii jest oddzielenie logiki biznesowej od logiki integracyjnej takiej jak routing czy transformacja danych, dzięki czemu tworzone systemy są łatwiejsze w utrzymaniu i rozbudowie, a także nie są ściśle związane z jedną technologią. 
-
-\setlength\fboxsep{20pt}
-\setlength\fboxrule{1pt}
-\begin{figure}[!h]
-	\centering
-	\fbox{\includegraphics{podejscia_integracyjne.png} }
-	\caption{Różne podejścia integracyjne  \cite{chappell2004}}\label{fig:podejscia_integracyjne}
-\end{figure}
-
-
-\newpage
-\section*{Podsumowanie}
-W powyższym rozdziale zostały przedstawione różne podejście do problemu integracji aplikacji. Z powódu dużej ich różnorodności, ciężko stwierdzić, że któreś z podejść jest najlepsze. Decyzja o wyborzo konkretnej techlnologii powinna być dopasowana do rozwiązywanego problemu. Dzięki opisaniu wad i zalet każdego z podejścia można lepiej wybrać to które najlepiej będzie odpowiadać stawianym wymaganiom. Z pośród 4 wyzej opisanych podejść, autorzy wybrali podejście ESB jako najlepiej spełniające wymagania stawiane tworzonemu systemowi. Jeżeli chodzi o silniki mowy, autorzy pracy nie chcą skupiać sie na jednym  konkretnym, lecz stworzyć system, który pozwoli w łatwy sposób na integracje dowolnego silnika syntezy mowy. Powyższy rodział daje solidne podstawy do rozpoczęcia projektowania i implementacji systemu z godnie z wybranym podejściem.
 
 
 
