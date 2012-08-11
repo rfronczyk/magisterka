@@ -16,7 +16,7 @@
 
 %: ----------------------- contents from here ------------------------
 
-Rozdział ten podzielony jest na dwie części. Celem pierwszej jest zdefiniowanie pojęcia przetwarzania mowy, natomiast celem drugiej jest analiza różnych, możliwych sposobów integracji.
+Rozdział ten podzielony jest na trzy części. Celem pierwszej jest zdefiniowanie pojęcia przetwarzania mowy, celem drugiej jest analiza różnych, możliwych sposobów integracji natomiast celem częsci trzeciej jest opisanie jak specyficzna dziedzina, jaką jest przetwarzanie mowy, wpływa na wybór sposobu integracji.
 
 \subsection{Przetwarzanie mowy}
 Mowa jest naturalnym, wybranym przez człowieka, w procesie ewolucji, sposobem komunikacji. Jej niewątpliwe zalety to:
@@ -50,6 +50,37 @@ Stosując kryterium drugie wyrózniamy następujące grupy systemów:
 	\item Rozpoznające łączone słowa - podobne do systemów z grupy powyżej, charakteryzują się znacznie większą czułoscią na przerwy pomiędzy kolejnymi słowami czyli umożliwiają osobnym wypowiedziom występować tylko, z minimalnymi przerwami pomiędzy nimi
 	\item Rozpoznające mowę ciągłą -  systemy z tej grupy umożliwiają użytkownikowi mówienie w sposób niemal naturalny w czasie gdy one rozpoznają zawartość. Są to najnowsze i najbardziej zaawansowane systemy.
 \end{itemize}   
+Synteza mowy jest sztuczną produkcją ludzkiej mowy. Syntezatory mowy, czyli systemy komputerowe, które dokonują syntezy można podzielić na grupy stosując dwa różne kryteria:
+\begin{itemize}
+	\item sposób implementacji
+	\item sposób tworzenia mowy
+\end{itemize}
+Systemy należące do pierwszej grupy można podzielić na:
+\begin{itemize}
+	\item implementowane programowo
+	\item implementowane sprzętowo
+\end{itemize}
+Kategoria pierwsza jest bardziej liczna, łatwiej dostępna, tańsza przez co też dużo bardziej popularna. Dużą zaletą aplikacji należących do pierwszej grupy jest ich uniwersalność, jej przestawiciele  mogą być łatwo wykorzystani do różnych celów takich jak:
+\begin{itemize}
+	\item lektorzy filmowi/e-książek/emaili
+	\item poczty głosowe
+	\item pomoc techniczna
+\end{itemize}
+Najpopularniejsze syntezatory mowy dostępne na rynku to:
+\begin{itemize}
+	\item IvonaTTS
+	\item TextAloud
+	\item Loquendo
+\end{itemize}
+Systemy należące do kategorii drugiej (implementowane sprzętowo) charakteryzują się dużo większą wydajnością i szybkością działania. Najlepsze z nich są w stanie generować mowę w czasie rzeczywistym. 
+Ze względu na sposób tworzenia mowy, systemy można podzielić na:
+\begin{itemize}
+	\item Syntezatory artykulacyjne stosują metodę polegającą na kontrolowaniu artykulatorów mowy takich jak szczęka, język, policzki itd. Systemy te próbują modelować mechaniczne ruchy artykulatorów.
+	\item Syntezatory korzystające z metody konkatenacyjnej korzystają z dużej bazy oznaczonych próbek prawdziwego głosu lektora, proces syntezy sprowadza się do wybranie, modyfikacji i konkatenacji tych nagrań. 
+	\item Syntezatory alofoniczne, w czasie działania składają potrzebne słowa z dźwięków elementarnych przechowywanych w pamięci i wywoływanych w odpowiedniej chwili. 
+\end{itemize}
+
+
 
 
 \subsection{Sposoby integracji}
