@@ -50,7 +50,7 @@ Stosując kryterium drugie wyrózniamy następujące grupy systemów:
 	\item Rozpoznające łączone słowa - podobne do systemów z grupy powyżej, charakteryzują się znacznie większą czułoscią na przerwy pomiędzy kolejnymi słowami czyli umożliwiają osobnym wypowiedziom występować tylko, z minimalnymi przerwami pomiędzy nimi
 	\item Rozpoznające mowę ciągłą -  systemy z tej grupy umożliwiają użytkownikowi mówienie w sposób niemal naturalny w czasie gdy one rozpoznają zawartość. Są to najnowsze i najbardziej zaawansowane systemy.
 \end{itemize}   
-Synteza mowy jest sztuczną produkcją ludzkiej mowy. Syntezatory mowy, czyli systemy komputerowe, które dokonują syntezy można podzielić na grupy stosując dwa różne kryteria:
+Synteza mowy jest sztuczną produkcją ludzkiej mowy. Syntezatory, czyli systemy komputerowe, które dokonują syntezy można podzielić na grupy stosując dwa różne kryteria:
 \begin{itemize}
 	\item sposób implementacji
 	\item sposób tworzenia mowy
@@ -79,6 +79,21 @@ Ze względu na sposób tworzenia mowy, systemy można podzielić na:
 	\item Syntezatory korzystające z metody konkatenacyjnej korzystają z dużej bazy oznaczonych próbek prawdziwego głosu lektora, proces syntezy sprowadza się do wybranie, modyfikacji i konkatenacji tych nagrań. 
 	\item Syntezatory alofoniczne, w czasie działania składają potrzebne słowa z dźwięków elementarnych przechowywanych w pamięci i wywoływanych w odpowiedniej chwili. 
 \end{itemize}
+Optyczne rozpoznawanie tekstu, dużo częściej występujące w wersji skróconej OCR, to mechaniczna lub elektroniczna konwersja obrazu pisma ręcznego, maszynowego lub wydrukowanego tekstu do postaci tekstu przechowywanego w pamięci komputera. Podobnie jak w przypadku syntezatorów mowy systemy OCR można podzielić na:
+\begin{itemize}
+	\item implementowane programowo
+	\item implementowane sprzętowo
+\end{itemize}
+Niezależnie od implementacji sposób ich działania oraz algorytm pozostają podobne. Podstawowe kroki jakie system musi podjąc w celu rozpoznania tekstu to:
+\begin{enumerate}
+	\item Wczytanie obrazu jako mapy bitowej z podanego źródła.
+	\item Rozpoznanie najważniejszych cech obrazu takich jak rozdzielczość i inwersja. Wiele algorytmów spodziewa się kolorów i rozmiaru czcionki w ramach predefiniowanego przedziału dlatego też obraz musi być przeskalowany i znormalizowany przed dalszą obróbką. Na tym etapie rozpoznawane również są pozycje i typy najważniejszych części obrazu.
+	\item Wiele algorytmów wymaga by obraz był dwu kolorowy, dlatego kolorowy albo szary obraz musi być przekonwertowany do biało czarnej postaci, to bardzo istotny krok algorytmu ponieważ błędy w tej części mogą powodować poważne problemy w dalszych etapach.
+	\item Kolejnym ważnym krokiem jest usunięcię wszystkich podkreśleń obramowań itd. w dalej kolejności umożliwia to rozpoznanie linii tekstu co jest jednym z kluczowych kroków poprawnego alborytmu.
+	\item Po podzieleniu tekstu na linie, algorytm stara się rozpoznać błedne znaki, to znaczy takie które stykają się z innymi albo są podzielone na kilka części (np. w wyniku konwersji do bialo czarnej postaci), i je dopasować do znanej mu puli.
+	\item Ostatnim i najważniejszym krokiem jest rozpoznanie pojedynczych znaków, sukces tego kroku zależy od poprzednich etapów. Najpierw każdemu znakowi próbuje się dopasować kod znaku, czasami nie jest możliwe dopasowanie tylko jednego kodu, np. w przypadku litery "\textbf{I}" większość algorytmów rozpona ją jako "\textbf{I}", "\textbf{|}", "\textbf{1}" lub "\textbf{i}". W takim przypadku należy skorzystać ze słownika, posiadanie bogatej bazy słów, może, w sposób znaczący poprawić efektywność algorytmu.
+\end{enumerate}
+Nie jest to kompletna lista kroków, istnieje dużo innych mniejszych lub większych etapów, jednak każdy z wymienionych jest bardzo ważny, cały proces nie zakończyc się sukcesem jeżeli zawiedzie którykolwiek z nich. 
 
 
 
