@@ -170,7 +170,13 @@ EAI brokers wypadają lepiej od serwerów aplikacji ponieważ rozdzielają logik
 
 Rozwiązania bazujące na MOM pozwalają na luźne łączenie poszczególnych systemów a także na asynchroniczną komunikację między nimi. Rozwiązania te zazwyczaj nie posiadają wysoko poziomowej warstwy abstrakcji nad logiką routowania co fragmentami wymusza programowanie na dość niskim poziomie. Z tego też powódu, rozwiązania te, podobnie jak rozwiązania oparte na serwerach aplikacji cierpią z powodu przeplatającecj sie logiki integracyjnej z logiką biznesową, co utrudnia utrzymywanie i rozwijanie takiego systemu.
 
-Ostatnia grupa rozwiązań jest oparta na ESB. Jest to zdecydowanie najnowsza z wyżej opisanych technologii. Dzięki doświadczeniu zdobytemu przy użytkowaniu poprzedników, udało sie stworzyć technologię, która nie posiada tych samych wad. Technologia ESB dostarcza mocno rozproszone środowisko, które pozwala na tworzenie dobrze skalowalnych systemów. Kolejnym plusem tej technologii jest oddzielenie logiki biznesowej od logiki integracyjnej takiej jak routing czy transformacja danych, dzięki czemu tworzone systemy są łatwiejsze w utrzymaniu i rozbudowie, a także nie są ściśle związane z jedną technologią. 
+Ostatnia grupa rozwiązań jest oparta na ESB. Jest to zdecydowanie najnowsza z wyżej opisanych technologii. Dzięki doświadczeniu zdobytemu przy użytkowaniu poprzedników, udało sie stworzyć technologię, która nie posiada tych samych wad. Ogólnie rzecz ujmując ESB dostarcza warstwę abstrakcji opartą na implementacji biznesowego systemu wymiany wiadomości, dzięki temu pozwala wykorzystać zalety wiadomości bez pisania dodatkowego kodu. W przeciwieństwie do bardziej klasycznego podejścia (EAI) opartego o architekturę hub and spoke podstawa paltformy jest zbudowana z funkcji bazowych podzielonych na części składowe które mogą być osadzane w jednolitym jak i rozproszonym środowisku wzajemnie ze sobą współpracując. Szkielet ESB działa w oparciu o asynchroniczne wiadomości, wspiera je, dostarczając routing i inteligentne transformacje w celu uzyskania niezawodności. Serwisy wchodzące w skład ESB do swojego działanai wykoszystują JMS lub standard wiadomości dla web serwisów. Najważniejszą cechą ESB jest fakt, iż po wpięciu aplikacji przez ściśle zdefiniowany, bazujący na standardach interfejs, uzyskuje ona dostęp do całej infrastruktury i serwisów udostpępnianych przez ESB a także do każdej innej, już działającej aplikacji. W chwili obecnej dostępnych jest kilka różnych implementacji ESB, większość z nich udostępnia podobne serwisy więc ciężko je stosować jako kryterium, lepszym sposobem by rozróżnić implementacje jest zastosowanie następującej miary:
+\begin{itemize}
+	\item wspierane środowisko działania/osadzania
+	\item model kontenera - bazujący na standardach czy własnościowy
+	\item powiązanie z innymi elementami architektury
+	\item zależności
+\end{itemize}
 
 \setlength\fboxsep{20pt}
 \setlength\fboxrule{1pt}
