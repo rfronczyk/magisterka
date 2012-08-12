@@ -35,7 +35,7 @@ Wraz z rozwojem cywylizacyjnym, ewoluował także sposób komunikacji i jej form
 	\item rozpoznawanie języka
 \end{itemize} 
 \subsection{Rozpoznawanie mowy}
-Rozpoznawanie mowy jest to technologia umożliwiająca komputerowi wyposażonemu w odpowiednie urządzenie na przykład mikrofon interpretować ludzką mowę i zamieniać ją na tekst. Systemy oferujące przetwarzanie mowy można rozróżniąc według dwóch różnych kryteriów:
+Rozpoznawanie mowy jest to technologia umożliwiająca komputerowi wyposażonemu w odpowiednie urządzenie na przykład mikrofon interpretować ludzką mowę i zamieniać ją na tekst \cite{douglas2002}. Systemy oferujące przetwarzanie mowy można rozróżniąc według dwóch różnych kryteriów:
 \begin{itemize}
 	\item sposobu uczenia się
 	\item sposobu rozpoznawania mowy
@@ -46,7 +46,7 @@ Stosując pierwsze kryterium, aplikacje można podzielić na
 	\item niezależne od lektora
 \end{itemize}
 Systemy należące do pierwszej grupy uczą się poprzez sesje w czasie których lektor czyta porcje tekstu, aplikacje analizują głos, ton oraz tępo  w efekcie czego mogą dostosować się do danego lektora w efekcie czego uzyskują potem o wiele dokładniejsze wyniki, w przedziale 95-100%, oczywiście przy założeniu, że lektor ma podobny głos.  Systemy należące do drugiej grupy uczy się przy wykorzystaniu różnych lektorów. Uzyskiwane przez nie wyniki rzadko przekracają 75% jednak są dużo bardziej stabilne, to znaczy nie zależnie od lektora wyniki są w tej okolicy. 
-Stosując kryterium drugie wyrózniamy następujące grupy systemów:
+Stosując kryterium drugie wyrózniamy następujące grupy systemów \cite{gaikwad2010} :
 \begin{itemize}
 	\item Rozpoznające izolowane słowa - są to dość proste systemy, posiadające dwa stany: nasłuchujący i nie nasłuchujący,  wymagające ciszy na początku i na końcu każdej wypowiedzi,  akceptują jedno słowo lub krótką wypowiedź 
 	\item Rozpoznające łączone słowa - podobne do systemów z grupy powyżej, charakteryzują się znacznie większą czułoscią na przerwy pomiędzy kolejnymi słowami czyli umożliwiają osobnym wypowiedziom występować tylko, z minimalnymi przerwami pomiędzy nimi
@@ -88,7 +88,7 @@ Optyczne rozpoznawanie tekstu, dużo częściej występujące w wersji skrócone
 	\item implementowane programowo
 	\item implementowane sprzętowo
 \end{itemize}
-Podobnie jak przy syntezatorach zaletą implementacji sprzętowej jest szybkość oraz wydajność co umożliwia pracę w czasie rzeczywistym. Niezależnie od implementacji, sposyb ich działania oraz algorytmy pozostają podobne. Podstawowe kroki jakie system musi podjąc w celu rozpoznania tekstu to:
+Podobnie jak przy syntezatorach zaletą implementacji sprzętowej jest szybkość oraz wydajność co umożliwia pracę w czasie rzeczywistym. Niezależnie od implementacji, sposyb ich działania oraz algorytmy pozostają podobne. Podstawowe kroki jakie system musi podjąc w celu rozpoznania tekstu to \cite{noor2005} :
 \begin{enumerate}
 	\item Wczytanie obrazu jako mapy bitowej z podanego źródła.
 	\item Rozpoznanie najważniejszych cech obrazu takich jak rozdzielczość i inwersja. Wiele algorytmów spodziewa się kolorów i rozmiaru czcionki w ramach predefiniowanego przedziału dlatego też obraz musi być przeskalowany i znormalizowany przed dalszą obróbką. Na tym etapie rozpoznawane również są pozycje i typy najważniejszych części obrazu.
@@ -120,11 +120,11 @@ system nauczy się, że:
 \end{enumerate} 
 Następnie aplikacja może zastosować w ten sposób nabytą wiedzę w bardziej zaawansowanych przypadkach.
 \subsection{Rozpoznawanie języka}
-Rozpoznawanie języka to proces którego celem jest stwierdzenie w jakim języku naturalnym jest podany na wejście tekst. Tradycyjne podejście, stosowane np. w księgarniach, opiera się na ręcznym zidentyfikowaniu najczęściej występujących słów i liter które są charakterystyczne dla danego języka i sprawdzenie ich w odpowiednich tabelach. Implementacja algorytmów działących na podobnej zasadzie jest możliwa jednak jest to rozwiązanie mało efektywne. Obecnie stosuje się kilka różnych podejść bazujących na statystyce:
+Rozpoznawanie języka to proces którego celem jest stwierdzenie w jakim języku naturalnym jest podany na wejście tekst \cite{adams1997} . Tradycyjne podejście, stosowane np. w księgarniach, opiera się na ręcznym zidentyfikowaniu najczęściej występujących słów i liter które są charakterystyczne dla danego języka i sprawdzenie ich w odpowiednich tabelach. Implementacja algorytmów działących na podobnej zasadzie jest możliwa jednak jest to rozwiązanie mało efektywne. Obecnie stosuje się kilka różnych podejść bazujących na statystyce:
  \begin{itemize}
 	\item Bardzo prostą techniką jest porównywanie jakości kompresji badanego tekstu z jakością kompresji tekstów w znanych językach, im bardziej zbliżone wyniki tym większe prawdopodobieństwo, że teksty są w tym samym języku. Podejście to nazywa się miarą odległości wzajemnej informacji.
 	\item Bardziej zaawansowanym algorytmem jest ten zaproponowany przez Panów Cavnar'a i Trenkle'a w 1994 roku pod nazwą: "N-Gram-Based Text Categorization". Najpierw należy utworzyć znakowy n-gramowy model języka na podstawie materiałów treningowych dla każdego z języków które mają być obsługiwane. Następnie dla każdego tekstu którego język ma być zidentyfikowany, tworzy się podobny model i porównuje z modelami bazowymi. Im bardziej są do siebie podobne tym więszka szansa, że to ten sam język. Problematyczne w tym podejściu są języki dla których nie można skonstruować takiego modelu. 
-	\item Rozszerzeniem poprzedniego algorytmu jest technika zaproponowa przez Panów Rehurek i Kolkus. Największymi zaletami ulepszonej wersji jest fakt, że nie zawodzi ona w sytuacji w które próbka tekstu jest napisana w wielu językach, a także nie stanowi dla niej problemu rozróżnianie języków należących do tej samej rodziny (np. polski i słowacki). 
+	\item Rozszerzeniem poprzedniego algorytmu jest technika zaproponowa przez Panów Rehurek i Kolkus \cite{rehurek2009} . Największymi zaletami ulepszonej wersji jest fakt, że nie zawodzi ona w sytuacji w które próbka tekstu jest napisana w wielu językach, a także nie stanowi dla niej problemu rozróżnianie języków należących do tej samej rodziny (np. polski i słowacki). 
 \end{itemize} 
 Jak widać przetwarzanie mowy samo w sobie jest bardzo obszernym i skomplikowanym tematem, w skład którego wchodzi wiele różnych procesów które można zintegrować tworząc efektywne i bardzo funkcjonalne systemy.
 
