@@ -190,6 +190,55 @@ Ostatnia grupa rozwiązań jest oparta na ESB. Jest to zdecydowanie najnowsza z 
 
 \section{Inegracja systemów przetwarzania mowy}
 
+Podrozdział ten ma na celu przedstawić jakie wymagania można postawić przed przykładową aplikacją integrującą systemy przetwarzania mowy i jak wpłyną one na sposób integracji. Aby zdefiniować wymagania można rozważyć przykładową aplikację kliencką która mogłaby być zbudowana w oparciu o taki system. Podstawowe funkcje które taka aplikacja realizuje mogą być następujące:
+\begin{itemize}
+	\item zamiana pliku graficznego będącego zdjęciem tekstu na plik tekstowy
+	\item synteza tekstu
+	\item tłumaczenie tekstu
+	\item rozpoznanie języka tekstu
+	\item zamiana mowy na tekst
+\end{itemize}
+Oczywiście każde z wyżej wymienionych zadań może zostać zrealizowane osobno przez odpowiednie aplikacje. Dlatego, gotowy system powinien być w stanie realizować każdą z nich osobna jak i każdą możliwą i sensowną kombinację. Dobrym przykładem takiej złożonej funkcjonalności jest zamiana pliku w formacie graficznym, będącym zdjęciem np. strony ksiązki(napisanej w nieznanym języku) na dźwięk w jakimś innym, konkretnym, zdefiniowanym przez użytkownika języku. Aby to osiągnąć należy poinformować system o tym z których serwisów należy skorzystać i w jakiej koleności je wywołać. Oczywiście idealnym i na szczeście możliwym rozwiązaniem jest ukrycie całej implementacji za jednym prostym interfersjem. Proponowanym rozwiązaniem tego problemu jest plik sterujący w formacie XML. Przykładowa struktura takiego pliku mogłaby wyglądać następująco:
+ \begin{itemize}
+	\item \textless speechProcessingInstructions\textgreater - podstawowy element, będący korzeniem dla całego pliku
+	\item \textless readImage\textgreater - wystąpienie tego elementu oznacza, że na wejściu należy oczekiwać pliku graficznego, zawierającego tekst
+	\item \textless identifyLanguage\textgreater - element oznaczający konieczność użycia serwisu rozpoznającego język
+	\item \textless translate\textgreater - element wymuszający użycie translatora, jego dziećmi są następujące elementy:
+		 \begin{itemize}
+			\item \textless inputLanguage\textgreater - element, którego zastosowaniem jest zdefiniowane języka tekstu wejściowego, jeżeli operacją poprzednią  było rozpoznanie języka element ten zostanie pominięty
+			\item \textless outputLanguage\textgreater - element, którego zastosowaniem jest zdefiniowane języka tekstu docelowego
+		\end{itemize}
+	\item \textless performTTS\textgreater - element oznaczający konieczność wywołania serwisu odpowiadającego za syntezę mowy
+	\item \textless performASR\textgreater - wystąpienie tego elementu oznacza użycie serwisu odpowiedzialnego  za rozpoznawanie mowy
+\end{itemize}
+Zastosowanie takiego formatu ma dużo zalet, z czego najważniejsze to:
+\begin{itemize}
+	\item prostota
+	\item duża ilość narzędzi do pracy z XML
+	\item wysoki poziom "zadomowienia" tego formatu w środowisku SOA
+	\item czytelność dla człowieka
+	\item łatwa rozbudowa
+\end{itemize}
+Aby zrealizować opisany wyżej scenariusz należałoby wysłać następujący plik XML:
+
+\setlength\fboxsep{20pt}
+\setlength\fboxrule{1pt}
+\begin{figure}[!h]
+	\centering
+	\fbox{\includegraphics{sampleXML.png} }
+	\caption{Przykładowy plik XML}
+\end{figure}
+
+Podsumowując, zakładając istnienie tak działającego systemu, jedyne zadania jakie musiałaby spełniać aplikacja kliencka:
+\begin{itemize}
+	\item umożliwić użytkownikowi łatwe wygenerowanie pliku sterującego XML
+	\item opcjonalne (zależnie od scenariusza) pobranie pliku graficznego lub tekstoweg i przesłanie go do systemu
+	\item pobranie strumienia dźwięku i przesłanie go do systemu
+	\item przekazać użytkownikowi efekt działania systemu (np. plik z przetlumaczonym tekstem, plik dźwiękowy, strumień dzwięku itd.)
+\end{itemize}
+Jak widać są to rzeczy dość proste i możliwe do bardzo szybkiej implementacji, co więcej można pokusić się o rozbudowanie pliku sterującego o inne, bardziej wyspecjalizowane funkcje, na przykład można rozbudować schemat xml o tag \textless rssSource\textgreater który sprawi, że aplikacja zamiast pliku wejściowego pobierze wiadomości ze źródła RSS i na nich wywoła funkcje udostępniane przez serwisy. Łatwo też wyobrazić sobie inne zastosowania lub możliwości rozbudowy. \\
+Biorąc pod uwagę proponowane serwisy, format danych wejściowych i wymagania stawiane przed platformą zdecydowanie najlepszym sposobem integracji wydaje się wykorzystanie jednej z istniejących implementacji ESB. Wszystkie one zapewniają routing, dużo różnych endpointów, wsparcie dla aplikacji pisanych przy użyciu Springa i wiele innych rzeczy które można wykorzystać nie tylko przy implementacji podsatawowej wersji systemu ale także przy jego rozbudowie. 
+
 -------------------------------------%%-----------------------------------------------------\\
 
 %: ##################### HUB and Spoke #########################################
