@@ -225,7 +225,7 @@ Aby zrealizować opisany wyżej scenariusz należałoby wysłać następujący p
 \setlength\fboxrule{1pt}
 \begin{figure}[!h]
 	\centering
-	\fbox{\includegraphics{sampleXML.png} }
+	\fbox{\includegraphics[scale=0.8]{sampleXML.png} }
 	\caption{Przykładowy plik XML}
 \end{figure}
 
@@ -236,112 +236,9 @@ Podsumowując, zakładając istnienie tak działającego systemu, jedyne zadania
 	\item pobranie strumienia dźwięku i przesłanie go do systemu
 	\item przekazać użytkownikowi efekt działania systemu (np. plik z przetlumaczonym tekstem, plik dźwiękowy, strumień dzwięku itd.)
 \end{itemize}
-Jak widać są to rzeczy dość proste i możliwe do bardzo szybkiej implementacji, co więcej można pokusić się o rozbudowanie pliku sterującego o inne, bardziej wyspecjalizowane funkcje, na przykład można rozbudować schemat xml o tag \textless rssSource\textgreater który sprawi, że aplikacja zamiast pliku wejściowego pobierze wiadomości ze źródła RSS i na nich wywoła funkcje udostępniane przez serwisy. Łatwo też wyobrazić sobie inne zastosowania lub możliwości rozbudowy. \\
-Biorąc pod uwagę proponowane serwisy, format danych wejściowych i wymagania stawiane przed platformą zdecydowanie najlepszym sposobem integracji wydaje się wykorzystanie jednej z istniejących implementacji ESB. Wszystkie one zapewniają routing, dużo różnych endpointów, wsparcie dla aplikacji pisanych przy użyciu Springa i wiele innych rzeczy które można wykorzystać nie tylko przy implementacji podsatawowej wersji systemu ale także przy jego rozbudowie. 
-
--------------------------------------%%-----------------------------------------------------\\
-
-%: ##################### HUB and Spoke #########################################
-\subsection {Podejscie zorientowane na usługi}
- 
-
-
-
-\newpage
+Jak widać są to rzeczy dość proste i możliwe do bardzo szybkiej implementacji, co więcej można pokusić się o rozbudowanie pliku sterującego o inne, bardziej wyspecjalizowane funkcje, na przykład można rozbudować schemat xml o tag \textless rssSource\textgreater który sprawi, że aplikacja zamiast pliku wejściowego pobierze wiadomości ze źródła RSS i na nich wywoła funkcje udostępniane przez serwisy. Łatwo też wyobrazić sobie inne zastosowania lub możliwości rozbudowy. 
 \section*{Podsumowanie}
-W powyższym rozdziale zostały przedstawione różne podejście do problemu integracji aplikacji. Z powódu dużej ich różnorodności, ciężko stwierdzić, że któreś z podejść jest najlepsze. Decyzja o wyborzo konkretnej techlnologii powinna być dopasowana do rozwiązywanego problemu. Dzięki opisaniu wad i zalet każdego z podejścia można lepiej wybrać to które najlepiej będzie odpowiadać stawianym wymaganiom. Z pośród 4 wyzej opisanych podejść, autorzy wybrali podejście ESB jako najlepiej spełniające wymagania stawiane tworzonemu systemowi. Jeżeli chodzi o silniki mowy, autorzy pracy nie chcą skupiać sie na jednym  konkretnym, lecz stworzyć system, który pozwoli w łatwy sposób na integracje dowolnego silnika syntezy mowy. Powyższy rodział daje solidne podstawy do rozpoczęcia projektowania i implementacji systemu z godnie z wybranym podejściem.
-
-Rozdział ten jest podzielonu na dwie części. W Pierwszej, analizujemy dostępne silniki syntezy mowy - dostępne rodzaje, ich cechy, a takze wpływ jaki one mogą mieć na powstające systemy. W części drugiej przenalizujemy różne podejscia integracyjne. Przedyskutujemy ich wady i zalety, a także przedstawimy przykładowe architektury dla każdego podejścia. 
-
-\section {Analiza dostępnych silników syntezy mowy}
-
-Jako, że celem naszej pracy nie jest stworzenie własnego syntezatora mowy, lecz stworzenie systemów, które to będą wykorzystywać syntezatory mowy w celu implementacji swojej logiki biznesowej, kolejnym krokiem jest analiza dostępnych na rynku rozwiązań. 
-
-Dostępne syntezatory są charakteryzowane przez następujące cechy:
-\begin{itemize}
-	\item sposób dostępu
-	\item ilość obsługiwanych języków
-	\item jakość generowanego dźwięku
-	\item cena
-	\begin{itemize}
-		\item koszty początkowe(cena zakupu)
-		\item koszty użytkowania (opłata za każde użycie)
-	\end{itemize}
-	\item perspektywy rozwoju
-	\item łatwość użycia
-\end{itemize}
-
-Większość z tych cech jest jasna i nie wymaga dalszego opisu. Jedyną cechą która nie dokońca przemawia za siebie jest sposób dostępu. Sposób dostępu określa w jaki sposób możemy uzywać danego syntezatora, można powiedzieć, że definiuję interfejs jaki dany syntezator posiada. Pod względem sposobu dostępu, syntezatory mowy dzielimy następująco:
-
-\begin{itemize}
-	\item syntezatory zintegrowane  - rozwiązania wbudowane w urządzenię, pozawalające na synteze tylko we wcześniej przewdizianych przez producenta scenariuszach - 
-		\begin{itemize}
-			\item  Amazon Kindle
-			\item  PocketBook eReader Pro
-		\end{itemize}
-	\item syntezatory stacjonarne - rozwiązania pozwalające na generację dźwięku w obrębie jednego urządzenia, zazwyczaj dostępne jako odrębne aplikacje lub biblioteki
-		\begin{itemize}
-			\item Festival Speech Synthesis System
-			\item FreeTTS
-			\item Loquendo Mobile
-			\item Loquendo Multimedia
-			\item Android TTS
-		\end{itemize}
-	\item syntezatory serwerowe - gotowe rozwiązania serwerowe, wykorzystujące specjalistyczne protokoły w celu zwiększenia wydajności 
-		\begin{itemize}
-			\item IVONA Telecom
-			\item IVONA Speech Server
-			\item Loquendo Speech Server
-		\end{itemize}
-	\item sytezatory SaaS
-		\begin{itemize}
-			\item IVONA Speech Cloud
-		\end{itemize}
-\end{itemize}
-
-Sposób dostępu jednoznacznie wyznacza stopień trudności integracji syntezatora w środowisku SOA. Na początku listy znajdują się silniki syntezy mowy, które ciężko zastosować do tworzenia rozbudowanych systemów(rozwiązania zintegrowane), natomiast na końcu rozwiązania który z łatwością można wykorzystać do budowanie wszelakiego rodzaju systemów (rozwiązania SaaS).
-
-Podjęcię decyzji, którego syntezatora będziemy używać, jak każda inna decyzja dotycząca architekury systemu, nie jest łatwa. Dodatkowo, zdecydowanie sie na jedno rozwiązanie bardzo często wymusi na nas wykorzystanie konkretnych technologii (np IVONA Telecom - MRCP), a także może nas pozbawić możliwości zmiany decyzji w przyszłości (przez brak standardów, wymiana jednego rozwiązania na inne moze wymagać dużego nakładu pracy).
-
-\section {Architektura}
-
-Znając wymagania które muszą spełniać przedstawione systemy, a także dostępne możliwości jeżeli chodzi o silniki syntezy mowy,  mozemy przejść do projektowania architektóry tych systemów.
-
-%: ##################### AUTONOMICZNE SYSTEMY #########################################
-\subsection {Autonomiczne systemy}
-Pierwszym proponowanym podejściem jest podejście polegające na stworzeniu wyspecjalizowanych autonomicznych systemów dla każdego problemu z osobna. Na pierwszy rzut oka, podejście to jest sprzeczne z tematem pracy, ponieważ nie występuje w nim żadna integracja. Jednak po spojrzeniu na problem z perspektywy systemu wykorzystującego multimedia - systemy wykorzystujące synteze mowy zaliczają sie do tego typu systemów - podejście to jaka najbardziej trzeba poddać rozważeniu.
-
-Systemy multimedialne charakteryzują sie specjalnymi wymaganiami w porównaniu do reszty systemów. Najważniejsze z nich to jak najmniejsze opuźnienie. Opuźnienia maja bardzo duży wpływ na to jak uzytkownicy odbierają daną aplikacje system. Weźmy na przykład system telekonferencji. Duże opuźnienia w takim systemnie nie tyle utrudniają co praktycznie uniemożliwiają korzystanie z takiego system. Pierwszy stopień opóźnień w prowadza sieć internet w której to takie systemy działaj. Czas propagacji sygnału, przepustowość sieci - wszystkie te cechy wpływają na opuźnienie. Z powodu wysokiego stopnia złożoności systemy te same z siebie wprowadzają pewien dodatkowy stopień opuźnień. U źródła danych zazwyczaj następuję kopresja danych i kodowanie do odpowniedniego formatu. Po drodze do użytkownika końcowego może nastąpić transkodowanie z jednego formatu na drugi, nawet wielokrotnie. Na końcu, u uzytkownika końcowego, następuje proces dekodowania i dekompresji. Każdy z tych procesów czy to u źródła danych , czy u użytkownika końcowego wymaga poświęcenia odpowiedniej ilości czasu. 
-
-Z wyżej wymienionych powodów, ważne jest aby w systemach multimedialnych nie wprowadzać dodatkowych, niepotrzebnych opóźnien, a także, żeby nie zwiększać objętości danych. Podejście autonomicznych systemów pozwala nam na używanie specjalistycznych rozwiązań, które to pomogą nam osiągnać nasz cel biznesowy, a tażke spełnienie wymagań stawianych systemom multimedialnym. W podejściu tym, część odpowiadająca za logike biznesową oraz silnik syntezy mowy stanowią jeden autonomiczny system. Bardzo często działają one na jednym wspólnym urządzeniu, badź we wspólnej sieci wewnętrznej, dzięki czemu komunikacją miedzy nimi jest szybka i mniej zawodna. Komunikacja zachodzi bezpośrednio między wymienionymi składnikami systemu, bez zadnych elementów pośrednich. Dodatkowo rozwiązanie takie pozwla w pełni wykorzystać specyfike danej aplikacji, np aplikacja na telefon może używać wbudowanych silników syntezy mowy, dzięki czemu nie jest uzaleźniona od dostępu do internetu - oczywiście  kosztem jakości generowanego dźwięku. 
-
-
-Wadą takiego rozwiązania jest nakład pracy potrzebny do stworzenia wszystkich systemów. Każdy system trzeba budować od podstaw. Wiedz zdobyta przy tworzeniu poprzednich systemów może okazać sie mało użyteczna, poniewać każdy system może być tworzony z myślą o innym silniku syntezy mowy,  z wykorzystaniem innych technologii. Kolejną wadą jest fakt że silnik mowy jest częścią systemu, przez co cały system jest mocno zaleźny od danego silnia. Jeżleli nagle nagle serwer syntezy mowy przestanie działać, cały system jest bezużyteczny. Problematyczna jest także wymiana silnika na inny. Przez mocne powiązanie podmiana silnika może wymagać dużego nakładu pracy. 
-
-Ważna kwestią do przemyslenia, podczas projektowania jest też kwestia rozbudowy systemu. Dotychczas poruszaliśmy tylko temat sytezy mowy,  jednak jeżeli myślimy o stworzeniu w pełni wartościowego produktu, musimy zastanowić sie nad rozszerzeniem naszego systemu o dodatkową funkcjonalność taką jak:
-
-\label{list:uslugi}
-\begin{itemize}
-	\item autentykacja
-	\item autoryzacja
-	\item cachowanie
-	\item księgowanie
-	\item monitoring
-\end{itemize}
-
-Jeżeli uznamy, że nasze systemy potrzebują którejś z wymienionych funkcjonalności mamy do wyboru dwa wyjścia implementacje tych funckjonalności od zera, albo skorzystanie z gotowych, dostępnych usłgu dostarczających takich funkcjonalności. Wypisane wyżej funkcjonalności są same w sobie dość złożonymi problemami wymagajacymi dużych nakładów pracy, dlatego lepiej odrazu skupić sie na dostępnych usługach, które to są wykorzstywane przez wielu użytkowników, przez co mozemy być bardziej pewnie co do poprawności ich działania. Przy podejściu utonomicznych systemów, będzeimy musili osobno zintegrować każdy system, z usługami których on wymaga. I tak przy założeniu, że tworzymy \begin{math}n\end{math} systemów, i kazdy z nich będzie korzystał z \begin{math}m\end{math} usług to liczba połączeń system-usługa, które musimy stworzyć wynosi \begin{math}n*m\end{math}. Dodanie nowego systemu korzystającego ze wszystkich dostępnych usług wiąże sie z tworzeniem dodatkowych  \begin{math}m\end{math} połączeń, natomiast dodanie nowej usługi wykorzystywanej przez wszystkie systemy z dodaniem \begin{math}n\end{math} nowych połączeń. Jak widać ilość pracy rośnie liniowo wraz z liczbą systemów i wraz z liczbą usług którtych te systemy chciały by wykorzystywać.
-
- Przykładową architekturę w w tym podejściu dla tworzonych systemów przedstawia rysunek \ref{fig:autonomiczne_systemy}
-
-\setlength\fboxsep{20pt}
-\setlength\fboxrule{1pt}
-\begin{figure}[!h]
-	\centering
-	\fbox{\includegraphics[scale=0.45]{wyspecjalizowane_rozwiazania.png} }
-	\caption{Architekrura - Autonomiczne systemy}\label{fig:autonomiczne_systemy}
-\end{figure}
-
-Podejście autonomicznych aplikacji jest  skupione na konkretnych systemach, a nie na intergracji ich w istniejącym środowisku. Można nawet powiedzieć, że w tym podejściu w ogóle nie występuje element integracji. Jednakże, rozwiązanie to ma też swoje plusy. Przy tym podejściu, powstające systemy są lepiej dostosowane do stawianych przed nimi zadań, ale też wymagają wiekszych nakładów pracy i są cieżkie w rozbudowie. Kolejne podejście, które zostanie zaprezentowane  patrzy na problem z troche innej perspektywy. Nie jest oneaż tak  skupione na tworzonych systemach, lecz na ich współistnieniu z współpracy wraz z innymi systemami w środowisku SOA.
+Biorąc pod uwagę proponowane serwisy, format danych wejściowych i wymagania stawiane przed platformą zdecydowanie najlepszym sposobem integracji wydaje się wykorzystanie jednej z istniejących implementacji ESB. Wszystkie one zapewniają routing, dużo różnych endpointów, wsparcie dla aplikacji pisanych przy użyciu Springa i wiele innych rzeczy które można wykorzystać nie tylko przy implementacji podsatawowej wersji systemu ale także przy jego rozbudowie. 
 
 
 
