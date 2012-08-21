@@ -2,7 +2,7 @@
 % content in this file will be fed into the main document
 
 %: ----------------------- name of chapter  -------------------------
-\chapter{Analiza wymagań} % top level followed by section, subsection
+\chapter{Weryfikacja rozwiązania} % top level followed by section, subsection
 
 
 %: ----------------------- paths to graphics ------------------------
@@ -16,10 +16,56 @@
 
 %: ----------------------- contents from here ------------------------
 
-Tem rodział opisuje wymagania które powinny być spełniane przez poszczególne, przykładowe aplikacje korzystające z serwisu UniversalSynthesizer. Podstawową funkcją serwisu jest udostępnianie usługi zamiany tekstu na mowę. Zaletą niniejszego systemu jest jego otwartość, możliwość wykorzystania innych niż proponowane syntezatorów mowy, łatwy dostęp przez web service, stosunkowo prosty sposób rozbudowy oraz możliwość jego wykorzystania do różnych celów na różnych platformach. Cechy te należy zademonstrować na przykładzie kilku prostych aplikacji, które muszą spełniać pewne jasno określone wymagania funkcjonalne i niefunkcjonalne opisane poniżej. 
-\section{Wymagania funkcjonalne}
+Rozdział ten opisuje jak wybrany sposób integracji oraz powstały w ten sposób prototypowy system wpływa na łatwość tworzenia i efektywność aplikacji przetwarzających mowę. Proponowane przykładowe aplikacje to:
+\begin{itemize}
+	\item Automatyczne dyktando
+	\item Lektor RSS
+	\item Lektor SMS
+	\item Konwerter plików graficznych do tekstowych
+\end{itemize}
+Każdej z proponowanych aplikacji poświęcono osobny podrozdział, w którym jest zdefiniowany przypadek użycia, przedstawione są wymagania funkcjonalne i niefunkcjonalne oraz przedstawiona jest weryfikacja podejścia.
 
-\subsection{Automatyczne dyktando}
+
+\section{Automatyczne dyktando}
+Jest to aplikacja web'owa umożliwiająca użytkownikowi ćwiczenie pisownii w różnych językach. Zasada działania jest bardzo prosta, użytkownik ładuje plik tekstowy lub graficzny na serwer oraz wybiera język docelowy, następnie zostaje przekierowany na stronę zawierającą formularz do pisania tekstu oraz odtwarzacz. Użytkownik słucha tekstu i zapisuje w polu tekstowym transkrypcję. W momencie w którym zatwierdzi formularz zostaje on przesłany na serwer i porównany z oryginalnym plikiem wejściowym, w efekcie użytkownik otrzymuje informację o ilości popełnionych błędów oraz o wyrazach które źle zapisał. 
+\newpage
+\subsection{Przypadek użycia}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{useCaseDictando.png} 
+	\caption{Przypadek użycia - Automatyczne dyktando }
+\end{figure}
+
+\subsection{Wymagania}
+\subsubsection{Wymagania funkcjonalne}
+\begin{enumerate}
+	\item Obsługiwanie wielu języków
+	\item Możliwość podania tekstu źródłowego
+		\begin{enumerate}
+			\item jako plik graficzny
+			\item jako plik tekstowy, wysyłany na serwer
+		\end{enumerate}
+	\item Umożliwienie użytkownikowi odsłuchania wysłanego tekstu w wybranym przez niego języku
+	\item Umożliwienie użytkownikowi wprowadzania tekstu jednocześnie z odsłuchiwaniem
+	\item Wygenerowanie i wyświetlenie raportu o ilości błędów popełnionych przez użytkownika
+\end{enumerate}
+
+\subsubsection{Wymagania niefunkcjonalne}
+\begin{enumerate}
+	\item Bezpieczeństwo - użytkownik i tylko on powinien móc widzieć swoje wyniki
+	\item Wydajność - dyktowanie tekstu powinno przebiegać płynnie, opóźnienia są niedozwolone ponieważ mogą dekoncentrować użytkownika
+	\item Niezawodność - użytkownik powinien zawsze otrzymać wynik który jest poprawny
+\end{enumerate}
+
+\subsection{Weryfikacja podejścia}
+Jak widać w powyższym podrozdziale wymagania stawiane przed aplikacją są precyzyjne i klarowne. Zastosowane podejście integracyjne sprawia, że stworzenie aplikacji spełniającej wymagania staje się proste. Zapewnienie obsługi wielu języków nie wymaga praktycznie żadnego nakładu pracy ze strony programisty aplikacji klienckiej. Jak zostało to opisane w rozdziale drugim, przy zastosowanym podejściu wystarczy wygenerować i przesłać plik xml z informacją dotyczącą języka docelowego, działa to niezależnie od języka w którym jest tekst wejściowy (pod warunkiem, że w pliku konfiguracyjnym ustawi się tag odpowiedzialny za serwis rozpoznający język). Podobnie przesłanie pliku graficznego, również wymaga tylko umieszczenia odpowiedniego tagu w pliku xml celem wywolania serwisu OCR. Jak łatwo zauważyć wygenerowanie i przesłanie pliku xml nie jest dużym wyzwaniem programistycznym. Szczególnie gdyby chcieć zaimplementować taką aplikację bez wykorzystania systemu opartego o rozwiązanie opisane w tej pracy. Musiałaby ona łączyć się z kilkoma zewnętrznymi serwisami, z których każdy prawdopodobnie miałby inny interfejs. Również narzut na komunikację byłby znacząco większy ponieważ byłaby ona dużo intensywnijesza. \\
+Jak widać, w tym przypadku, zastosowane podejście w sposób znaczący pozytywnie wpływa na łatwość i szybkość implementacji aplikacji klienckiej. \\
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+W celu weryfikacji prezentowanego rozwiązania 
+
+Tem rodział opisuje wymagania które powinny być spełniane przez poszczególne, przykładowe aplikacje korzystające z serwisu UniversalSynthesizer. Podstawową funkcją serwisu jest udostępnianie usługi zamiany tekstu na mowę. Zaletą niniejszego systemu jest jego otwartość, możliwość wykorzystania innych niż proponowane syntezatorów mowy, łatwy dostęp przez web service, stosunkowo prosty sposób rozbudowy oraz możliwość jego wykorzystania do różnych celów na różnych platformach. Cechy te należy zademonstrować na przykładzie kilku prostych aplikacji, które muszą spełniać pewne jasno określone wymagania funkcjonalne i niefunkcjonalne opisane poniżej. 
+
+
 Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internetowej. Jej głównym celem jest wykorzystanie funkcji UniversalSynthesizer do dyktowania treści którą użytkownik zapisuje. Po odczytaniu całego tekstu i wysłaniu przez użytkownika formularza, jest on porównywany z tekstem oryginalnym w ten sposób może ćwiczyć swoją ortografie. Dużą zaletą jest to, że aplikacja ta nie jest ograniczona do jednego języka oraz fakt, że użytkownik sam podaje tekst.
 \newpage
 \subsubsection{Przypadki użycia} 
