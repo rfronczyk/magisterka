@@ -61,9 +61,43 @@ Jest to aplikacja web'owa umożliwiająca użytkownikowi ćwiczenie pisownii w r
 Jak widać w powyższym podrozdziale wymagania stawiane przed aplikacją są precyzyjne i klarowne. Zastosowane podejście integracyjne sprawia, że stworzenie aplikacji spełniającej wymagania staje się proste. Zapewnienie obsługi wielu języków nie wymaga praktycznie żadnego nakładu pracy ze strony programisty aplikacji klienckiej. Jak zostało to opisane w rozdziale drugim, przy zastosowanym podejściu wystarczy wygenerować i przesłać plik xml z informacją dotyczącą języka docelowego, działa to niezależnie od języka w którym jest tekst wejściowy (pod warunkiem, że w pliku konfiguracyjnym ustawi się tag odpowiedzialny za serwis rozpoznający język). Podobnie przesłanie pliku graficznego, również wymaga tylko umieszczenia odpowiedniego tagu w pliku xml celem wywolania serwisu OCR. Jak łatwo zauważyć wygenerowanie i przesłanie pliku xml nie jest dużym wyzwaniem programistycznym.Widać to szczególnie gdyby porównać to z implementacją bez wykorzystania systemu opartego o rozwiązanie opisane w tej pracy. Musiałaby ona łączyć się z kilkoma zewnętrznymi serwisami, z których każdy prawdopodobnie miałby inny interfejs, konwertować różne formaty plików, obsługiwać błędy itd. Jedyną przewagą osobnej implementacji mogłabybyć szybkość działania, ale i tak różnica nie byłaby duża i sprowadzałaby się głównie do czasu potrzebnego na przesyłanie danych do i z systemu (oczywiście zakładając, że zarówno implementacja platformy jak i aplikacji korzystałaby z tych samych zewnętrznych serwisów). 
 Jak widać, w tym przypadku, zastosowane podejście w sposób znaczący pozytywnie wpływa na łatwość i szybkość implementacji aplikacji klienckiej. \\
 
-\section{Lektor RSS}
-Jest to aplikacje web'owa której zadaniem jest odczytywanie wiadomości RSS ze źródeł podanych przez użytkownika, może on podać źródło przez specjalny formularz, załadować plik tekstowy zawierający adresy źródeł lub też wysłać plik w formacie graficznym z którego zostaną odczytane źródła. Niezależnie od użytej metody tekst wiadomości może być w dowolnym języku, podanym przez użytkownika lub też rozpoznanym przez system. Możliwe jest również przetłumaczenie wiadomości na język podany przez użytkownika i przeczytanie jej przez odpowiedniego lektora. Użytkownik ma również możliwość ustawienia co jaki czas ma następować sprawdzanie źródła celem znalezenia nowych wiadomości.	 
+\section{Lektor SMS}
+Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskazuje jej funkcjonalność pozwala odczytywać na głos wiadomości tekstowe. Może okazać się bardzo przydatna w czasie jazdy samochodem, wiadomo, że używanie telefonu komórkowego jest zabronione z powodu bezpieczeństwa, tym bardziej, używanie rąk i skupianie wzrodku na odczytywanej wiadomości tekstowej jeszcze w większym stopniu niż rozmowa przez telefon prowadzi do odwrócenia uwagi kierowcy od sytuacji na drodze.
+Zasada działania tej aplikacji jest bardzo prosta, mianowicie po włączenie przechwytuje ona każde zdarzenie oznaczające otrzymanie wiadomości tekstowej, pobiera jej treść i zamienia ją na dzwięk w dowolnym, wybranym przez użytkownika języku. Co warte zauważenia aplikacja ta ma dwa różne sposoby generowania mowy:
+\begin{itemize}
+	\item korzystając z usług udostępnianych przez przykładową implementację systemu integrującego usługi przetwarzania mowy
+	\item korzystając z wbudowengo w system Android TTS'a
+\end{itemize} 
+Dzięki wykorzystaniu obu rozwiązań mamy możliwość bezpośredniego porównania. Wybór sposobu generowania dzwięku zależy od dostępności połączenia z internetem, jeżeli takie istnieje to aplikacja korzysta z zewnętrznego systemu, w przeciwnym razie wykorzystuje wbudowany TTS. Oczywiście użytkownik ma możliwość ustawienia dla których numerów aplikacja będzie działać.
+\newpage
+\subsection{Przypadek użycia}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{useCaseLektorSMS.png} 
+	\caption{Przypadek użycia - LektorRSS}
+\end{figure}
 
+\subsection{Wymagania}
+\subsubsection{Wymagania funkcjonalne}
+\begin{enumerate}
+	\item Możliwość aktywacji i dezaktywacji aplikacji
+	\item Możliwość ustawienia języka w którym będzie odczytywana treść wiadomości
+	\item Możliwość filtrowania obsługiwanych wiadomości SMS po numerach nadawców 
+	\item Obsługiwanie więcej niż jednego języka wiadomości
+	\item Automatyczne odczytywanie otrzymanych wiadomości
+\end{enumerate}
+\subsubsection{Wymagania niefunkcjonalne}
+\begin{enumerate}
+	\item Dostęp do apikacji musi być chroniony hasłem
+	\item Użyteczność - poprawne działanie na dowolnym urządzeniu z systemem Android z dostępem do siecii lub z systemem w wersji co najmniej 1.6
+\end{enumerate}
+
+\subsection{Weryfikacja podejścia}
+Wykorzystanie sposobu integracji systemów przetwarzania mowy rozważanego w tej pracy pozwala na bardzo łatwą implementację aplikacji spełniającej wszystkie stawiane przed nią wymagania. Co więcej pozwala ona na łatwą rozbudowę. Można na przykład dodać funkcjonalność polegającą na tłumaczenie wiadomości na konkretny język docelowy, co w implementacji bez wykorzystania systemu byłoby dużo trudniejsze i wymagało przesłania większej ilości danych co ponosi za sobą koszty(szczególnie jeżeli telefon działa w roamingu). Z drugiej strony system Android daje dostęp do wbudowanej usługi TTS. Jest ona dość dobrej jakości, również obsługuje kilka języków, co więcej nie wymaga dostępu do internetu co jest jej dużym plusem. Ci więcej implemetancja aplikacji z jej wykorzystaniej również jest prostym zadaniem. Co więcej aplikacja, korzystająca z natywnego TTS'a będzie napewno szybsza. Na podstawie wszystkich argumentów można dojść do wniosku, że w tym przypadku nie ma potrzeby korzystania z koncepcyjnego systemu. Dlatego też, w tym konkretnym przypadku, ciężko ocenić które rozwiązanie jest lepsze. Wszystko zależy od tego czy ważniejsza jest jakość wygenerowanego dźwięku, możliwość dodania dodatkowych funkcji czy szybkość działania i nie obciążanie połączenia internetowego.
+
+\section{Lektor RSS}
+Jest to aplikacje web'owa której zadaniem jest odczytywanie wiadomości RSS ze źródeł podanych przez użytkownika, może on podać źródło przez specjalny formularz, załadować plik tekstowy zawierający adresy źródeł. Niezależnie od użytej metody można podać język wiadomości lub też użyć serwisu rozpoznającego. Możliwe jest również przetłumaczenie wiadomości na język podany przez użytkownika i dopiero wtedy przeczytanie jej przez odpowiedniego lektora. Użytkownik ma również możliwość ustawienia co jaki czas ma następować sprawdzanie źródła celem znalezienia nowych wiadomości.	 
+\newpage
 \subsection{Przypadek użycia}
 \begin{figure}[!h]
 	\centering
@@ -83,106 +117,15 @@ Jest to aplikacje web'owa której zadaniem jest odczytywanie wiadomości RSS ze 
 \end{enumerate}  
 \subsubsection{Wymagania niefunkcjonalne}
 \begin{enumerate}
-	\item Bezpieczeństwo - użytkownik i tylko on powinien mieć dostęp do swojej listy źródeł RSS
 	\item Niezawodność - system nie może pominąć żadnej wiadomości z listy źródeł zdefiniowanej przez użytkownika
 	\item Szybkość - różnica czasu pomiędzy udostępnieniem nowej wiadomości w którymś ze źródeł a otrzymaniem jej przez użytkownika nie może przekraczać czasu pomiędzy sprawdzeniami w poszukiwaniu uaktualnień (czas ten ustawia użytkownik)
 	\item Możliwość personalizacji - użytkownik powinien móc dodać dowolną ilość różnych źródeł, system powinien zapewnić ich niepowtarzalność(usuwać duplikaty)
 \end{enumerate}
 
 \subsection{Weryfikacja podejścia}
-Tak jak w sekcji opisującej aplikację Automatyczne Dyktando wymagania przedstawione powyżej są jasne i klarowne. Po raz kolejny zastosowane podejście integracyjne sprawia, że napisanie aplikacji klienckiej, spełniającej wymagania przed nią stawiane jest proste. Dzięki użyciu ESB i oferowanych przez niego endpointów jest możliwe przerzucenie konieczności pobierania wiadomości ze źródeł RSS na stronę systemu. Podobnie jak w przypadku aplikacji opisanej wyżej zarówno rozpoznawanie języka, tłumaczenie czy generowanie mowy w odpowiednim języku nie stanowi dla programisty, autra aplikacji klienckiej żadnego problemu, wystarczającym jest wygenerowanie pliku xml zawierającego odpowiednie instrukcje. Implementacja podobnej, równie rozbudowanej aplikacji, bez wykorzystania systemu integrującego serwisy odpowiadające za przetwarzanie mowy byłaby bardzo trudna. Poza problemami podobnymi do tych jakie były opisane w przypadku Aumatycznego Dyktanda dochodzi jeszcze sprawa pobierania RSS'ów, ich parsowania itd. Pozostałe wymagania, takie jak bezpieczeństwo czy też konieczność przechowywania danych w bazie danych muszą być zaspokojone w ten sam sposób niezależnie od wykorzystania systemu. \\
-W przypadku tej aplikacji również klarownym jest fakt, że użyte podejście bardzo upraszcza implementację.
- ----------------------------------------------------------------------------------------------------------------------------------------------------------------------
-W celu weryfikacji prezentowanego rozwiązania 
+Tak jak w sekcji opisującej aplikację Automatyczne Dyktando wymagania przedstawione powyżej są jasne i klarowne. Po raz kolejny zastosowane podejście integracyjne sprawia, że napisanie aplikacji klienckiej, spełniającej wymagania przed nią stawiane jest proste. Dzięki użyciu ESB i oferowanych przez niego endpointów jest możliwe przerzucenie konieczności pobierania wiadomości ze źródeł RSS na stronę systemu. Podobnie jak w przypadku aplikacji opisanej wyżej zarówno rozpoznawanie języka, tłumaczenie czy generowanie mowy w odpowiednim języku nie stanowi dla programisty, autora aplikacji klienckiej żadnego problemu, wystarczającym jest wygenerowanie pliku xml zawierającego odpowiednie instrukcje. Implementacja podobnej, równie rozbudowanej aplikacji, bez wykorzystania systemu integrującego serwisy odpowiadające za przetwarzanie mowy byłaby trudniejsza oraz wymagałaby poświęcenia większej ilości czasu. Poza problemami podobnymi do tych jakie były opisane w przypadku Aumatycznego Dyktanda dochodzi jeszcze sprawa pobierania RSS'ów, ich parsowania itd. Pozostałe wymagania, takie jak bezpieczeństwo czy też konieczność przechowywania danych w bazie danych muszą być zaspokojone w ten sam sposób niezależnie od wykorzystania systemu. \\
+W przypadku tej aplikacji również klarownym jest fakt, że zastosowane podejście bardzo upraszcza implementację.
 
-Ten rodział opisuje wymagania które powinny być spełniane przez poszczególne, przykładowe aplikacje korzystające z serwisu UniversalSynthesizer. Podstawową funkcją serwisu jest udostępnianie usługi zamiany tekstu na mowę. Zaletą niniejszego systemu jest jego otwartość, możliwość wykorzystania innych niż proponowane syntezatorów mowy, łatwy dostęp przez web service, stosunkowo prosty sposób rozbudowy oraz możliwość jego wykorzystania do różnych celów na różnych platformach. Cechy te należy zademonstrować na przykładzie kilku prostych aplikacji, które muszą spełniać pewne jasno określone wymagania funkcjonalne i niefunkcjonalne opisane poniżej. 
-
-
-Jest to prosta aplikacja dostępna dla użytkowników w formacie strony internetowej. Jej głównym celem jest wykorzystanie funkcji UniversalSynthesizer do dyktowania treści którą użytkownik zapisuje. Po odczytaniu całego tekstu i wysłaniu przez użytkownika formularza, jest on porównywany z tekstem oryginalnym w ten sposób może ćwiczyć swoją ortografie. Dużą zaletą jest to, że aplikacja ta nie jest ograniczona do jednego języka oraz fakt, że użytkownik sam podaje tekst.
-\newpage
-\subsubsection{Przypadki użycia} 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.45]{useCaseDictando.png} 
-	\caption{Przypadek użycia - Automatyczne dyktando }
-\end{figure}
-
-\subsubsection{Wymagania funkcjonalne}
-\begin{enumerate}
-	\item Obsługiwanie więcej niż jednego języka
-		\begin{enumerate}
-			\item polski
-			\item angielski
-			\item francuski
-		\end{enumerate}
-	\item Możliwość podania tekstu źródłowego
-		\begin{enumerate}
-			\item w formie tekstu wpisywanego na stronie
-			\item jako plik tekstowy, wysyłany na serwer
-		\end{enumerate}
-	\item Umożliwienie użytkownikowi odsłuchania wysłanego tekstu w wybranym przez niego języku
-	\item Umożliwienie użytkownikowi wprowadzania tekstu jednocześnie z odsłuchiwaniem
-	\item Wygenerowanie i wyświetlenie raportu o ilości błędów popełnionych przez użytkownika
-\end{enumerate}
-\subsection{LektorRSS}
-Jest to aplikacja webowa, które głównym celem jest odczytywanie użytkownikowi wiadomości RSS pobieranych z podanych przez niego źródeł. Należy zwrócić uwagę na duża zaletę tej aplikacji jaką jest fakt, że w zależności od języka wiadomości RSS jest ona odczytywana przez lektora odpowiedzialnego za ten język, oczywiście przy założeniu, że UniversalSynthesizer obłusguje język wiadomości.
-\subsubsection{Przypadki użycia}
-
-
-\subsubsection{Wymagania funkcjonalne}
-\begin{enumerate}
-	\item Możliwość dodania źródła RSS
-	\item Możliwość usunięcia źródła RSS
-	\item Obsługiwanie więcej niż jednego języka wiadomości
-		\begin{enumerate}
-			\item polski
-			\item angielski
-			\item francuski
-		\end{enumerate}
-		\item Automatyczne sprawdzanie czy któreś ze źródeł nie zawiera nowej wiadomości
-	\item Możliwość ustawienia odstępów czasowych pomiędzy sprawdzaniem przez system źródeł
-	\item Automatyczne Odczytanie użytkownikowi nowych wiadomości (w przypadku istnienia) 
-\end{enumerate}  
-\subsection{LektorsSMS}
-Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskazuje służy ona do automatycznego odczytywania wiadomości SMS zaraz po ich otrzymaniu. Jest bardzo przydatna w czasie jazdy samochodem, wiadomo, że używanie telefonu komórkowego jest zabronione z powodu bezpieczeństwa, tym bardziej, używanie rąk i skupianie wzrodku na odczytywanej wiadomości tekstowej jeszcze w większym stopniu niż rozmowa przez telefon prowadzi do odwrócenia uwagi kierowcy od sytuacji na drodze. Istnienie i użyteczność tej aplikacji pokazuje, że stworzony na potrzeby tej pracy serwis UniversalSynthesizer jest bardzo użyteczny, aplikacje mogące z niego korzystać mogą być tworzone na różne platformy.
-\newpage
-\subsubsection{Przypadki użycia}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.45]{useCaseLektorSMS.png} 
-	\caption{Przypadek użycia - LektorRSS}
-\end{figure}
-
-\subsubsection{Wymagania funkcjonalne}
-\begin{enumerate}
-	\item Możliwość aktywacji i dezaktywacji aplikacji
-	\item Możliwość ustawienia języka w którym będzie odczytywana treść wiadomości
-	\item Możliwość filtrowania obsługiwanych wiadomości SMS po numerach nadawców 
-	\item Obsługiwanie więcej niż jednego języka wiadomości
-		\begin{enumerate}
-			\item polski
-			\item angielski
-			\item francuski
-		\end{enumerate}
-	\item Automatyczne odczytywanie otrzymanych wiadomości
-\end{enumerate}
-
-\section{Wymagania niefunkcjonalne}
-\subsection{Automatyczne dyktando}
-\subsubsection{Wymagania niefunkcjonalne}
-\begin{enumerate}
-	\item Bezpieczeństwo - użytkownik i tylko on powinien móc widzieć swoje wyniki
-	\item Wydajność - dyktowanie tekstu powinno przebiegać płynnie
-	\item Niezawodność - użytkownik powinien zawsze otrzymać wynik który jest poprawny i jest jego wynikiem
-\end{enumerate}
-\subsection{Lektor RSS}
-
-\subsection{LektorsSMS}
-\begin{enumerate}
-	\item Bezpieczeństwo - dostęp do apikacji musi być chroniony hasłem
-	\item Użyteczność - poprawne działanie na dowolnym urządzenie z systemem Android posiadającym dostęp do sieci
-	\item Wydajność - musi działać na starszych i słabszych telefonach
-\end{enumerate}
 
 % ---------------------------------------------------------------------------
 %: ----------------------- end of thesis sub-document ------------------------
