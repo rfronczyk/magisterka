@@ -9,6 +9,35 @@
 
 
 % ----------------------- contents from here ------------------------
+W rozdziale tym, zostaną zaprezentowane oraz po krótce opisane najważniejsze technologie wykorzystane przy implementacji przykładowego systemu  powstałego na bazie tej pracy.
+
+\section{OSGi}
+Technologia OSGi to zbiór specyfikacji definiujących dynamiczne środowisko komponentowe. Taka struktura pozwala na tworzenie aplikacji złożonych z wielu, różnych komponentów(bundle) które mogą być wykorzystywane wiele razy. Specyfikacja OSGi umożliwia bundle'om ukrywanie swojej implementacji przed innymi komponentami i komunikację tylko przy użyciu specjalnych serwisów, które są dzielone pomiędzy bundle'ami. Pozwala to na zmniejszenie złożoności tworzonych systemów.
+\newpage
+\subsection{Architektura}
+OSGi posiada architekturę warstwową, przedstawiona jest ona, wraz z krótkim opisem, na poniższym diagramie.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.75]{osgiArchitektura.png} 
+	\caption{Architektura OSGi}
+\end{figure}
+\begin{itemize}
+	\item Bundles - Są to OSGi'owe, mogą być preinstalowane jak i tworzone i dynamicznie ładowane przez programistów
+	\item Services - Warstwa serwisów dynamicznie łączy komponenty, stosując model publish-find-bin
+	\item Life-Cycle - API do startowania, zatrzymywania, instalowania i dezinstalowania komponentów
+	\item Modules - Warstwa definiująca jak komponenty mogą importować i eksportować kod	
+	\item Security - Warstwa zajmująca się bezpieczeństwem
+	\item Execution Environment - Warstwa definiująca jakie metody i klasy są dostępne na specyficznej plarformie
+\end{itemize}  
+Najważniejszym konceptem umożliwiającym istnienie i działanie takiej platformy jest modułowość, której ucieleśnieniem są bundle. OSGi ukrywa wszystko co znajduje się w takim komponencie poza funkcjonalnością która jest wyspecyfikowana. Jeżeli jeden komponent chce wykorzystać inny musi wyraźnie definiować jaką funkcjonalność potrzebuje. Ponieważ ciężko stworzyć model współpracy opierając się tylko na klasach OSGi wprowadza wastwę serwisów, a wraz z nią rejestr serwisów. Bundle może stworzyć obiekt i zarejestrować go w rejestrze pod jednym lub więcej interfejsów. Inne komponenty mogą z takiego rejestru pobierać obiekty stosując różne kryteria, na przykład wszystkie obiekty implementujące dany interfejs itd.
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.75]{serveLayer.png} 
+	\caption{Zalezność pomiędzy bundlami i serwisami}
+\end{figure}
+ Możliwe jest oczywiście, żeby dowolna liczba komponentów zarejestrowała ten sam typ serwisów lub też pobrała ten sam serwis. Oczywiście zarejestrowane serwisy można rozróżniać, każdy ma powiązany ze sobą zestaw właściwości(properties), które mogą służyć do specyfikacji. Cała warstwa serwisów jest dynamiczna, bundle mogą dodawać, usuwać itd. serwisy bez konieczności restartu kontenera.  \\
+Do tworzenia i definiowana zależności między bundlami OSGi wykorzystuje Blueprint Container. Jest to framework którego celem jest zarządzanie wstrzykiwaniem zależności. Został zaprojektowany żeby radzić sobie z dynamiczną specyfikacją OSGi'a (możliwość pojawienia się i zniknięcia serwisów w dowolnym momencie). Jego specyfikacja pozwala mu też na działania w środowisku innym niż OSGi'owe. W założeniu opiera się on o strukturę plików xml, które definiują jak komponenty są tworzone oraz łączone aby stworzyć działającą aplikację. Sposób działania kontera opiera się o wzorzec Extender. W czasie inicjalizacji bundle'a (a więc w czasie działania kontenera) Blueprint Container sprawdza czy wszystkie wymagane zależności są spełnione, tworzy wszystkie wymagane obiekty oraz rejestruje serwisy. 
+\\------------------------------------------------------------------------------------------------------------------------------------
 
 \section{Apache ServiceMix}
 Integracja systemów informatycznych jest jednym z największych wyzwań stojących przed nowoczesnymi przedsiębiorstwami. Apache ServiceMix pomaga rozwiązać ten problem będąc bazującym na standardach, lekkim oraz stosującym paradygmat "luźnego powiązania" narzędziem. Dzięki bazowaniu na standardach w sposób drastyczny zmniejsza szanse na uzależnienie się od konkretnego dostawcy oprogramowania, przez stosowanie luźneg powiązania zmniejsza złożoność integracji. 
