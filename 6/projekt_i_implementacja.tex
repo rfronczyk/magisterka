@@ -83,8 +83,8 @@ Ilustracja \ref{fig:endpoins_layer_project} przedstawia przepływ wiadomości w 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1.0]{component_uml.png}
-	\caption{MOCK Diagram przepływu wiadomości w warstwie \textit{Data Endpoints Layer}}\label{fig:endpoins_layer_project}
+	\includegraphics[scale=0.8]{endpoints_layer_flow.png}
+	\caption{Diagram przepływu wiadomości w warstwie \textit{Data Endpoints Layer}}\label{fig:endpoins_layer_project}
 \end{figure}
 
 Ponieważ przetwarzanie mowy może być procesem czasochłonnym, budowana platforma powinna wspierać komunikację asynchroniczną, która umożliwi uniknięcie zbędnego oczekiwania na odpowiedź. Niektóre punkty końcowe, takie jak FTP czy SMTP są z natury asynchroniczne. Aplikacja wykorzystująca protokół SMTP wysyła emaila z wymaganymi załącznikami na adres endpointa i wraca do swojego przetwarzania. Email zostaje odebrany przez platformę, następuje proces przetwarzania, a odpowiedź jest odsyłana na adres nadawcy. Gdy aplikacja odbierze emaila zwrotnego może zacząć przetwarzanie odpowiedzi w dogodnym dla siebie czasie. Inne końcówki, takie jak REST czy SOAP, posiadają naturę synchroniczną, dlatego aby wspierały one komunikację asynchroniczną należy zastosować dodatkowe mechanizmy. W rozwiązaniu zastosowanym w platformie SpeechProcessingPlatform większość odpowiedzialności za dodanie obsługi asynchronicznej komunikacji spada na kolejne warstwy, dlatego zostanie ono dokładnie opisane w kolejnych podrozdziałach. Jedynym dodatkowym zadaniem punktów końcowych jest oznaczenie wiadomości jako przeznaczonej do przetwarzania asynchronicznego. Reszta procesu, z perspektywy endpointu, nie ulega zmianie. Przy takim oznaczeniu, odpowiedź z warstwy routującej przychodzi bardzo szybko, lecz zawiera ona tylko identyfikator odpowiedzi, dzięki któremu aplikacja kliencka będzie mogła odpytać system czy jej zadanie zostało już zakończone. Takie zapytanie jest traktowane w taki sam sposób jak żądanie przetwarzania. Jeżeli zadanie zostało zakończone, wynik zostanie zwrócony aplikacji. Jeżeli nie, aplikacja będzie musiała wykonać zapytanie ponownie.
@@ -92,29 +92,37 @@ Ponieważ przetwarzanie mowy może być procesem czasochłonnym, budowana platfo
 \subsection{Warstwa \textit{Routing Layer}}
 
 \subsubsection{Przepływ regularnych wiadomości}
-Diagram \ref{fig:routing_layer_project} przedstawia, przepływ wiadomości, które zostały wysłane na adres warstwy routującej. Żadania, które już wcześniej były poddane transformacji, są gotowe aby wysłać je do odpowiednich serwisów. Komponent routujący, nie posiada stałych, wyznaczonych tras, lecz wybiera je za każdym razem gdy otrzyma wiadomość na swój kanał wejściowy. Jeżeli zadanie zostanie uznane za zakończone zostaje ono wysłane z powrotem do odpowiedniego endpointu na podstawie adresu zwrotnego. Jeżeli do zakończenia zadania potrzebny jest jeszcze jakiś etap przetwarzania, router wykonuje zapytanie do rejestru serwisów w celu uzyskania adresu serwisu spełniającego wymagania zadania. Jeżeli zostanie znaleziony odpowiedni serwis , żądanie przetwarzania zostaje opakowane w w dodatkową kopertę, której adres zwrotny wskazuje na kanał wejściowy routera. Tak przygotowana wiadomość zostaje wysłana na adres uzyskany od rejestru serwisów. Po przetworzeniu, wiadomość jest odsyłana na adres wejściowy routera. Opakowana wiadomość jest łączona z odpowiedzią od serwisu w jedną, przenoszącą kompletną informacje o zadaniu wiadomość i jest podawana procesowi routowania ponownie. Jeżeli repozytorium nie zawiera serwisu spełniającego wymagania zadania, wiadomość jest odsyłana z powrotem do endpointu z odpowiednim kodem błędu. 
+Diagram \ref{fig:routing_layer_project} przedstawia, przepływ wiadomości, które zostały wysłane na adres warstwy routującej. Żadania, które już wcześniej były poddane transformacji, są gotowe aby wysłać je do odpowiednich serwisów. Komponent routujący, nie posiada stałych, wyznaczonych tras, lecz wybiera je za każdym razem gdy otrzyma wiadomość na swój kanał wejściowy. Jeżeli zadanie zostanie uznane za zakończone zostaje ono wysłane z powrotem do odpowiedniego endpointu na podstawie adresu zwrotnego. Jeżeli do zakończenia zadania potrzebny jest jeszcze jakiś etap przetwarzania, router wykonuje zapytanie do rejestru serwisów w celu uzyskania adresu serwisu spełniającego wymagania zadania. Jeżeli zostanie znaleziony odpowiedni serwis , żądanie przetwarzania zostaje opakowane w w dodatkową kopertę, której adres zwrotny wskazuje na kanał wejściowy routera. Tak przygotowana wiadomość zostaje wysłana na adres uzyskany od rejestru serwisów. Po przetworzeniu, wiadomość jest odsyłana na adres wejściowy routera i jest podawana procesowi routowania ponownie. Jeżeli repozytorium nie zawiera serwisu spełniającego wymagania zadania, wiadomość jest odsyłana z powrotem do endpointu z odpowiednim kodem błędu. 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1.0]{component_uml.png}
-	\caption{MOCK Diagram przepływu wiadomości w warstwie \textit{Routing Layer}}\label{fig:routing_layer_project}
+	\includegraphics[scale=0.55]{router_flow.png}
+	\caption{Diagram przepływu wiadomości w warstwie \textit{Routing Layer}}\label{fig:routing_layer_project}
 \end{figure}
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1.0]{component_uml.png}
-	\caption{MOCK UML diagram akcji. }\label{fig:action_diagram}
+	\includegraphics[scale=1.0]{router_activity.png}
+	\caption{Diagram czynności komponentu routującego. }\label{fig:router_activity_diagram}
 \end{figure}
 
 \subsubsection{Przepływ wiadomości asynchronicznych}
 W celu obsługi wiadomości w sposób asynchroniczny, jeżeli wykorzystywany endpoint nie zapewnia wparcia dla takiej komunikacji, należy poprzedzić proces routowania dodatkowymi krokami.
-Diagram \ref{fig:asynchronous_detour} przedstawia rozwiązanie zastosowane w SpeechProcessingPlatform. Ważnym aspektem w prezentowanej koncepcji jest dodanie dodatkowego typu serwisów, których zadaniem jest przechowywanie odpowiedzi pod odpowiednim kluczem. Serwisy w dalszej części pracy będą zwane serwisami storage. Pierwszym etapem jest rozdzielenie wiadomości na dwie grupy synchroniczne i asynchroniczne. Podział ten jest dokonywany na podstawie oznaczenia wykonanego przez endpoint zlecający, a także na podstawie obecności chociaż jednego serwisu storage. Jeżeli chociaż jeden z tych warunków nie jest spełniony żądanie będzie obsłużony w sposób opisany w poprzednim podrozdziale. Jeżeli oby dwa warunki są spełnione do wiadomości dodawane są dwa dodatkowe nagłówki: unikalny idetyfikator, oraz adres serwisu do przechowywania danych. Kolejnym etapem jest zduplikowanie wiadomości i wysłanie elementów tak powstałej pary w dwóch przeciwnych kierunkach. Pierwsza wiadomość zostaje wysłana do zlecającego endpointu. Zawarte w nie informacje umożliwią aplikacji klienckiej odpytanie platformy w celu uzyskania wyniku przetwarzania. Druga wiadomość, po zamianie adresu zwrotnego z adresu endpointu na adres serwisu storage zostaje przesłana do routera. Dalsze przetwarzanie wygląda tak samo jak w wypadku wiadomości synchronicznych.
+Diagram \ref{fig:asynchronous_detour} przedstawia rozwiązanie zastosowane w SpeechProcessingPlatform. Ważnym aspektem w prezentowanej koncepcji jest wprowadzenie dodatkowego typu serwisów, których zadaniem jest przechowywanie odpowiedzi pod odpowiednim kluczem. Serwisy w dalszej części pracy będą zwane serwisami storage. Pierwszym etapem jest rozdzielenie wiadomości na dwie grupy synchroniczne i asynchroniczne. Podział ten jest dokonywany na podstawie oznaczenia wykonanego przez endpoint zlecający, a także na podstawie obecności chociaż jednego serwisu storage. Jeżeli chociaż jeden z tych warunków nie jest spełniony żądanie będzie obsłużony w sposób opisany w poprzednim podrozdziale. Jeżeli oby dwa warunki są spełnione wiadomość jest poddawana kilku dodatkowym operacjom przed wysłaniem jej do routera. Pierwsza z nich to usunięcie oznaczenia do przetwarzania asynchronicznego. Druga to wygenerowanie i dodanie do wiadomości unikalnego identyfikatora, który posłuży jako klucz przy przechowywaniu docelowej odpowiedzi. Następnym krokiem jest wygenerowanie zastępczej odpowiedzi i wysłanie jej do endpointu. Odpowiedz ta zawiera wygenerowany wcześniej identyfikator, co pozwoli aplikacji klienckiej odpytanie systemu o odpowiedz na oryginalne zadanie. Ostatnim krokiem jest podmiana adresu zwrotnego w oryginalnej wiadomości na adres serwisu storage. Dalsze przetwarzanie wygląda tak samo jak w wypadku wiadomości synchronicznych.
+
+
  % mozna dodać obrazek do correlation idetifier po słowach : ...nagłówki: unikalny idetyfikator, oraz....
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1.0]{component_uml.png}
-	\caption{MOCK Diagram przepływu dla komunikacji asynchronicznej}\label{fig:asynchronous_detour}
+	\includegraphics[scale=0.55]{asynchronous_detour.png}
+	\caption{Diagram przepływu dla komunikacji asynchronicznej}\label{fig:asynchronous_detour}
+\end{figure}
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=1.0]{asynchronous_activity_uml.png}
+	\caption{Diagram czynności dla wiadomości asynchronicznych. }\label{fig:asynchronous_activity}
 \end{figure}
 
 \subsection{Warstwa \textit{Services Layer}}
@@ -139,8 +147,8 @@ Chociaż repozytorium serwisów jest ważnym komponentem to nie bierze ono czynn
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1.0]{component_uml.png}
-	\caption{MOCK Diagram przepływu wiadomości w warstwie \textit{Services Layer}}\label{fig:services_layer_project}
+	\includegraphics[scale=0.85]{services_layer_flow.png}
+	\caption{Diagram przepływu wiadomości w warstwie \textit{Services Layer}}\label{fig:services_layer_project}
 \end{figure}
 
 Pierwszym wymaganiem stawianym konkretnym instancjom serwisów jest implementacja interfejsu \textit{IMessageEnabledService} \ref{lst:service_interface}. Interfejs ten posiada tylko jedną metodę, która zwraca adres kanału wejściowego danego serwisu. Spełnienie tego wymagania jest konieczne aby repozytorium było w stanie odnaleźć serwis i zwrócić jego adres routerowi, jednak aby dana instancja pełniła jakąkolwiek rolę w systemie musi także udostępniać informację o funkcjonalności przez niej dostarczanej. W tym celu instancje muszą implementować dodatkowe interfejsy, które jednoznacznie określają udostępnianą funkcjonalność. Ponieważ komunikacją między serwisami a resztą systemu odbywa się przez kanały wiadomości, interfejsy te służą tylko do oznaczenia serwisów a nie jako kontrakt miedzy nimi a, komponentami z nich korzystającymi. Takie użycie interfejsu jest znane jako wzorzec \textit{Marker interface} \cite{bloch2008}.
@@ -185,30 +193,23 @@ public interface StorageService {
 Drugim i ostatnim wymaganiem stawianym przed implementacjami serwisów jest obsługa wiadomości w w wewnętrznym formacie używanym w systemie. Jest to spowodowane brakiem informacji na temat jaki format wiadomości jest obsługiwany przez dany serwis. Podczas routowania wiadomości znany jest tylko adres i typ docelowego serwisu, dlatego router nie jest w stanie przetransformować wiadomości do obsługiwanego formatu. 
 
 
-Większość dostępnych serwisów syntezy mowy nie była tworzona z myślą o obsłudze komunikacji opartej na wiadomościach, a nawet jeśli,  to na pewno nie obsługują one formatu budowanego systemu. Aby możliwe było użycie gotowych serwisów w budowanym systemie użyć komponentów które będą działać na zasadzie proxy i to te komponenty będą rejestrować sie w rejestrze serwisów. Po otrzymaniu wiadomości komponent proxy, podda ją wymaganej translacji po czym wyśle zadanie do konkretnej instancji serwisu, używając przy tym odpowiedniego adaptera, jeżeli zajdzie taka potrzeba. 
+Większość dostępnych serwisów syntezy mowy nie była tworzona z myślą o obsłudze komunikacji opartej na wiadomościach, a nawet jeśli,  to na pewno nie obsługują one formatu budowanego systemu. Aby możliwe było użycie gotowych serwisów w budowanym systemie użyć komponentów które będą działać na zasadzie proxy i to te komponenty będą rejestrować sie w rejestrze serwisów. Po otrzymaniu wiadomości komponent proxy, podda ją wymaganej transformacji po czym wyśle zadanie do konkretnej instancji serwisu, używając przy tym odpowiedniego adaptera, jeżeli zajdzie taka potrzeba. 
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=1.0]{component_uml.png}
-	\caption{MOCK proxy, Channel adapter z ksiazki eip strona 166 }\label{fig:channel_adapter.}
+	\includegraphics[scale=0.8]{proxy_layer_flow.png}
+	\caption{Proxy wraz z elementami transformującymi oraz adapterem. }\label{fig:servis_proxy.}
 \end{figure}
 
 
 
 
-\subsection{Wewnętrzny format wiadomości}
 
 
 \section*{Podsumowanie} 
 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=1.0]{component_uml.png}
-	\caption{MOCK Cały system }\label{fig:whole_system}
-\end{figure}
 
-
-
+% można wrzucic obrazek całego systemu
 
 %Jednym z rozwiązań jest użycie wzorca \textit{Correlation Identifier}\cite{eaipatterns}:
 
