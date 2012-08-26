@@ -13,12 +13,13 @@ W rozdziale tym, zostaną zaprezentowane oraz po krótce opisane najważniejsze 
 
 \section{OSGi}
 Technologia OSGi to zbiór specyfikacji definiujących dynamiczne środowisko komponentowe. Taka struktura pozwala na tworzenie aplikacji złożonych z wielu, różnych komponentów(bundle) które mogą być wykorzystywane wiele razy. Specyfikacja OSGi umożliwia bundle'om ukrywanie swojej implementacji przed innymi komponentami i komunikację tylko przy użyciu specjalnych serwisów, które są dzielone pomiędzy bundle'ami. Pozwala to na zmniejszenie złożoności tworzonych systemów.
-\newpage
+
 \subsection{Architektura}
 OSGi posiada architekturę warstwową, przedstawiona jest ona, wraz z krótkim opisem, na poniższym diagramie.
+\newpage
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.75]{osgiArchitektura.png} 
+	\includegraphics[scale=0.65]{osgiArchitektura.png} 
 	\caption{Architektura OSGi}
 \end{figure}
 \begin{itemize}
@@ -37,6 +38,26 @@ Najważniejszym konceptem umożliwiającym istnienie i działanie takiej platfor
 \end{figure}
  Możliwe jest oczywiście, żeby dowolna liczba komponentów zarejestrowała ten sam typ serwisów lub też pobrała ten sam serwis. Oczywiście zarejestrowane serwisy można rozróżniać, każdy ma powiązany ze sobą zestaw właściwości(properties), które mogą służyć do specyfikacji. Cała warstwa serwisów jest dynamiczna, bundle mogą dodawać, usuwać itd. serwisy bez konieczności restartu kontenera.  \\
 Do tworzenia i definiowana zależności między bundlami OSGi wykorzystuje Blueprint Container. Jest to framework którego celem jest zarządzanie wstrzykiwaniem zależności. Został zaprojektowany żeby radzić sobie z dynamiczną specyfikacją OSGi'a (możliwość pojawienia się i zniknięcia serwisów w dowolnym momencie). Jego specyfikacja pozwala mu też na działania w środowisku innym niż OSGi'owe. W założeniu opiera się on o strukturę plików xml, które definiują jak komponenty są tworzone oraz łączone aby stworzyć działającą aplikację. Sposób działania kontera opiera się o wzorzec Extender. W czasie inicjalizacji bundle'a (a więc w czasie działania kontenera) Blueprint Container sprawdza czy wszystkie wymagane zależności są spełnione, tworzy wszystkie wymagane obiekty oraz rejestruje serwisy. 
+
+\section{SOA}
+SOA czyli Service Oriented Architecture(Architektura zorientowana na usługi) to zgodnie z definicją zaproponowaną przez W3C to zbiór komponentów dostępnych w siecii posiadających dobrze opisane interfejsy. Opis ten pozwala na rozróżnianie komponentów i ich wyszukiwanie, a następnie wywoływanie. Najbardziej popularną obecnie implementacją tego paradygmatu jest ta opierająca się o web serwisy.  W paradygmacie SOA możemy wyróżnić dwa różne podejścia tworzenia serwisów:
+ \begin{itemize}
+	\item orkiestracja
+	\item choreografia
+\end{itemize}  
+Orkiestracja charakteryzuje się tym, iż istnieje jeden serwis orkiestrator, dyrygent lub kordynator który zarządza innymi serwisami w celu udostępniania jednej funkcjonalności. Prowadzi to do luźniejszego połączenia serwisów, sprawia też, że nie są one świadome bycia częścią większego procesu. Orkiestracja jest scentralizowaną formą współpracy z dobrze zdefiniowanymi operacjami i kolejnością wywoływania serwisów. Powstał nawet specjalny język BPEL ułatwiający taką integrację serwisów.   
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.75]{orkiestracja.png} 
+	\caption{Orkiestracja}
+\end{figure}
+\newpage
+Choreografia to sposób współpracy serwisów, charakteryzujący się tym,  iż każdy serwis musi być świadomy bycia częścią czegoś większego, od niego zależy kiedy i z kim się skomunikuje. Nie ma tutaj centralnego zarządzania, kordynatora czy też serwisu nadrzędnego. Stworzenie alternatywnego scenariusza w przypadku awarii jest ciężkie albo wręcz niemożliwe. 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.75]{choreogragia.png} 
+	\caption{Choreografia}
+\end{figure}
 
 \section{Web serwisy}
 Web  serwis to system zaprojektowany do wspierania komunikacji między róznymi komputerami za pomocą sieci.  Podstawowe cechyb web serwisu to:
@@ -68,24 +89,20 @@ Serwisy z grupy drugiej reprezentują bardziej klasyczne podejście. Do opisania
 	\item FTP
 	\item RMI/IIOP
 \end{itemize}  
-\newpage
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.75]{webSerwisyArchitektura.png} 
 	\caption{Architektura web serwisów w podejściu klasycznym}
 \end{figure}
-------------------------------------------------------------------------------------------------------------------------------------
 
 \section{Apache ServiceMix}
-Integracja systemów informatycznych jest jednym z największych wyzwań stojących przed nowoczesnymi przedsiębiorstwami. Apache ServiceMix pomaga rozwiązać ten problem będąc bazującym na standardach, lekkim oraz stosującym paradygmat "luźnego powiązania" narzędziem. Dzięki bazowaniu na standardach w sposób drastyczny zmniejsza szanse na uzależnienie się od konkretnego dostawcy oprogramowania, przez stosowanie luźneg powiązania zmniejsza złożoność integracji. 
-Jest to otwarta implementacja ESB, zbudowana w oparciu o JBI i wydana na licencji Apache, od wersji 4 ServiceMix wykorzystuje OSGi do uproszczenia podziału aplikacji na komponenty. 	
+Apache ServiceMix pomaga rozwiązać problem integracji będąc bazującym na standardach, lekkim oraz stosującym paradygmat "luźnego powiązania" narzędziem. Dzięki bazowaniu na standardach w sposób drastyczny zmniejsza szanse na uzależnienie się od konkretnego dostawcy oprogramowania, przez stosowanie luźnego powiązania zmniejsza złożoność integracji. Jest to otwarta implementacja ESB, zbudowana w oparciu o JBI i wydana na licencji Apache, od wersji 4 ServiceMix wykorzystuje OSGi do uproszczenia podziału aplikacji na komponenty. 	
 Architekturę ServiceMix'a można podzielić na 3 warstwy:
 \begin{enumerate}
 	\item Warstwa jądra
 	\item Warstwa serwisów
 	\item Warstwa aplikacji
 \end{enumerate}  
-\newpage
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.45]{ServiceMixArchitektura.jpg} 
@@ -125,61 +142,29 @@ Każda z tych warstw ma inne zadania i odpowiada za inne czynności.
 	\item Warstaw aplikacji - w tym miejscu znajdując się aplikacje użytkownika, ServiceMix 4 dostarcza wielu różnych API(częściowo wymienionych w warstwie serwisów) za pomocą których aplikacje klienckie mogą łączyć się i korzystać z usług oferowanych przez serwisy działające wewnątrz kontenera
 \end{itemize}
 
-\section{IvonaTTS}
-Głównym wyzwaniem stawianym przed syntezatorami mowy jest czytanie tekstu w sposób naturalny, głosem możliwie jak najbardziej podobnym do ludzkiego. Pomimo dużego postępu jaki dokonał się w tej dziedzinie w ciągu ostatnich lat, głosy oferowane przez współczesne syntezatory wciąż brzmią sztucznie, czyniąc słuchanie ich bez zmęczenia zadaniem dość trudny. IvonaTTS wykorzystuje dwie autorskie technologie, mianowicie:
+\section{Apache Camel}
+Apache Came\cite{ibsen2010} \cite{camel} to framework używany na szeroką skalę w systemach których celem jest rozwiązywanie problemu integracji, na przykład w ServiceMixie. Najważniejszą funkcjonalnością Camel'a jest mechanizm routingu. W celu lepszego zrozumienia sposobu działania tego framework'u należy wyjaśnić kilka pojęć:
 \begin{itemize}
-	\item BrightVoices
-	\item Rapid Voice Development
-\end{itemize} 
-BrightVoices zapewniaja ekspresyjne, wyraziste, czyste, lektorskie brzmienie zarówno słów, zdań czy nawet całych książek. Jest ona efektem przeszło 10-letnich badań naukowych. Technologia ta korzysta z nowoczesnych algorytmów z dziedziny sztucznej inteligencji, umożliwiają one precyzyjne odzwierciedlanie ekspresji oraz różnych, nieraz bardzo indywidualnych, cech ludzkiego głosu.   \\
-Rapid Voice Development w sposób znaczny przyspiesza proces tworzenia ludzkiego głosu. Pozwala także na efektywne, szybkie i precyzyjne rozpoznawianie sygnałów mowy w nagraniach lektorskich. Wszystko to jest możliwe do osiągnięcia dzięki doskonałemu modelowaniu zagadnień językowych takich jak:
-\begin{itemize}
-	\item akcentowanie,
-	\item fonetyzacja,
-	\item artykulacja,
-	\item intonacja.
-\end{itemize}
-Według niezależnej amerykańskiej organizacji Voice Information Assiociates syntezator IvonaTTS jest najdokładniejszym spośród dostępnych na rynku komercyjnych syntezatorów. Pozostawia w tyle produkty takich firm jak Microsoft, Nuance, Loquendo czy AT\&T.
+	\item Endpoint - implementacja wzorca Message Endpoint \cite{hohpe2003}, może odnosić się do adresu lub do serwisu znajdującego się pod tym adresem (np. źródło RSS, serwer FTP), pozwala wysyłać i odbierać wiadomości  
+	\item Komponent - fabryki endpoint'ów, pozwalają w elegancki sposób tworzyć endpoint'y preferowanego typu na przykład WS, JMS, RSS itd.
+	\item Procesor - konsument lub translator wiadomości, może wykonać logike biznesową lub też wywołać jakiś serwis
+	\item Wiadomość - wiadomość Camel'owa
+	\item Ścieżka - trasa jaką pokonuje wiadomość, zaczyna się w endpoint (producent), następnie przechodzi przez procesory(konsumenci) i opcjonalnie może zostać skierowana do innego endpoint'u 
+	\item CamelContext - kontekst Camel'a, miejsce w którym komponenty, endpoint'y i procesory są zdefiniowane oraz są utworzone ścieżki z ich wykorzystaniem
+\end{itemize}  
+Korzystając z wszystkich wymienionych wyżej elementów Camel daje możliwość stworzenia bardzo skomplikowanego systemu złożonego z wielu różnych elementów. Za jego pomocą można łatwo zaimplementować system który pobierze plik graficzny z serwera FTP, skieruje go do serwisu OCR, następnie tak otrzymany tekst skieruje do serwisu TTS. Różnych scenariuszy może być dużo i wszystkie one są łatwe do implementacji z wykorzystaniem Camel'a. Umożliwia on dwa różne sposoby definiowania ścieżek, za pomocą pliku XML i za pomocą DSL bazującego na Javi'e.
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.45]{IvonaWydajnosc.png} 
-	\caption{Dokładność IvonaTTS w porównaniu do konkurencji}
+	\includegraphics[scale=0.95]{camel.png} 
+	\caption{Sposób definiowania ścieżek w Camel'u}
 \end{figure}
-
+			
 \section{FreeTTS}
 FreeTTS jest syntezatorem mowy, dostępnym na licencji opensource, w całości napisanym w języku Java. Bazuje na silniku Flite stworznym i rozwijanym przez Carnegie Mellon University. Mimo swojej prostoty jego zaletami są duża wydajność, bardzo dobre radzenie sobie z językiem angielskim oraz częściowe wsparcie dla JSAPI 1.0(jako, że jest to syntezator nie wspiera częsci specyfikacji odpowiedzialnej za rozpoznawanie mowy). Dzięki temu ostatniemu w łatwy sposób umożliwia integrację z różnymi, wieloplatformowymi aplikacjami działającymi wewnątrz JVM. Przy opisywaniu tego syntezatora nie można zapomnieć o tym, że posiada dość dobrą dokumentację oraz liczne, łatwe do uruchomienia i, co bardzo ważne, działające dema. Standardowo oferuje 3 różne głosy, wszystkie w języku angielskim, umożliwia jednak rozszerzenie liczby głosów poprzez import nowych stworzonych przy pomocy narzedzi takich jak:
-	\begin{itemize}
-		\item FestVox,
-		\item MBROLA,
-		\item CMU Arctic.
-	\end{itemize}    
+\begin{itemize}
+	\item FestVox,
+	\item MBROLA,
+	\item CMU Arctic.
+\end{itemize}    
+------------------------------------------------------------------------------------------------------------------------------------
 
-\section{Spring}
-Spring jest framework'iem przeznaczonym do tworzenia aplikacji w językach działających na JVM. Dostarcza gotowe rozwiązania dla wielu zagadnień technicznych napotykanych przez programistów. Najważniejszym elementem Spring'a jest wsparcie infratrukturalne na poziomie aplikacji. Spring skupia się na integracji elementów aplikacji, dzięki czemu programiści mogą skupić się na logice biznesowej.Framework ten można rozważać jako zbiór szablonów, większość z nich może pracować niezależnie, jakkolwiek dzięki połączeniu ich można uzyskać większą funkcjonalność. 
-\newpage
-Najważniejsze funkcje wspomnianych modułów to:
-  \begin{itemize}
-	\item Zarządzanie transakcjami - zapewnie wszechstronne, spójne wsparcie dla transakcj poprzez utworzenie odpowiedniej warstwy abstrakcji, która posiada następujące zalety:
-	\begin{itemize}
-		\item udostępnia generyczne, zwięzły model programowania pomiędzy różnymi interfejsami takimi jaki: JTA, JDBC, JPA itd.,
-		\item bardzo łatwo integruje się z różnymi interfejsami dostępu do danych,
-		\item wspiera deklaratywne zarządzanie transakcjami
-	\end{itemize}
-	\item Spring DI - szablon odpowiedzialny za wstrzykiwanie zależności, prawdopodobnie najbardziej popularna obecnie funkcja Spring'a, dopuszcza zarówno konfigurację za pomocą plików w formacie XML jak i przez adnotacje,
-	
-	\item Zaawansowane wsparcie dla programowania orientowanego aspektowo - dostarcza możliwość zaimplementowania wspólnej logiki, która następnie odwołuje się do konkretnych, potrzebnych w danej chwili modułów, umożliwia łatwe dodanie nowych modułów,
-	\item Wsparcie dla elementów Java EE - dostarcza warstwę abstrakcji do pracy ze standardowymi elementami Java EE takimi jak JDBC, JTA, JMS czy JPA,
-	\item Wsparcie dla testów - oferuje wsparcie dla testów jednostkowych jak i integracyjnych.
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.45]{springArchitektura.png} 
-	\caption{Architektura Spring'a}
-\end{figure}
-Kolejną bardzo ważną cechą tego framework'u jest fakt, że wspiera wiele różnych platform, może działać jako osobna aplikacja, być osadzony w wielu różnych kontenerach, od najprostszego Tomcat'a do najbardziej zaawansowanych wersji WebSphere'a lub też działać w chmurze, takiej jak Heroku czy Google App Engine.  
-\end{itemize}
-
-
-
-% ---------------------------------------------------------------------------
-% ----------------------- end of thesis sub-document ------------------------
-% ---------------------------------------------------------------------------
