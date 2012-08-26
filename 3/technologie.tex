@@ -37,7 +37,44 @@ Najważniejszym konceptem umożliwiającym istnienie i działanie takiej platfor
 \end{figure}
  Możliwe jest oczywiście, żeby dowolna liczba komponentów zarejestrowała ten sam typ serwisów lub też pobrała ten sam serwis. Oczywiście zarejestrowane serwisy można rozróżniać, każdy ma powiązany ze sobą zestaw właściwości(properties), które mogą służyć do specyfikacji. Cała warstwa serwisów jest dynamiczna, bundle mogą dodawać, usuwać itd. serwisy bez konieczności restartu kontenera.  \\
 Do tworzenia i definiowana zależności między bundlami OSGi wykorzystuje Blueprint Container. Jest to framework którego celem jest zarządzanie wstrzykiwaniem zależności. Został zaprojektowany żeby radzić sobie z dynamiczną specyfikacją OSGi'a (możliwość pojawienia się i zniknięcia serwisów w dowolnym momencie). Jego specyfikacja pozwala mu też na działania w środowisku innym niż OSGi'owe. W założeniu opiera się on o strukturę plików xml, które definiują jak komponenty są tworzone oraz łączone aby stworzyć działającą aplikację. Sposób działania kontera opiera się o wzorzec Extender. W czasie inicjalizacji bundle'a (a więc w czasie działania kontenera) Blueprint Container sprawdza czy wszystkie wymagane zależności są spełnione, tworzy wszystkie wymagane obiekty oraz rejestruje serwisy. 
-\\------------------------------------------------------------------------------------------------------------------------------------
+
+\section{Web serwisy}
+Web  serwis to system zaprojektowany do wspierania komunikacji między róznymi komputerami za pomocą sieci.  Podstawowe cechyb web serwisu to:
+\begin{itemize}
+	\item jest komponentem mogącym być osadzonym w innej aplikacji
+	\item komunikacja przy użyciu otwartych protokołów
+	\item jest samodzielny i samo-opisujący się
+	\item może być zlokalizowany za pomocą UDDI
+	\item jest wykorzystywany przez inne aplikacje
+\end{itemize}  
+Można rożróżnić 2 główne klasy web serwisów:
+\begin{itemize}
+	\item web serwisy zgodne z architekturą REST'ową
+	\item web serwisy z których każdy może udostępniać dowolny zbiór operacji
+\end{itemize}  
+Serwisy z grupy pierwszej \cite{fielding2000} ograniczają swój interfejs do zbioru dobrze znanych i wspieranych przez protokół transportowy operacji takich jak: PUT, GET, POST itd. dla  HTTP. Nacisk jest tutaj skierowany na interakcję z zasobami bezstanowymi. Koncpecja serwisów REST'owych opiera się na szcześciu kluczowych punktach:
+\begin{itemize}
+	\item model klient-serwer - wprowadza rozdzielenie odpowiedzialności, oznacza to, że na przykład klient nie interesuje się przechowywaniem danych, jest to sprawa wewnętrznej implementacji serwera, a serwer nie interesuje się interfejsem użytkownika co wprowadza prostotę i zwiększa skalowalność
+	\item bezstanowość - kontekst aplikacji klienckiej nie jest przechowywany na serwerze pomiędzy zapytaniami, każde nowe zapytanie zawiera wszystkie potrzebne informacje żeby mogło zostać obsłużone
+	\item możliwość cache'owania - aplikacje klienckie mogą cache'ować odpowiedzi, wymaga to od serwera by odpowiedź była pośrednio lub bezpośrednio zdefiniowana jako możliwa do cache'owania lub nie, poprawne zarządzanie tą cechą może w sposób znaczy ograniczyć komunikację na linii klient-serwer
+	\item warstwowy system - klient nie jest w stanie stwierdzić czy jest bezpośrednio podpięty do serwisy czy po drodze znajdują sie inne serwisy, takie jak na przykład load-balancer
+	\item opcjonalnie wykonanie kodu na rządanie - możliwe jest żeby serwer wykonał kod przesłany przez klienta
+	\item jednolity interfejs - upraszcza oraz rozluźnia powiązanie między klientem a serwerem, dzięki temu możliwa jest ich niezależna ewolucja
+\end{itemize}   
+Serwisy z grupy drugiej reprezentują bardziej klasyczne podejście. Do opisania swoich interfejsów mogą (nie jest to wymagane jednak bardzo popularne, co więcej konieczne jeżeli chce się użyć framework'ku do generowania kodu) wykorzystywać WSDL. Jest to skrót od Web Service Description Language, formacie bazującym na XML, wykorzystywanym do opisywania jak wywołać dany serwis, jakie parametry wejściowe przyjmuje i jakie struktury danych zwraca. Inne systemy mogą komunikować się z web serwisem za pomocą protokułu SOAP. Skrót pochodzi od angielskiej nazyw Simple Object Access Protocol. Dostarcza on standardowy, rozszerzalny, dobrze zdefiniowany fremwork do wymiany wiadomości XML. Wspiera kilka różnych protokołów transportowych takich jak:
+ \begin{itemize}
+	\item HTTP
+	\item SMTP
+	\item FTP
+	\item RMI/IIOP
+\end{itemize}  
+\newpage
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.75]{webSerwisyArchitektura.png} 
+	\caption{Architektura web serwisów w podejściu klasycznym}
+\end{figure}
+------------------------------------------------------------------------------------------------------------------------------------
 
 \section{Apache ServiceMix}
 Integracja systemów informatycznych jest jednym z największych wyzwań stojących przed nowoczesnymi przedsiębiorstwami. Apache ServiceMix pomaga rozwiązać ten problem będąc bazującym na standardach, lekkim oraz stosującym paradygmat "luźnego powiązania" narzędziem. Dzięki bazowaniu na standardach w sposób drastyczny zmniejsza szanse na uzależnienie się od konkretnego dostawcy oprogramowania, przez stosowanie luźneg powiązania zmniejsza złożoność integracji. 
