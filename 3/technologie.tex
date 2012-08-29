@@ -166,5 +166,71 @@ FreeTTS jest syntezatorem mowy, dostępnym na licencji opensource, w całości n
 	\item MBROLA,
 	\item CMU Arctic.
 \end{itemize}    
-------------------------------------------------------------------------------------------------------------------------------------
+
+\section{Ivona TTS}
+IVONA TTS to wielojęzyczny syntetyzator mowy działający w oparciu o metodę alofoniczną. Autorski algorytm stosowany przez Ivona nazywa się Bright Voices,  powstał i został opisany podczas Blizzard Challenge 2006. W chwili obecnej funkcjonalność Ivona jest dostępna na dwa sposoby:
+\begin{itemize}
+	\item poprzez Ivona SDK
+	\item poprzez Speech Cloud (SaaS)
+\end{itemize}
+Ivona SDK to podstawowy sposób korzystania z usług tego oprogramowania. Dostępne są wersję na wiele różnych platform takich jak:
+\begin{itemize}
+	\item Linux
+	\item Windows
+	\item iOS
+	\item Solaris
+\end{itemize}
+oraz w kilku różnych językach programowania:
+\begin{itemize}
+	\item C/C++
+	\item Java
+	\item ObjectiveC
+	\item platforma .NET
+\end{itemize}
+Dostęp do Speech Cloud'a możliwy jest zarówno za pomocą protokołu SOAP oraz przez reprezentację REST'ową. W tej chwili niezależnie od używanego API można uzyskać następującą funkcjonalność:
+\begin{itemize}
+	\item wygenerowanie pliku dźwiękowego z podanego tekstu
+	\item pobranie informacji o dostępnych głosach i kodekach
+	\item zmodyfikowanie zasad wymowy, w celu poprawienia jakości wymowy niektórych słów
+\end{itemize}
+Syntezator ten wspiera bardzo dużo języków między innymi:
+ \begin{itemize}
+	\item polski
+	\item angielski
+	\item francuski
+	\item portugalski
+	\item niemiecki
+\end{itemize}
+Poza wyborem języka istnieje też możliwość wyboru lektora, różnią się oni barwą i siłą głosu, czy też szybkością mówienia. Możliwa jest też dynamiczna zmiana zarówno języka jak i lektora. Kolejną ważną cechą Ivona jest fakt, iż nie ogranicza się ona do jednego kodeka, wspiera następujące formaty:
+\begin{itemize}
+	\item mp3/22050
+	\item ogg/22050
+	\item pcm16/22050
+	\item alaw/8000
+\end{itemize}
+ Aby korzystać ze zdalnego API należy posiadać konto w systemie Ivony, jest ono wykorzystywane do pobierania opłat. Co bardzo istnotne, Ivona wspiera protokół SSML, umożliwiający klientowi dokładniejsze sterowanie generowanym głosem. 
+
+\section{Google Translate}
+Google Translate to płatna usługa Google'a umożliwiająca tłumaczenie tekstu pomiędzy tysiącami dostępnych par języków. Poza tłumaczeniem usługa ta umożliwia również rozpoznanie języka. API udostępniane przez korporację opiera się o architekturę REST, składa się z trzech metod:
+\begin{itemize}
+	\item translate - tłumaczy tekst z języka źródłowego na docelowy, przykład:
+		\begin{figure}[!h]
+			\centering
+			\includegraphics[scale=0.95]{translateExp.png} 
+			\caption{Tłumaczenie słowa hello z angielskiego na polski}
+		\end{figure}
+	\item languages - zwraca listę języków wspieranych przez translator
+		\begin{figure}[!h]
+			\centering
+			\includegraphics[scale=0.95]{listExp.png} 
+			\caption{Przykład pobrania listy dostępnych języków}
+		\end{figure}
+	\item detect - rozpoznaje język tekstu źródłowego
+		\begin{figure}[!h]
+			\centering
+			\includegraphics[scale=0.95]{detectExp.png} 
+			\caption{Przykład detekcji języka}
+		\end{figure}
+\end{itemize}
+Parametr key=INSERT-YOUR-KEY służy korporacji do indentyfikowania usługobiorcy, na jego podstawie naliczane są opłaty. Jak widać REST w API Google Translate różni się nieznacznie od tradycyjnego pojmowania tej architektury. Zamiast dostarczać dostęp do zasobów, dostarczarczany jest dostęp do usług, stosując takie podejście uzyskano możliwość wykorzystania jednego URI jako całego API. 
 
