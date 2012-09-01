@@ -151,9 +151,9 @@ Chociaż repozytorium serwisów jest ważnym komponentem to nie bierze ono czynn
 	\caption{Diagram przepływu wiadomości w warstwie \textit{Services Layer}}\label{fig:services_layer_project}
 \end{figure}
 
-Pierwszym wymaganiem stawianym konkretnym instancjom serwisów jest implementacja interfejsu \textit{IMessageEnabledService} \ref{lst:service_interface}. Interfejs ten posiada tylko jedną metodę, która zwraca adres kanału wejściowego danego serwisu. Spełnienie tego wymagania jest konieczne aby repozytorium było w stanie odnaleźć serwis i zwrócić jego adres routerowi, jednak aby dana instancja pełniła jakąkolwiek rolę w systemie musi także udostępniać informację o funkcjonalności przez niej dostarczanej. W tym celu instancje muszą implementować dodatkowe interfejsy, które jednoznacznie określają udostępnianą funkcjonalność. Ponieważ komunikacją między serwisami a resztą systemu odbywa się przez kanały wiadomości, interfejsy te służą tylko do oznaczenia serwisów a nie jako kontrakt miedzy nimi a, komponentami z nich korzystającymi. Takie użycie interfejsu jest znane jako wzorzec \textit{Marker interface} \cite{bloch2008}.
+Pierwszym wymaganiem stawianym konkretnym instancjom serwisów jest implementacja interfejsu \textit{MessageEnabledService} \ref{lst:service_interface}. Interfejs ten posiada tylko jedną metodę, która zwraca adres kanału wejściowego danego serwisu. Spełnienie tego wymagania jest konieczne aby repozytorium było w stanie odnaleźć serwis i zwrócić jego adres routerowi, jednak aby dana instancja pełniła jakąkolwiek rolę w systemie musi także udostępniać informację o funkcjonalności przez niej dostarczanej. W tym celu instancje muszą implementować dodatkowe interfejsy, które jednoznacznie określają udostępnianą funkcjonalność. Ponieważ komunikacją między serwisami a resztą systemu odbywa się przez kanały wiadomości, interfejsy te służą tylko do oznaczenia serwisów a nie jako kontrakt miedzy nimi a, komponentami z nich korzystającymi. Takie użycie interfejsu jest znane jako wzorzec \textit{Marker interface} \cite{bloch2008}.
 
-\lstset{language=Java, tabsize=4, caption=Definicja interfejsu IMessageEnabledService w języku Java.,label=lst:service_interface}
+\lstset{language=Java, tabsize=4, caption=Definicja interfejsu MessageEnabledService w języku Java.,label=lst:service_interface}
 
 \begin{center}
 \begin{lstlisting}
@@ -198,12 +198,132 @@ Większość dostępnych serwisów syntezy mowy nie była tworzona z myślą o o
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.8]{proxy_layer_flow.png}
-	\caption{Proxy wraz z elementami transformującymi oraz adapterem. }\label{fig:servis_proxy.}
+	\caption{Proxy wraz z elementami transformującymi oraz adapterem. }\label{fig:servis_proxy}
 \end{figure}
 
 
+\section{Implementacja}
+
+Do implementacji systemu SpeechProcessingPlatform została użyta platforma integracyjna Fuse ESB, która w znaczący sposób ułatwia rozwiązywanie problemów integracji, dzięki dostarczaniu dużej ilości gotowych komponentów. Zastosowanie kontenera OSGi, na którym platforma ta jest oparta, pozawala na dynamiczną adaptację systemu w zależności od zaistniałych warunków. Dodatkowo pozwala podzielić system na niezależne, wymienialne części (bundle), z których każda posiada niezależny od reszty cykl życia. Dodawanie nowych części, takich jak kolejne endpointy, czy kolejne serwisy może być realizowane w trakcie pracy systemu i nie wymaga jego ponownego uruchomienia. 
+Do implementacji przepływów wiadomości został użyty Apache Camel, który jest jedną z części składowych Fuse ESB. Framework ten zawiera bardzo dużą liczbę wbudowanych endpointów, obsługujących większość z popularnych protokołów komunikacji takich jak: FTP, HTTP, IMAP czy XMPP. Dzięki temu dodanie obsługi większej ilości protokołów nie stanowi żadnego problemu. Framework ten, pozwala również w prosty w sposób zaimplementować większość wzorców EIP, dlatego implementacja opisanych w poprzednim podrozdziale przepływów wiadomości jest stosunkowo prosta.
+
+\subsection{Wewnętrzny format wiadomości}
+Wiadomości przesyłane wewnątrz systemu mają postać obiektów, a pliki wejściowe są dołączone do nich jako załączniki. Takie podejście ułatwia operacje na wiadomościach, np. sprawdzenie czy zadanie jest już zakończone sprowadza się do wywołania metody. Fragment kodu \ref{lst:task_interface} przedstawia interfejs który musi być implementowany przez obiekty wiadomości.
+
+\lstset{language=Java, tabsize=4, caption=Definicja interfejsu Task w języku Java.,label=lst:task_interface}
+
+\begin{center}
+\begin{lstlisting}
+public interface Task {
+	boolean isfinished();
+	boolean isAsynchronous();
+	Class getRequiredServiceType();
+	Map<String, String> getMetaData();
+	String getReturnAddress();
+	void addReturnAddress(String address);
+}
+\end{lstlisting}
+\end{center}
+
+Zadania mogą mieć postać jedno lub wieloetapową, lecz fakt ten powinien być nie widoczny dla komponentów systemu. Jest to klasyczny przykład na zastosowanie wzorca projektowego kompozyt(diagram \ref{fig:composite_pattern}), który jest szeroko stosowany w informatyce, a szczegółowo opisany chociażby w \cite{gamma1995}.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.7]{composit_pattern.png}
+	\caption{Wzorzec kompozyt}\label{fig:composite_pattern}
+\end{figure}
+
+Każdy z opisanych wcześniej rodzajów przetwarzania mowy posiada swoją klasę obiektów reprezentująca zadania danego typu. Diagram \ref {fig:task_class_hierarchy} przedstawia strukturę dziedziczenia klas reprezentujących obiekty zadań. Przedstawiona została tylko klasa zadań TTS, pozostałe klasy są analogiczne. 
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.7]{tasks_hierarhy.png}
+	\caption{Struktura dziedziiczenia klasy Task}\label{fig:task_class_hierarchy}
+\end{figure}
 
 
+\subsection{Warstwa \textit{Data Endpoints Layer}}
+
+Dzięki bogatej bazie komponentów dostępnych Aapache Camel, implementacja konkretnych endpointów sprowadza się raczej do konfiguracji. W większości przypadków jedyne co trzeba zrobić to dostarczyć odpowiedni adres URI, który pozwoli Camelowi stworzyć i uruchomić wymagany endpoint. Fragment kodu \ref{lst:camel_uris} przedstawia przykładowe formaty adresów URI
+
+\lstset{language=Java, tabsize=4, caption=Przykładowe formaty adresów URI dla endpointów Apache Camel.,label=lst:task_interface}
+
+\begin{center}
+\begin{lstlisting}
+	ftp://[username@]hostname[:port]/directoryname[?options]
+	smtp://[username@]host[:port][?options]
+	jms:[queue:|topic:]destinationName[?options]
+	cxf:bean:cxfEndpoint[?options]
+	cxfrs:bean:rsEndpoint[?options]
+\end{lstlisting}
+\end{center}
+
+Aby dodać niektóre rodzaje endpointów jest troche większy, lecz nadal stosunkowo mały. Chcąc udostępnić system jako web serwis należało stworzyć również opis serwisu, jednak sprowadza się to do implementacji prostego interfejsu z dodatkowy adnotacjami.  Fragment kodu \ref{lst:rest_service} przedstawia definicje serwisu REST-owego, która zastała użyta do konfiguracji endpointu cxfrs. Metody w poniższej klasie nie są wywoływane, służą one tylko do konfiguracji endpointu. Za całe przetwarzanie odpowiedzialna jest reszta ścieżki camelowej.
+
+
+\lstset{language=Java, tabsize=4, caption=Definicja REST-owego endpointu.,label=lst:rest_service}
+
+
+%Trzeba to przejrzeć czy to działa zanim to sie pokaże wiekszej liczbie osób.
+\begin{center}
+\begin{lstlisting}
+@Path("/speech_processing/rest")
+public class RESTSpeechProcessingService {
+
+	@POST
+	@Path("/process")
+    	public Response process(@FormParam("task")  String task, @FormParam("input")  File input) {
+		return null;
+	}
+
+	@GET
+	@PATH("/get_response")
+	public Response getResponse(@QueryParam("id")  String responseId) {
+		return null;
+	}
+}
+
+\end{lstlisting}
+\end{center}
+
+Po odebraniu wiadomości przez endpoint kolejnym krokiem jest jej transformacja do używanego wewnętrznie formatu. Wspieranie transformacji między różnymi formatami danych jest jednym z podstawowych wymagań stawianym rozwiązaniom ESB, dlatego też w FUSE ESB problem ten posiada bardzo duże wsparcie ze strony frameworku. Camel udostępnia zbiór gotowych komponentów, dzięki którym transformacja między formatami takimi jak JSON, XML, czy CSV staje się trywialna. Jeżeli jednak, transformacja nie jest standardowa, Camel posiada konstrukcje, które w łatwy sposób umożliwiają dodanie własnych komponentów transformujących. W przypadku transformacji wiadomości otrzymanych przez endpointy, transformacja polega na zamianie opisu zadania w postaci pliku XML, na obiekt przedstawiający odpowiednie zadanie. Do tego zadania wykorzystano technologie JAXB \cite{jaxb2008}. Pozwala ona w prostu i przejrzysty sposób opisać mapowanie obiekt <-> xml przy pomocy zestawu adnotacji. Dzięki zachowaniu odpowiedniej konwencji nazewnictwa opisanie mapowania sprowadza się do dodania tylko jednej adnotacji do każdej z klas opisujących zadania. Fragment kodu \ref{lst:jaxb_annotation} przedstawia klasę TTSTask z dodaną adnotacją JAXB.
+
+
+% TO TEZ SPRAWDZIC , CZY ZADZIALA ZE ZLOZONYMI TYPAMI
+\lstset{language=Java, tabsize=4, caption=Definicja klasy TTSTask wraz z adnotacjami JAXB .,label=lst:jaxb_annotation}
+
+\begin{center}
+\begin{lstlisting}
+@XmlRootElement(name="tts")
+public class TTSTask extends AbstarctTask {
+	...
+}
+\end{lstlisting}
+\end{center}
+
+Ostatnim zadaniem endpointa jest przesłanie gotowej wiadomości do routera. Jedyne czego do tego potrzebuje to adres URI kanału wejściowego routera. Adres ten jest dostarczany za pomocą pliku konfiguracyjnego. Takie rozwiązanie nie pozwala na dynamiczną zmianę ścieżki, lecz nie jest to wymagane ponieważ bez routera, reszta komponentów nie może pełnić swojej roli.
+Fragment kodu \ref{lst:email_endpoint} przedstawia kompletną implementację przepływu wiadomości od endpointu do routera.
+
+\lstset{language=XML, tabsize=4, caption=Kompletna implementacja przypływu wiadomości od endpointu do routera przy pomocy XML DSL.,label=lst:email_endpoint}
+
+\begin{center}
+\begin{lstlisting}
+
+<camelContext xmlns="http://camel.apache.org/schema/spring">
+
+	<dataFormats>
+		<jaxb id="jaxb" contextPath="pl.edu.agh.speechprocessing.tasks"/>
+	</dataFormats>
+
+	<route>
+		<from uri="smtp://gmail.com?password=pass123&username=SpeechProcessingPlatform"/>
+		<unmarshal ref="jaxb"/>
+		<to uri="{{routerURI}}"
+	</route>
+
+</camelContext>
+\end{lstlisting}
+\end{center}
 
 
 \section*{Podsumowanie} 
