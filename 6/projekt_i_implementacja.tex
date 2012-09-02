@@ -46,6 +46,7 @@ Głównym elementami ostatniej warstwy, \textit{Services Layer}, jest repozytori
 \begin{itemize}
 	\item OCR
 	\begin{itemize}
+		\item obsługiwane języki 
 		\item obsługiwane formaty zdjęć
 	\end{itemize}
 	\item ASR
@@ -135,10 +136,10 @@ Aby nie wiązać platformy z konkretną implementacją repozytorium został wpro
 \begin{center}
 \begin{lstlisting}
 public interface SreviceRepository {
-	Collection<String> lookupServices(Class type);
-	Collection<String> lookupServices(Class type, Map<String, String> metaData);
-	String lookupService(Class type);
-	String lookupService(Class type, Map<String, String> metaData);
+	Collection<String> lookupServicesURIs(Class type);
+	Collection<String> lookupServicesURIs(Class type, Map<String, String> metaData);
+	String lookupServiceURI(Class type);
+	String lookupServiceURI(Class type, Map<String, String> metaData);
 }
 \end{lstlisting}
 \end{center}
@@ -204,7 +205,7 @@ Większość dostępnych serwisów syntezy mowy nie była tworzona z myślą o o
 
 \section{Implementacja}
 
-Do implementacji systemu SpeechProcessingPlatform została użyta platforma integracyjna Fuse ESB, która w znaczący sposób ułatwia rozwiązywanie problemów integracji, dzięki dostarczaniu dużej ilości gotowych komponentów. Zastosowanie kontenera OSGi, na którym platforma ta jest oparta, pozawala na dynamiczną adaptację systemu w zależności od zaistniałych warunków. Dodatkowo pozwala podzielić system na niezależne, wymienialne części (bundle), z których każda posiada niezależny od reszty cykl życia. Dodawanie nowych części, takich jak kolejne endpointy, czy kolejne serwisy może być realizowane w trakcie pracy systemu i nie wymaga jego ponownego uruchomienia. 
+Do implementacji systemu SpeechProcessingPlatform została użyta platforma integracyjna Fuse ESB, która w znaczący sposób ułatwia rozwiązywanie problemów integracji, dzięki dostarczaniu dużej ilości gotowych komponentów. Zastosowanie kontenera OSGi, na którym platforma ta jest oparta, pozawala na dynamiczną adaptację systemu w zależności od zaistniałych warunków. Dodatkowo pozwala podzielić system na niezależne, wymienialne części (bundle), z których każda posiada niezależny od reszty cykl życia. Dodawanie nowych części, takich jak kolejne endpointy, czy kolejne serwisy może być realizowane w trakcie pracy systemu i nie wymaga jego ponownego uruchomienia \cite{hall2011}. 
 Do implementacji przepływów wiadomości został użyty Apache Camel, który jest jedną z części składowych Fuse ESB. Framework ten zawiera bardzo dużą liczbę wbudowanych endpointów, obsługujących większość z popularnych protokołów komunikacji takich jak: FTP, HTTP, IMAP czy XMPP. Dzięki temu dodanie obsługi większej ilości protokołów nie stanowi żadnego problemu. Framework ten, pozwala również w prosty w sposób zaimplementować większość wzorców EIP, dlatego implementacja opisanych w poprzednim podrozdziale przepływów wiadomości jest stosunkowo prosta.
 
 \subsection{Wewnętrzny format wiadomości}
@@ -215,7 +216,7 @@ Wiadomości przesyłane wewnątrz systemu mają postać obiektów, a pliki wejś
 \begin{center}
 \begin{lstlisting}
 public interface Task {
-	boolean isfinished();
+	boolean isFinished();
 	boolean isAsynchronous();
 	Class getRequiredServiceType();
 	Map<String, String> getMetaData();
@@ -304,7 +305,7 @@ public class TTSTask extends AbstarctTask {
 Ostatnim zadaniem endpointa jest przesłanie gotowej wiadomości do routera. Jedyne czego do tego potrzebuje to adres URI kanału wejściowego routera. Adres ten jest dostarczany za pomocą pliku konfiguracyjnego. Takie rozwiązanie nie pozwala na dynamiczną zmianę ścieżki, lecz nie jest to wymagane ponieważ bez routera, reszta komponentów nie może pełnić swojej roli.
 Fragment kodu \ref{lst:email_endpoint} przedstawia kompletną implementację przepływu wiadomości od endpointu do routera.
 
-\lstset{language=XML, tabsize=4, caption=Kompletna implementacja przypływu wiadomości od endpointu do routera przy pomocy XML DSL.,label=lst:email_endpoint}
+\lstset{language=XML, tabsize=4, caption=Przykładowa\, kompletna implementacja przypływu wiadomości od endpointu do routera przy pomocy XML DSL.,label=lst:email_endpoint}
 
 \begin{center}
 \begin{lstlisting}
@@ -318,7 +319,7 @@ Fragment kodu \ref{lst:email_endpoint} przedstawia kompletną implementację prz
 	<route>
 		<from uri="smtp://gmail.com?password=pass123&username=SpeechProcessingPlatform"/>
 		<unmarshal ref="jaxb"/>
-		<to uri="{{routerURI}}"
+		<to uri="{{routerURI}}" />
 	</route>
 
 </camelContext>
@@ -326,7 +327,171 @@ Fragment kodu \ref{lst:email_endpoint} przedstawia kompletną implementację prz
 \end{center}
 
 
+\subsection{Warstwa \textit{Routing Layer}}
+
+Najważniejszym elementem tej warstwy jak i całego systemu jest router. Jedyną zależnością pomiędzy routerem a innymi komponentami systemu jest jego adres, dzięki czemu system jest bardzo słabo powiązany z konkretną implementacją komponentu routującego, dzięki czemu implementacje te można dowolnie podmieniać stosownie do zaistniałych potrzeb. Apache Camel bardzo upraszcza proces implementacji routera. Dzięki użyciu elementu \textit{dynamicRouter} jedyne co zostaje do implementacji to metoda zwracająca odpowiedni adres URI. Ponieważ \textit{dynamicRouter} musi być ostatnim elementem ścieżki, ustawienie poprawnego adresu zwrotnego musi zostać podzielone na dwa etapy. Pierwszy etap następuje przed etapem routowania i polega na dodaniu adresu zwrotnego routera niezależnie od tego gdzie ostatecznie wiadomość zostanie przesłana. Drugi etap polega na usunięciu adresu routera z wiadomości i następuje tylko jeżeli proces przetwarzania został zakończony, czyli jeżeli wszystkie wymagane kroki zostały wykonane albo któryś z nich nie może zostać wykonany z powodu braku odpowiedniego serwisu. Poniżej przedstawiona została przykłądowa ścieżka Camelowa odpowiadająca za przepływ wiadomości w opisywanej warstwie jak i przykładowa implementacja komponentu routującego.
+
+\lstset{language=XML, tabsize=4, caption=Scieżka Camelowa odpowiadająca za przepływ wiadomości w warstwie \textit{Routing Layer}.,label=lst:routin_layer_impl}
+
+%SPRAWDZIĆ
+\begin{center}
+\begin{lstlisting}
+<bean id="dynamicRouter" class="pl.edu.agh.speechprocessing.routing.DynamicRouter"/>
+
+<camelContext xmlns="http://camel.apache.org/schema/spring">
+
+	<route>
+		<from uri="{{routerURI}}" />
+		<bean ref="dynamicRouter" method="addRouterAddress"/>
+		<dynamicRouter>
+			<method ref="dynamicRouter" method="route" />
+		</dynamicRouter>
+	</route>
+
+	<route>
+		<from uri="direct:responseChannel">
+		<bean ref="dynamicRouter" method="removeRouterAddress"/>
+		<dynamicRouter>
+			<method ref="dynamicRouter" method="routeResponse" />
+		</dynamicRouter>
+	</route>
+
+</camelContext>
+
+\end{lstlisting}
+\end{center}
+
+\lstset{language=Java, tabsize=4, caption=Implementacja metody routującej wiadomości do odpowiednich serwisów.,label=lst:router_impl}
+
+\begin{center}
+\begin{lstlisting}
+
+class DynamicRouter {
+
+	...
+
+	public String route(Task task) {
+		if (task.isFinished()) {
+			return "direct:responseChannel";
+		} else {
+			String uri = serviceRepository.lookupServiceURI(task.getRequiredServiceType(), task.getMetaData());
+			if (service != null) {
+				return uri;
+			} else {
+				return "direct:responseChannel";
+			}
+		}
+	}
+
+	public String routeResponse(Task task) {
+		return task.getReturnAddress();
+	}
+
+	public Task removeRouterAddress(Task task) {
+		//usuniecie adresu routera z listy adresow zwrotnych
+		task.getReturnAddress();
+		return task;
+	}
+
+	public Task addRouterAddress(Task task) {
+		task.addReturnAddress(getRouterAddress());
+		return task;
+	}
+
+	...
+end
+\end{lstlisting}
+\end{center}
+
+\subsection{Warstwa \textit{Services Layer}}
+
+Implementacja repozytorium serwisów zastosowana w systemie SpeechProcessingPlatform jest oparta na OSGi-u, lecz dzięki dobrze wyspecifikowanemu interfejsowi, system ten nie jest związany z tą jedną, konkretną implementacją. Bazowanie na kontenerze OSGi pozwala dodać dynamiczną naturę do systemu. Takie podejście pozwala dodawać nowe serwisy bez zatrzymywania systemu. Ponieważ OSGi posiada wbudowany rejestr serwisów, a więc całą logika związana z rejestrowaniem się i utrzymywaniem listy dostępnych serwisów jest  zapewniona, jedyne co zostało do zaimplementowania to odpytanie rejestru o odpowiedni serwis. Podstawowym typem wyszukiwania jakie udostępnia rejestr OSGi jest wyszukiwanie po typie serwisu. Dodatkowo udostępnia on metodę wyszukiwania, która przyjmuje standardowy filtr LDAP \cite{ldaprfc1996} w postaci ciągu znaków. Rejestr OSGi porównuje parametry z filtru z parametrami w definicji serwisu i na tej podstawie podejmuje decyduję które referencje do serwisów zwrócić. Fragment \ref{lst:ldap_tts_query} przedstawia przykładowe zapytanie LDAP zawierające parametry dotyczące przetwarzania mowy. Oprócz opisu serwisów w postaci typu oraz parametrów, OSGi pozwala również na nadawanie im rankingu, dzięki czemu jeżeli więcej niż jeden serwis spełnia zadane wymagania, pozwala zdecydować który serwis jest lepszy. Kompletny algorytm wyboru najlepiej pasującego serwisu można znaleźć w \cite{hall2011}. Fragment kodu \ref{lst:service_repository_impl} przedstawia klasę OSGIServiceRepository, która pełni funkcję fasady nad rejestrem wbudowanym w OSGi.
+
+\lstset{language=Java, tabsize=4, caption=Przykładowe zapytanie LDAP zawierające parametry dotyczące serwisu TTS ,label=lst:ldap_tts_query}
+
+\begin{center}
+\begin{lstlisting}
+
+//zapytanie o serwis TTS
+"(&(language=en)(codec=mp3))"
+
+/zaptanie o serwis OCR
+"(&(language=pl)(|(imageFormat=jpg)(imageFormat=jpeg)))"
+
+
+\end{lstlisting}
+\end{center}
+
+\lstset{language=Java, tabsize=4, caption=Częściowa definicja klasy OSGIServiceRepository będącą fasadą nad Rejestrem OSGi. ,label=lst:service_repository_impl}
+
+\begin{center}
+\begin{lstlisting}
+public class TTSTask implements SreviceRepository{
+	private BundleContext bundleContext;
+	...
+	
+	public Collection<String> lookupServicesURIs(Class type) {
+		ServiceReference[] refList = bundleContext.getServiceReferences(type.getName())
+		return prepareURIsList(refList);
+	}
+
+	public Collection<String> lookupServicesURIs(Class type, Map<String, String> metaData) {
+		ServiceReference[] refList = bundleContext.getServiceReferences(type.getName(), preapreFilterQuery(metaData));
+		return prepareURIsList(refList);
+	}
+
+	...
+}
+
+\end{lstlisting}
+\end{center}
+% MOZNA DODAC REFERENCJE DO LBUEPRINTA
+Ostatnimi elementami systemu są konkretne serwisy, jednak aby jakiś serwis mógł zostać użyty w systemie musi spełniać parę warunków. Pierwszyw warunkiem jest umiejętność obsługi wiadomości co jest równoznaczne z udostępnianiem jakiegoś kanału wejściowego, który pozwoli na komunikącje routera z daną implementacją. Drugim warunkiem jest rejestracja w rejestrze OSGi pod odpowiednimi interfejsami oraz z odpowiednimi parametrami, co pozwoli na wyszukanie serwisu podczas procesu routowania. W celu rejestracji serwisów został użyty kontener Blueprint, który jest dostarczony razem z frameworkiem OSGi. Pozwala on na łatwą i przejrzystą definicję serwisów za pomocą plików konfiguracyjnych w formacie xml. Oprócz tego, pozwala on również na definicję oraz wstrzykiwanie zależności co upraszcza konfiguracje systemu. Fragment kodu \ref{lst:blueprint_definition} przedstawia definicje serwisu OCR przy uzyciu kontenera Blueprint.
+
+\lstset{language=XML, tabsize=4, caption=Definicja serwisu OCR przy użyciue kontenera Blueprint.,label=lst:blueprint_definition}
+
+%SPRAWDZIĆ
+\begin{center}
+\begin{lstlisting}
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
+
+	 <!-- definicja beanu ktory zostanie zarejestrowany jako serwis, jako argument przyjmuje nazwe kanalu wejsciowego -->
+	<bean id="freeOCRServiceImpl" class="pl.edu.agh.speechprocessing.services.FreeOCRService">
+		 <argument value="direct:freeOCRService"/> 
+	</bean>
+
+	<service ref="freeOCRService" auto-export="interfaces" ranking="5">
+		<service-properties>
+			<entry key="language">
+				<set value-type="java.lang.String">
+					<value>en</value>
+					<value>it</value>
+					<value>pl</value>
+				</set> 
+			</entry>
+			<entry key="imageFormat">
+				<set value-type="java.lang.String">
+					<value>bmp</value>
+					<value>png</value>
+					<value>jpg</value>
+				</set> 
+			</entry>
+		</service-properties>
+	</service>
+
+</blueprint>
+
+\end{lstlisting}
+\end{center}
+
+Serwisy rejestrowane w rejestrze OSGi pełnią tylko pomocniczą role. Ich zadaniem jest umożliwienie wyszukiwania oraz dostarczanie adresu pod który należy wysłać wiadomość do zainteresowanych routera. Całę przetwarzanie zaczyna się po otrzymaniu wiadomości w kanale odbiorczym udostępnianym przez dany serwis. Oczywiście obiekt, który jest rejestrowany może również brać czynny udział w przetwarzaniu, ale nie musi. Jako ża właściwe serwisy, które dokonują przetwarzania są na zewnątrz systemu, jedyne zadanie jakie pozostaje to przyogotwanie wiadomości, wywołanie serwisu używając odpowiedniego protokołu, przetłumaczenie odpowiedzi na format wewnętrzny i odesłanie jej do routera. 
+
+
+% Można dodać fragment implementacji.
+
 \section*{Podsumowanie} 
+
+Powyższy rozdział przedstawił projekt i implementację przykładowej platformy integracyjnej dla przetwarzania mowy. Zastosowanie architekryury z luźno powiązanymi warstwami zostawia dużo opcji do przyszłego rozwoju systemu. Prezentowany system jest też przykładem na to jak użycie wyspecjalizowanych technologii upraszcza proces integracji. Fuse ESB integrujący w sobie takie technologie jak OSGi cz Apache Camel pozwala budować systemu integracyjne z gotowych elementów pozwalając ich twórcom skupić sie na logice przypływu danych. Zaimplementowany system należy poddać weryfikacji względem wymagań postawionych w rozdziale 2, a także sprawdzić jego wydajność w porównaniu z tradycyjnym podejściem do systemów przetwarzania mowy.
 
 
 % można wrzucic obrazek całego systemu
