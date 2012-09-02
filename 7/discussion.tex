@@ -1,7 +1,7 @@
 % this file is called up by thesis.tex
 % content in this file will be fed into the main document
 
-\chapter{Discussion} % top level followed by section, subsection
+\chapter{Podsumowanie} % top level followed by section, subsection
 
 
 % ----------------------- paths to graphics ------------------------
@@ -13,6 +13,16 @@
     \graphicspath{{7/figures/EPS/}{7/figures/}}
 \fi
 
+Obecnie istnieje bardzo dużo róznych serwisów oferujących przetwarzanie mowy. Jednak ich poważną wadą jest to, że dziedzina ich pracy jest bardzo wąska. Brakuje systemów oferujących więcej niż jeden sposób transformacji. Autorzy tej pracy starali się sprawdzic czy integracja takich systemów jest dobrym pomysłem oraz jeżeli tak to jakie podejście jest najlepsze. Jak zostało to zaprezentowane w powyższych rozdziałach stworzenie systemu integrującego serwisy posiadające różne funkcje ma dużo zalet i bardzo ułatwia tworzenie aplikacji wykorzystujących te serwisy. Co więcej dodatkowa warstwa abstrakcji, która powstaje w ten sposób, nie wpływa w sposób znaczący na szybkość działania aplikacji klienckich (w porównaniu z sytuacją w której aplikacja kliencka sama musiałaby komunikować się z tymi serwisami). Wszystko to wyraźnie pokazuje, że istnienie takiego zintegrowanego serwisu ma sens i jest na niego zapotrzebowanie. \\
+Co do wyboru sposobu integracji, jak zostało to zaprezentowane wyżej istnieje wiele odrębnych sposobów, z których każdy ma swoje zalety i wady. Po dogłębnej analizie dostępnych rozwiązań integracyjnych autorzy pracy zdecydowali, że najlepszy efekt daje najnowsze rozwiązanie a więc ESB. Posiada ono szerek zalet które należy uwypuklić:
+\begin{itemize}
+	\item Łatwość rozbudowy - gdy powstanie jakiś nowy serwis, oferujący ciekawą funkcjonalność jedynym wysiłkiem jaki należy wykonać w celu użycia go, jest wpięcie serwisu do szyny
+	\item Lekkość - warstwa abtrakcji nakładana przez ESB w celu połączenia dostępnych serwisów jest bardzo mała i nie ma wpływu na wydajność
+	\item Skalowalność - różne instancje ESB mogą łączyć się razem w celu uzyskania wyższej wydajności oraz rozproszenia geograficznego
+	\item Różnorodność - wszystkie istniejące implementacje ESB oferują wiele różnych endpoint'ów, służących jako interfejsy wejścia/wyjścia, obsługujących wiele formatów
+\end{itemize}
+Wykorzystanie takiego podejścia daje też inny duży, plus jakim niewątpliwie jest łatwość ukrywania implementacji. Klienci systemu opartego na takim rozwiązaniu nie będą wiedzieć z jakich konkretnie serwisów korzystają, przez co w razie wystąpienia kłopotów czy też pojawienia się nowszego, lepszego lub ciekawszego rozwiązania można taki serwis łatwo podmienić, bez konieczności zmieniania API. Kolejną dużą zaletą wykorzystania ESB, jest możliwość wykorzystania routingu. Dzięki temu sterowanie całym systemem i kolejnością wywoływania poszczególnych serwisów jest możliwa za pomocą prostego pliku xml.  \\
+Zaprezentowana praca magisterska zagłębia się w dziedzinę, która jest dość nowatorska. Zaproponowane rozwiązanie i przykładowa implementacja pokazują, że pomimo, iż temat jest ciekawy i warty dalszych badań to jednak istniejące w tej chwili rozwiązania integracyjne są odpowiednie dla specyficznej dziedziny jaką są multimedia i można jest z powodzeniem stosować. 
 
 % ----------------------- contents from here ------------------------
 
