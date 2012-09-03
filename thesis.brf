@@ -10,10 +10,10 @@
 \backcite {ibsen2010}{{30}{3.5}{section.3.5}}
 \backcite {camel}{{30}{3.5}{section.3.5}}
 \backcite {hohpe2003}{{30}{3.5}{section.3.5}}
-\backcite {bloch2008}{{55}{5.2.3}{figure.caption.27}}
-\backcite {hall2011}{{57}{5.3}{section.5.3}}
-\backcite {gamma1995}{{58}{5.3.1}{lstnumber.5.4.8}}
-\backcite {jaxb2008}{{61}{5.3.2}{lstnumber.5.6.16}}
-\backcite {ldaprfc1996}{{64}{5.3.4}{subsection.5.3.4}}
-\backcite {hall2011}{{64}{5.3.4}{subsection.5.3.4}}
+\backcite {bloch2008}{{47}{4.2.3}{figure.caption.24}}
+\backcite {hall2011}{{49}{4.3}{section.4.3}}
+\backcite {gamma1995}{{50}{4.3.1}{lstnumber.4.4.8}}
+\backcite {jaxb2008}{{53}{4.3.2}{lstnumber.4.6.16}}
+\backcite {ldaprfc1996}{{56}{4.3.4}{subsection.4.3.4}}
+\backcite {hall2011}{{56}{4.3.4}{subsection.4.3.4}}
 \backcite {chappell2004}{{73}{6}{chapter*.33}}

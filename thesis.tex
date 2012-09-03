@@ -47,7 +47,7 @@
 %\def\refname{Literatura}%
 %\def\abstractname{Streszczenie}%
 %\def\bibname{Bibliografia}%
-%\def\chaptername{Rozdzia\l}%
+%\def\chaptername{Rozdzial}%
 %\def\appendixname{Dodatek}%
 %\def\contentsname{Spistre\'sci}% spis treści
 %\def\listfigurename{Spisrysunk\'ow}% spis rysunków
@@ -156,7 +156,7 @@ Kraków, 2012
 % the main text starts here with the introduction, 1st chapter,...
 \mainmatter
 
-\renewcommand{\chaptername}{} % uncomment to print only "1" not "Chapter 1"
+\renewcommand{\chaptername}{Rozdział} % uncomment to print only "1" not "Chapter 1"
 
 
 %: ----------------------- subdocuments ------------------------
@@ -166,12 +166,13 @@ Kraków, 2012
 
 \include{1_introduction/introduction}	% background information
 \include{2/problem_analysis}
-\include{3/technologie}						% aims of the project
 
+\include{3/technologie}						% aims of the project
+\include{6/projekt_i_implementacja}
 \include{4/wymagania}						
 	
 %\include{5/projects_implementations}
-\include{6/projekt_i_implementacja}
+
 
 \include{7/discussion}               % discussion of results
 
@@ -232,11 +233,13 @@ Kraków, 2012
 %: ----------------------- list of figures/tables ------------------------
 
 \listoffigures	% print list of figures
-\renewcommand*{\lstlistlistingname}{Spis fragmentów kodu}
+\renewcommand{\lstlistlistingname}{Spis fragmentów kodu}
 \lstlistoflistings
+\addcontentsline{toc}{chapter}{Spis fragmentów kodu}
 
 %\listoftables  % print list of tables
 
+\lstset{language=XML, tabsize=4,caption=XML Schema dla pliku konfiguracyjnego,label=lst:xml_schema}
 \appendix
 \chapter{XML Schema dla pliku konfiguracyjnego}
 \lstset{caption={Plik konfiguracyjny xml},label=DescriptiveLabel}
