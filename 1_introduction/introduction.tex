@@ -28,23 +28,29 @@
 
 
 
-\section{Definicja problemu } % section headings are printed smaller than chapter names
+\section{Definicja problemu} % section headings are printed smaller than chapter names
 % intro
-Integracja to łączenie mniejszych elementów ze sobą w celu stworzenia większego, spójnego, poprawnie działającego elementu. W informatyce pojęcie to dotyczy głównie całych systemów. Czasami integracja nie kończy się tylko na łączeniu funkcjonalności ale także na dodawaniu nowych, jest to spowodowane tym, że system mający wiele komponentów mających różne zastosowania ma dzięki temu dużo większe możliwości i może uzyskać funkcjonalność jakiej jego składowe nie byłyby w stanie uzyskać samodzielnie. Integracja systemów jest zadaniem bardzo trudnym, mającym charakter przekrojowy, wymagającym wiedzy z wielu dziedzin takich jak:
+Komputerowe przetwarzanie mowy jest w ostatnim czasie szybko rozwijającą się dziedziną w przemyśle informatycznym. Wykorzystuje się je w wielu różnych dziedzinach zarówno związanych z rozrywką (rozmaite gry polegające na jak najwierniejszym zaśpiewaniu podanego utworu), z życiem codziennym (Apple Siri czyli wirtualny asystent) jak i z pracą (różne systemy telefoniczne działające bez udziału człowieka). W wielu sytuacjach wykorzystanie komputerowego przetwarzania mowy jest niezastąpione.
+Podobnie sytuacja wygląda z architekturą SOA. W ciągu ostatnich lat zdecydowanie dominuje w projektowanych, nowych systemach informatycznych. Co więcej zdarzały się też sytuacje w których firmy decydowały się na przepisanie swoich aplikacji na architekturę zgodną z tym paradygmatem (na przykład Amazon). Jednym z główych powodów takiego stanu rzeczy jest uproszczenie modelu współczesnych dużych aplikacji. Umożliwia ono podzielenie systemu na serwisy które są niezależnymi, samodzielnymi, łatwymi w zarządzaniu, posiadającymi jasno i jednoznacznie zdefiniowane interfejsy encjami, które można wykorzystać w różnej kolejności w celu otrzymania różnych efektów. W chwili obecnej istnieje wiele serwisów oferujących różne formy przetwarzania mowy, niestety znakomita ich większość ma bardzo ograniczoną funkcjonalność, umożliwiającą tylko jeden rodzaj transformacji, na przykład oferując tylko TTS lub OCR. Pomimo tego, że często jest to wystarczające to jednak łatwo wyobrazić sobie zalety systemu oferującego szerszą funkcjonalność, umożliwiającego na przykład nie tylko rozpoznanie mowy, ale też wykrycie jej języka, przetłumaczenie i zwrócenie w postaci tekstowej. Przykładowe zalety to:
+ \begin{itemize}
+	\item centralizacja
+	\item ujednolicony interfejs
+	\item łatwość wykorzystania
+	\item pojedynczy punkt awarii - z punktu widzenia aplikacji klienckiej
+\end{itemize} 
+Najlepszym sposobem stworzenia systemu posiadającego tak szeroką funkcjonalność jest zbudowanie go poprzez integrację istniejących już serwisów. Integracja to łączenie mniejszych elementów ze sobą w celu stworzenia większego, spójnego, poprawnie działającego elementu. W informatyce pojęcie to może dotyczyć zarówno całych systemów jak i mniejszych elementów takich jak serwisy czy też biblioteki. Czasami integracja nie kończy się tylko na łączeniu funkcjonalności ale także na dodawaniu nowych, jest to spowodowane tym, że system składający się z wielu komponentów mających różne zastosowania ma dzięki temu dużo większe możliwości i może uzyskać funkcjonalność jakiej jego składowe nie byłyby w stanie osiągnąć samodzielnie. Integracja systemów informatycznych jest zadaniem bardzo trudnym, mającym charakter przekrojowy, wymagającym wiedzy z wielu dziedzin takich jak:
  \begin{itemize}
 	\item sieci komputerowe
 	\item programowanie
+	\item architektura systemów
 	\item zarządzanie procesami biznesowymi
 	\item znajomość narzędzi wspierających integrację
 \end{itemize} 
-Komputerowe przetwarzanie mowy jest w ostatnim czasie szybko rozwijającą się dziedziną w przemyśle informatycznym. Wykorzystuje się je w wielu różnych dziedzinach zarówno związanych z rozrywką ( rozmaite gry polegające na jak najwierniejszym zaśpiewaniu podanego utworu), z życiem codziennym (Apple Siri czyli wirtualny asystent) jak i z pracą(różne systemy telefoniczne działające bez udziału człowieka). W wielu sytuacjach wykorzystanie komputerowego przetwarzania mowy jest niezastąpione.\\
-Podobnie sytuacja wygląda z wykorzystaniem architektury SOA. Jest to jedno z najważniejszych osiągnieć informatycznych ostatnich lat. Podejście to zdecydowanie dominuje w obecnie projektowanych architekturach. Jednym z głowych powodów takiego stanu rzeczy jest uproszczenie modelu współczesnych dużych aplikacji. Umożliwia ono podzielenie systemu na serwisy które są niezależnymi, samodzielnymi, łatwymi w zarządzaniu, posiadającymi jasno i jednoznacznie zdefiniowane interfejsy encjami, które można wykorzystać w różnej kolejności w celu otrzymania różnych efektów. \\
-Celem tej pracy jest zbadanie możliwości wykorzystania nowoczesnej i prężnie rozwijającej się architektury do stworzenia gotowego systemy ułatwiającego i ujednolicającego proces tworzenia aplikacji przetwarzających mowę.
+Celem tej pracy jest zbadanie możliwości stworzenia systemu oferującego kompleksowy zakres usług z dziedziny przetwarzania mowy, wykorzystującego w tym celu istniejące już rozwiązania. Należy zastanowić się nad sposobem integracji, czy specyficzna dziedzina problemu jaką niewątpliwie jest przetwarzanie mowy wpływa w sposób znaczący na dokonanie wyboru. 
  
 
-
 \section{Obszar badań} % subsection headings are again smaller than section names
-W skład zakresu pracy wchodzą zarówno technologie związane z architekturą SOA jak i z przetwarzaniem mowy. W celu użycia odpowiednich narzędzi przeprowadzono wiele badań i testów w czasie których dużą wagę przykładano do:
+W skład  pracy wchodzą zarówno technologie związane z architekturą SOA jak i z przetwarzaniem mowy. W celu użycia odpowiednich narzędzi przeprowadzono wiele badań i testów w czasie których dużą wagę przykładano do:
 \begin{itemize}
  	\item możliwości konfiguracyjnych
 	\item wydajności
