@@ -11,14 +11,16 @@
 % ----------------------- contents from here ------------------------
 W rozdziale tym, zostaną zaprezentowane oraz po krótce opisane najważniejsze technologie wykorzystane przy implementacji przykładowego systemu  powstałego na bazie tej pracy.
 
-\section{OSGi}
-Technologia OSGi to zbiór specyfikacji definiujących dynamiczne środowisko komponentowe. Taka struktura pozwala na tworzenie aplikacji złożonych z wielu, różnych komponentów(bundle) które mogą być wykorzystywane wiele razy. Specyfikacja OSGi umożliwia bundle'om ukrywanie swojej implementacji przed innymi komponentami i komunikację tylko przy użyciu specjalnych serwisów, które są dzielone pomiędzy bundle'ami. Pozwala to na zmniejszenie złożoności tworzonych systemów.
+\section{Technologie integracyjne}
+\subsection{OSGi}
+Technologia OSGi to zbiór specyfikacji definiujących dynamiczne środowisko komponentowe. Taka struktura pozwala na tworzenie aplikacji złożonych z wielu, różnych komponentów(bundle) które mogą być wykorzystywane wiele razy. Specyfikacja OSGi pozwala bundle na ukrywanie swojej implementacji przed innymi komponentami i komunikację tylko przy użyciu specjalnych serwisów, które są dzielone pomiędzy bundle'ami. Pozwala to na zmniejszenie złożoności tworzonych systemów.
 
 OSGi posiada architekturę warstwową, przedstawiona jest ona, wraz z krótkim opisem, na poniższym diagramie.
 \newpage
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.65]{osgiArchitektura.png} 
+	\cite{fusehomepage2012}
 	\caption{Architektura OSGi}
 \end{figure}
 \begin{itemize}
@@ -29,7 +31,7 @@ OSGi posiada architekturę warstwową, przedstawiona jest ona, wraz z krótkim o
 	\item Security - Warstwa zajmująca się bezpieczeństwem
 	\item Execution Environment - Warstwa definiująca jakie metody i klasy są dostępne na specyficznej plarformie
 \end{itemize}  
-Najważniejszym konceptem umożliwiającym istnienie i działanie takiej platformy jest modułowość, której ucieleśnieniem są bundle. OSGi ukrywa wszystko co znajduje się w takim komponencie poza funkcjonalnością która jest wyspecyfikowana. Jeżeli jeden komponent chce wykorzystać inny musi wyraźnie definiować jaką funkcjonalność potrzebuje. Ponieważ ciężko stworzyć model współpracy opierając się tylko na klasach OSGi wprowadza wastwę serwisów, a wraz z nią rejestr serwisów. Bundle może stworzyć obiekt i zarejestrować go w rejestrze pod jednym lub więcej interfejsów. Inne komponenty mogą z takiego rejestru pobierać obiekty stosując różne kryteria, na przykład wszystkie obiekty implementujące dany interfejs itd.
+Najważniejszą ideą umożliwiającą istnienie i działanie takiej platformy jest modułowość, której ucieleśnieniem są bundle. OSGi ukrywa wszystko co znajduje się w takim komponencie poza funkcjonalnością która jest wyspecyfikowana. Jeżeli jeden komponent chce wykorzystać inny musi wyraźnie definiować jaką funkcjonalność potrzebuje. Ponieważ ciężko stworzyć model współpracy opierając się tylko na klasach OSGi wprowadza wastwę serwisów, a wraz z nią rejestr serwisów. Bundle może stworzyć obiekt i zarejestrować go w rejestrze pod jednym lub więcej interfejsów. Inne komponenty mogą z takiego rejestru pobierać obiekty stosując różne kryteria, na przykład wszystkie obiekty implementujące dany interfejs itd.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.75]{serveLayer.png} 
@@ -38,28 +40,8 @@ Najważniejszym konceptem umożliwiającym istnienie i działanie takiej platfor
  Możliwe jest oczywiście, żeby dowolna liczba komponentów zarejestrowała ten sam typ serwisów lub też pobrała ten sam serwis. Oczywiście zarejestrowane serwisy można rozróżniać, każdy ma powiązany ze sobą zestaw właściwości(properties), które mogą służyć do specyfikacji. Cała warstwa serwisów jest dynamiczna, bundle mogą dodawać, usuwać itd. serwisy bez konieczności restartu kontenera.  \\
 Do tworzenia i definiowana zależności między bundlami OSGi wykorzystuje Blueprint Container. Jest to framework którego celem jest zarządzanie wstrzykiwaniem zależności. Został zaprojektowany żeby radzić sobie z dynamiczną specyfikacją OSGi'a (możliwość pojawienia się i zniknięcia serwisów w dowolnym momencie). Jego specyfikacja pozwala mu też na działania w środowisku innym niż OSGi'owe. W założeniu opiera się on o strukturę plików xml, które definiują jak komponenty są tworzone oraz łączone aby stworzyć działającą aplikację. Sposób działania kontera opiera się o wzorzec Extender. W czasie inicjalizacji bundle'a (a więc w czasie działania kontenera) Blueprint Container sprawdza czy wszystkie wymagane zależności są spełnione, tworzy wszystkie wymagane obiekty oraz rejestruje serwisy. 
 
-\section{SOA}
-SOA czyli Service Oriented Architecture(Architektura zorientowana na usługi) to zgodnie z definicją zaproponowaną przez W3C to zbiór komponentów dostępnych w siecii posiadających dobrze opisane interfejsy. Opis ten pozwala na rozróżnianie komponentów i ich wyszukiwanie, a następnie wywoływanie. Najbardziej popularną obecnie implementacją tego paradygmatu jest ta opierająca się o web serwisy.  W paradygmacie SOA możemy wyróżnić dwa różne podejścia tworzenia serwisów:
- \begin{itemize}
-	\item orkiestracja
-	\item choreografia
-\end{itemize}  
-Orkiestracja charakteryzuje się tym, iż istnieje jeden serwis orkiestrator, dyrygent lub kordynator który zarządza innymi serwisami w celu udostępniania jednej funkcjonalności. Prowadzi to do luźniejszego połączenia serwisów, sprawia też, że nie są one świadome bycia częścią większego procesu. Orkiestracja jest scentralizowaną formą współpracy z dobrze zdefiniowanymi operacjami i kolejnością wywoływania serwisów. Powstał nawet specjalny język BPEL ułatwiający taką integrację serwisów.   
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.75]{orkiestracja.png} 
-	\caption{Orkiestracja}
-\end{figure}
-\newpage
-Choreografia to sposób współpracy serwisów, charakteryzujący się tym,  iż każdy serwis musi być świadomy bycia częścią czegoś większego, od niego zależy kiedy i z kim się skomunikuje. Nie ma tutaj centralnego zarządzania, kordynatora czy też serwisu nadrzędnego. Stworzenie alternatywnego scenariusza w przypadku awarii jest ciężkie albo wręcz niemożliwe. 
-\begin{figure}[!h]
-	\centering
-	\includegraphics[scale=0.75]{choreogragia.png} 
-	\caption{Choreografia}
-\end{figure}
-
-\section{Web serwisy}
-Web  serwis to system zaprojektowany do wspierania komunikacji między róznymi komputerami za pomocą sieci.  Podstawowe cechyb web serwisu to:
+\subsection{Technologia web services}
+Technologia web services to system zaprojektowany do wspierania komunikacji między róznymi komputerami za pomocą sieci.  Podstawowe cechy każdej implementacji tej technologii to:
 \begin{itemize}
 	\item jest komponentem mogącym być osadzonym w innej aplikacji
 	\item komunikacja przy użyciu otwartych protokołów
@@ -69,10 +51,11 @@ Web  serwis to system zaprojektowany do wspierania komunikacji między róznymi 
 \end{itemize}  
 Można rożróżnić 2 główne klasy web serwisów:
 \begin{itemize}
-	\item web serwisy zgodne z architekturą REST'ową
-	\item web serwisy z których każdy może udostępniać dowolny zbiór operacji
+	\item technologie web services zgodne z architekturą REST'ową
+	\item technologie arbitrary web services z których każda może udostępniać dowolny zbiór operacji
 \end{itemize}  
-Serwisy z grupy pierwszej \cite{fielding2000} ograniczają swój interfejs do zbioru dobrze znanych i wspieranych przez protokół transportowy operacji takich jak: PUT, GET, POST itd. dla  HTTP. Nacisk jest tutaj skierowany na interakcję z zasobami bezstanowymi. Koncpecja serwisów REST'owych opiera się na szcześciu kluczowych punktach:
+\subsubsection{Technologia REST web services}
+Serwisy z tej grupy \cite{fielding2000} ograniczają swój interfejs do zbioru dobrze znanych i wspieranych przez protokół transportowy operacji takich jak: PUT, GET, POST itd. dla  HTTP. Nacisk jest tutaj skierowany na interakcję z zasobami bezstanowymi. Koncepcja serwisów REST'owych opiera się na sześciu kluczowych punktach:
 \begin{itemize}
 	\item model klient-serwer - wprowadza rozdzielenie odpowiedzialności, oznacza to, że na przykład klient nie interesuje się przechowywaniem danych, jest to sprawa wewnętrznej implementacji serwera, a serwer nie interesuje się interfejsem użytkownika co wprowadza prostotę i zwiększa skalowalność
 	\item bezstanowość - kontekst aplikacji klienckiej nie jest przechowywany na serwerze pomiędzy zapytaniami, każde nowe zapytanie zawiera wszystkie potrzebne informacje żeby mogło zostać obsłużone
@@ -81,7 +64,8 @@ Serwisy z grupy pierwszej \cite{fielding2000} ograniczają swój interfejs do zb
 	\item opcjonalnie wykonanie kodu na rządanie - możliwe jest żeby serwer wykonał kod przesłany przez klienta
 	\item jednolity interfejs - upraszcza oraz rozluźnia powiązanie między klientem a serwerem, dzięki temu możliwa jest ich niezależna ewolucja
 \end{itemize}   
-Serwisy z grupy drugiej reprezentują bardziej klasyczne podejście. Do opisania swoich interfejsów mogą (nie jest to wymagane jednak bardzo popularne, co więcej konieczne jeżeli chce się użyć framework'ku do generowania kodu) wykorzystywać WSDL. Jest to skrót od Web Service Description Language, formacie bazującym na XML, wykorzystywanym do opisywania jak wywołać dany serwis, jakie parametry wejściowe przyjmuje i jakie struktury danych zwraca. Inne systemy mogą komunikować się z web serwisem za pomocą protokułu SOAP. Skrót pochodzi od angielskiej nazyw Simple Object Access Protocol. Dostarcza on standardowy, rozszerzalny, dobrze zdefiniowany fremwork do wymiany wiadomości XML. Wspiera kilka różnych protokołów transportowych takich jak:
+\subsubsection{Technologia arbitrary web services}
+Serwisy z tej grupy reprezentują bardziej klasyczne podejście. Do opisania swoich interfejsów mogą (nie jest to wymagane jednak bardzo popularne, co więcej konieczne jeżeli chce się użyć framework'ku do generowania kodu) wykorzystywać WSDL. Jest to skrót od Web Service Description Language, formacie bazującym na XML, wykorzystywanym do opisywania jak wywołać dany serwis, jakie parametry wejściowe przyjmuje i jakie struktury danych zwraca. Inne systemy mogą komunikować się z web serwisem za pomocą protokułu SOAP. Skrót pochodzi od angielskiej nazyw Simple Object Access Protocol. Dostarcza on standardowy, rozszerzalny, dobrze zdefiniowany fremwork do wymiany wiadomości XML. Wspiera kilka różnych protokołów transportowych takich jak:
  \begin{itemize}
 	\item HTTP
 	\item SMTP
@@ -90,11 +74,11 @@ Serwisy z grupy drugiej reprezentują bardziej klasyczne podejście. Do opisania
 \end{itemize}  
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.75]{webSerwisyArchitektura.png} 
-	\caption{Architektura web serwisów w podejściu klasycznym}
+	\includegraphics[scale=0.50]{webSerwisyArchitektura.png} 
+	\caption{Architektura technologii arbitrary web services}
 \end{figure}
 
-\section{Apache ServiceMix}
+\subsection{Apache ServiceMix}
 Apache ServiceMix pomaga rozwiązać problem integracji będąc bazującym na standardach, lekkim oraz stosującym paradygmat "luźnego powiązania" narzędziem. Dzięki bazowaniu na standardach w sposób znaczący zmniejsza szanse na uzależnienie się od konkretnego dostawcy oprogramowania, przez stosowanie luźnego powiązania pomiędzy poszczegolymi komponentami zmniejsza złożoność integracji. Jest to otwarta implementacja ESB, zbudowana w oparciu o JBI i wydana na licencji Apache, od wersji 4 ServiceMix wykorzystuje OSGi do uproszczenia podziału aplikacji na komponenty. 	
 Architekturę ServiceMix'a można podzielić na 3 warstwy:
 \begin{enumerate}
@@ -141,8 +125,8 @@ Każda z tych warstw ma inne zadania i odpowiada za inne czynności.
 	\item Warstwa aplikacji - w tym miejscu znajdując się aplikacje użytkownika, ServiceMix 4 dostarcza wielu różnych API(częściowo wymienionych w warstwie serwisów) za pomocą których aplikacje klienckie mogą łączyć się i korzystać z usług oferowanych przez serwisy działające wewnątrz kontenera
 \end{itemize}
 
-\section{Apache Camel}
-Apache Came\cite{ibsen2010} \cite{camel} to framework używany na szeroką skalę w systemach których celem jest rozwiązywanie problemu integracji, na przykład w ServiceMixie. Najważniejszą funkcjonalnością Camel'a jest mechanizm routingu. W celu lepszego zrozumienia sposobu działania tego framework'u należy wyjaśnić kilka pojęć:
+\subsection{Apache Camel}
+Apache Came \cite{camel2012} \cite{ibsen2010} to framework używany na szeroką skalę w systemach których celem jest rozwiązywanie problemu integracji, na przykład w ServiceMixie. Najważniejszą funkcjonalnością Camel'a jest mechanizm routingu. W celu lepszego zrozumienia sposobu działania tego framework'u należy wyjaśnić kilka pojęć:
 \begin{itemize}
 	\item Endpoint - implementacja wzorca Message Endpoint \cite{hohpe2003}, może odnosić się do adresu lub do serwisu znajdującego się pod tym adresem (np. źródło RSS, serwer FTP), pozwala wysyłać i odbierać wiadomości  
 	\item Komponent - fabryki endpoint'ów, pozwalają w elegancki sposób tworzyć endpoint'y preferowanego typu na przykład WS, JMS, RSS itd.
@@ -157,17 +141,18 @@ Korzystając z wszystkich wymienionych wyżej elementów Camel daje możliwość
 	\includegraphics[scale=0.95]{camel.png} 
 	\caption{Sposób definiowania ścieżek w Camel'u}
 \end{figure}
-			
-\section{FreeTTS}
-FreeTTS jest syntezatorem mowy, dostępnym na licencji opensource, w całości napisanym w języku Java. Bazuje na silniku Flite stworznym i rozwijanym przez Carnegie Mellon University. Mimo swojej prostoty jego zaletami są duża wydajność, bardzo dobre radzenie sobie z językiem angielskim oraz częściowe wsparcie dla JSAPI 1.0(jako, że jest to syntezator nie wspiera częsci specyfikacji odpowiedzialnej za rozpoznawanie mowy). Dzięki temu ostatniemu w łatwy sposób umożliwia integrację z różnymi, wieloplatformowymi aplikacjami działającymi wewnątrz JVM. Przy opisywaniu tego syntezatora istotną kwestią jest fakt, że posiada dość dobrą dokumentację oraz liczne, łatwe do uruchomienia i, co bardzo ważne, działające dema. Standardowo oferuje 3 różne głosy, wszystkie w języku angielskim, umożliwia jednak rozszerzenie liczby głosów poprzez import nowych stworzonych przy pomocy narzedzi takich jak:
+	
+\section{Technologie przetwarzania mowy}		
+\subsection{FreeTTS}
+FreeTTS \cite{freettssite} jest syntezatorem mowy, dostępnym na licencji opensource, w całości napisanym w języku Java. Bazuje na silniku Flite stworznym i rozwijanym przez Carnegie Mellon University. Mimo swojej prostoty jego zaletami są duża wydajność, bardzo dobre radzenie sobie z językiem angielskim oraz częściowe wsparcie dla JSAPI 1.0(jako, że jest to syntezator nie wspiera częsci specyfikacji odpowiedzialnej za rozpoznawanie mowy). Dzięki temu ostatniemu w łatwy sposób umożliwia integrację z różnymi, wieloplatformowymi aplikacjami działającymi wewnątrz JVM. Przy opisywaniu tego syntezatora istotną kwestią jest fakt, że posiada dość dobrą dokumentację oraz liczne, łatwe do uruchomienia i, co bardzo ważne, działające dema. Standardowo oferuje 3 różne głosy, wszystkie w języku angielskim, umożliwia jednak rozszerzenie liczby głosów poprzez import nowych stworzonych przy pomocy narzedzi takich jak:
 \begin{itemize}
 	\item FestVox,
 	\item MBROLA,
 	\item CMU Arctic.
 \end{itemize}    
 
-\section{Ivona TTS}
-IVONA TTS to wielojęzyczny syntetyzator mowy działający w oparciu o metodę alofoniczną. Autorski algorytm stosowany przez Ivona nazywa się Bright Voices,  powstał i został opisany podczas Blizzard Challenge 2006. W chwili obecnej funkcjonalność Ivona jest dostępna na dwa sposoby:
+\subsection{Ivona TTS}
+IVONA TTS \cite{ivonasite} to wielojęzyczny syntetyzator mowy działający w oparciu o metodę alofoniczną. Autorski algorytm stosowany przez Ivona nazywa się Bright Voices,  powstał i został opisany podczas Blizzard Challenge 2006. W chwili obecnej funkcjonalność Ivona jest dostępna na dwa sposoby:
 \begin{itemize}
 	\item poprzez Ivona SDK
 	\item poprzez Speech Cloud (SaaS)
@@ -209,7 +194,7 @@ Poza wyborem języka istnieje też możliwość wyboru lektora, różnią się o
 \end{itemize}
  Aby korzystać ze zdalnego API należy posiadać konto w systemie Ivony, jest ono wykorzystywane do pobierania opłat. Co bardzo istnotne, Ivona wspiera protokół SSML, umożliwiający klientowi dokładniejsze sterowanie generowanym głosem. 
 
-\section{Google Translate}
+\subsection{Google Translate}
 Google Translate to płatna usługa Google'a umożliwiająca tłumaczenie tekstu pomiędzy tysiącami dostępnych par języków. Poza tłumaczeniem usługa ta umożliwia również rozpoznanie języka. API udostępniane przez korporację opiera się o architekturę REST, składa się z trzech metod:
 \begin{itemize}
 	\item translate - tłumaczy tekst z języka źródłowego na docelowy, przykład:
@@ -230,7 +215,7 @@ Google Translate to płatna usługa Google'a umożliwiająca tłumaczenie tekstu
 \end{itemize}
 Parametr key=INSERT-YOUR-KEY służy korporacji do indentyfikowania usługobiorcy, na jego podstawie naliczane są opłaty. Jak widać REST w API Google Translate różni się nieznacznie od tradycyjnego pojmowania tej architektury. Zamiast dostarczać dostęp do zasobów, dostarczarczany jest dostęp do usług, stosując takie podejście uzyskano możliwość wykorzystania jednego URI jako całego API. 
 
-\section{OCR Web Service}
+\subsection{OCR Web Service}
 OCR Web Service jest to jeden z najpopularniejszych web serwisów tego rodzaju. Rozpoznaje aż dwadzieścia osiem języków między innymi:
 \begin{itemize}
 	\item polski
@@ -239,16 +224,7 @@ OCR Web Service jest to jeden z najpopularniejszych web serwisów tego rodzaju. 
 	\item francuski
 	\item portugalski
 \end{itemize}
-Przyjmuje różne formaty wejściowe, takie jak:
-\begin{itemize}
-	\item JPEG\\JPG
-	\item BMP
-	\item PCX
-	\item GIF
-	\item PNG
-	\item PDF
-\end{itemize}
-Co więcej pozwala na przekonwertowanie rozpoznanego tekstu na aż sześć różnych formatów:
+Przyjmuje różne formaty wejściowe, takie jak: JPEG/JPG, BMP, PCX, GIF, PNG, PDF. Co więcej pozwala na przekonwertowanie rozpoznanego tekstu na aż sześć różnych formatów:
 \begin{itemize}
 	\item Adobe PDF
 	\item MS Word 2003
