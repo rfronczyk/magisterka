@@ -131,11 +131,11 @@ Test dla usługi TTS polegał na syntezie tekstu  w języku angielskim, zamieszc
 \includegraphics[scale=0.9]{textExample.png}
 \caption{Przykładowy tekst dla usługi TTS}\label{fig:ttsExample}
 \end{figure}
-Ponieważ w obu przypadkach wykorzystano ten sam tekst jakość odczytu była taka sama. Jedyna różnica występuje w czasie działania. Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{tab:TTS}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi TTS, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
+Ponieważ w obu przypadkach wykorzystano ten sam tekst jakość odczytu była taka sama. Jedyna różnica występuje w czasie działania. Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{tab:tts}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi TTS, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
 \begin{center}
 	\begin{table}[h]
-	\label{tab:TTS}
 	\caption{Test TTS}
+	\label{tab:tts}
 	\centering
 	\begin{tabular}{| l | l | l |}	
 		\hline
@@ -174,8 +174,6 @@ Ponieważ użyto tej samej usługi tłumaczącej jego efekt za każdym razem by�
 Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{tab:translacja}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi translacji, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
 \begin{center}
 	\begin{table}[h]
-	\label{tab:translacja}
-	\caption{Test Translacji}
 	\centering
 	\begin{tabular}{| l | l | l |}	
 		\hline
@@ -193,6 +191,8 @@ Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \re
 		\textbf{Średnia/Odchylenie standardowe} & 464.1/38.01645 & 620.4/41.7235\\ 
 		\hline
 	\end{tabular}
+	\caption{Test Translacji}
+	\label{tab:translacja}
 	\end{table}
 \end{center}
 Koszt czasowy wykorzystania prototypu nie jest duży, co więcej nie odnotowano wystąpień dużych odchyleń, co świadczy o stabilności.
@@ -210,11 +210,9 @@ Ponieważ użyto tej samej usługi OCR jego efekt za każdym razem był taki sam
 \includegraphics[scale=0.9]{OCRExample.jpg}
 \caption{Wynik działania usługi OCR}\label{fig:OCRResult}
 \end{figure}
-Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{fig:ocr}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi OCR, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
+Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{tab:ocr}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi OCR, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
 \begin{center}
 	\begin{table}[h]
-	\label{fig:ocr}
-	\caption{Test OCR}
 	\centering
 	\begin{tabular}{| l | l | l |}	
 		\hline
@@ -232,6 +230,8 @@ Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \re
 		\textbf{Średnia/Odchylenie standardowe} & 4101/472.1354 & 4224/457.2335\\ 
 		\hline
 	\end{tabular}
+	\caption{Test OCR}
+	\label{tab:ocr}
 	\end{table}
 \end{center}
 Koszt czasowy wykorzystania prototypu nie jest duży, co więcej nie odnotowano wystąpień dużych odchyleń, co świadczy o stabilności. 
@@ -246,8 +246,8 @@ Celem tego testu było wypróbowanie bardziej złożonego scenariusza jakim jest
 W jego wyniku otrzymano plik dźwiękowy w formacie mp3, zawierający odczyt tekstu będącego tłumaczeniem tekstu znajdującego się na obrazku \ref{fig:OCRExample} wysłanym na wejście. Gdyby zapisać zdania czytane przez lektora wyglądałyby one następująco: ''To jest przykład użycia OCR usług. Jak możemy zobaczyć, jest to dość proste. I to działa całkiem dobrze.''. Nie stwierdzono żadnych niewyraźnie przeczytanych wyrazów, ani innych nieprawidłowości. Tłumaczenie również jest całkiem poprawne. Test powtórzono dziesięciokrotnie, wyniki są zaprezentowane w tabeli \ref{tab:bigTest}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usług, a ''Prototyp'' wywołanie tych samych usług poprzez przykładową implementację platformy integracyjnej.
 \begin{center}
 	\begin{table}[t]
-	\label{tab:bigTest}
 	\caption{Test złożony}
+	\label{tab:bigTest}
 	\centering
 	\begin{tabular}{| l | l | l |}	
 		\hline
