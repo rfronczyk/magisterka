@@ -13,7 +13,7 @@ W rozdziale tym, zostaną zaprezentowane oraz po krotce opisane najważniejsze t
 
 \section{Technologie integracyjne}
 \subsection{OSGi}
-Technologia OSGi to zbiór specyfikacji definiujących dynamiczne środowisko komponentowe. Taka struktura pozwala na tworzenie aplikacji złożonych z wielu, różnych komponentów(bundle) które mogą być wykorzystywane wiele razy. Specyfikacja OSGi pozwala komponentowi na ukrywanie swojej implementacji przed innymi i komunikację tylko przy użyciu specjalnych usług, które są dzielone pomiędzy wszystkimi komponentami. Pozwala to na zmniejszenie złożoności tworzonych systemów.
+Technologia OSGi to zbiór specyfikacji definiujących dynamiczne środowisko komponentowe. Taka struktura pozwala na tworzenie aplikacji złożonych z wielu, różnych komponentów(paczek) które mogą być wykorzystywane wiele razy. Specyfikacja OSGi pozwala komponentowi na ukrywanie swojej implementacji przed innymi i komunikację tylko przy użyciu specjalnych usług, które są dzielone pomiędzy wszystkimi komponentami. Pozwala to na zmniejszenie złożoności tworzonych systemów.
 
 OSGi posiada architekturę warstwową, przedstawiona jest ona, wraz z krótkim opisem, na poniższym diagramie.
 \newpage
@@ -24,21 +24,21 @@ OSGi posiada architekturę warstwową, przedstawiona jest ona, wraz z krótkim o
 	\caption{Architektura OSGi}
 \end{figure}
 \begin{itemize}
-	\item Bundles - Są to OSGi'owe, mogą być preinstalowane jak i tworzone i dynamicznie ładowane przez programistów
+	\item Bundles - Są to paczki technologii OSGi, mogą być preinstalowane jak i tworzone i dynamicznie ładowane przez programistów
 	\item Services - Warstwa usług dynamicznie łączy komponenty, stosując model publish-find-bin
 	\item Life-Cycle - API do startowania, zatrzymywania, instalowania i usuwania komponentów
 	\item Modules - Warstwa definiująca jak komponenty mogą importować i eksportować kod	
 	\item Security - Warstwa zajmująca się bezpieczeństwem
 	\item Execution Environment - Warstwa definiująca jakie metody i klasy są dostępne na specyficznej plarformie
 \end{itemize}  
-Najważniejszą ideą umożliwiającą istnienie i działanie takiej platformy jest modułowość, której ucieleśnieniem są bundle. OSGi ukrywa wszystko co znajduje się w takim komponencie poza funkcjonalnością która jest wyspecyfikowana. Jeżeli jeden komponent chce wykorzystać inny musi wyraźnie definiować jaką funkcjonalność potrzebuje. Ponieważ ciężko stworzyć model współpracy opierając się tylko na klasach, OSGi wprowadza warstwę usług, a wraz z nią rejestr konkretnych usług. Bundle może stworzyć obiekt i zarejestrować go w rejestrze pod jednym lub więcej interfejsów. Inne komponenty mogą z takiego rejestru pobierać obiekty stosując różne kryteria, na przykład wszystkie obiekty implementujące dany interfejs itd.
+Najważniejszą ideą umożliwiającą istnienie i działanie takiej platformy jest modułowość, której ucieleśnieniem są paczki. OSGi ukrywa wszystko co znajduje się w takim komponencie poza funkcjonalnością która jest wyspecyfikowana. Jeżeli jeden komponent chce wykorzystać inny musi wyraźnie definiować jaką funkcjonalność potrzebuje. Ponieważ ciężko stworzyć model współpracy opierając się tylko na klasach, OSGi wprowadza warstwę usług, a wraz z nią rejestr konkretnych usług. Paczka może stworzyć obiekt i zarejestrować go w rejestrze pod jednym lub więcej interfejsów. Inne komponenty mogą z takiego rejestru pobierać obiekty stosując różne kryteria, na przykład wszystkie obiekty implementujące dany interfejs itd.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.75]{serveLayer.png} 
 	\caption{Zależność pomiędzy bundlami i usługami}
 \end{figure}
- Możliwe jest oczywiście, żeby dowolna liczba komponentów zarejestrowała ten sam typ usługi lub też pobrała tą samą implementację usługi. Oczywiście zarejestrowane usługi można rozróżniać, każda ma powiązany ze sobą zestaw właściwości(properties), które mogą służyć do specyfikacji. Cała warstwa usług jest dynamiczna, bundle mogą dodawać, usuwać itd. usługi bez konieczności restartu kontenera.  \\
-Do tworzenia i definiowana zależności między bundlami OSGi wykorzystuje Blueprint Container. Jest to framework którego celem jest zarządzanie wstrzykiwaniem zależności. Został zaprojektowany żeby radzić sobie z dynamiczną specyfikacją OSGi'a (możliwość pojawienia się i zniknięcia usługi w dowolnym momencie). Jego specyfikacja pozwala mu też na działania w środowisku innym niż OSGi'owe. W założeniu opiera się on o strukturę plików xml, które definiują jak komponenty są tworzone oraz łączone aby stworzyć działającą aplikację. Sposób działania kontera opiera się o wzorzec Extender. W czasie inicjalizacji bundle'a (a więc w czasie działania kontenera) Blueprint Container sprawdza czy wszystkie wymagane zależności są spełnione, tworzy wszystkie wymagane obiekty oraz rejestruje usługi. 
+ Możliwe jest oczywiście, żeby dowolna liczba komponentów zarejestrowała ten sam typ usługi lub też pobrała tą samą implementację usługi. Oczywiście zarejestrowane usługi można rozróżniać, każda ma powiązany ze sobą zestaw właściwości(properties), które mogą służyć do specyfikacji. Cała warstwa usług jest dynamiczna, paczki mogą dodawać, usuwać itd. usługi bez konieczności restartu kontenera.  \\
+Do tworzenia i definiowana zależności między bundlami OSGi wykorzystuje Blueprint Container. Jest to framework którego celem jest zarządzanie wstrzykiwaniem zależności. Został zaprojektowany żeby radzić sobie z dynamiczną specyfikacją technologii OSGi (możliwość pojawienia się i zniknięcia usługi w dowolnym momencie). Jego specyfikacja pozwala mu też na działania w środowisku innym niż technologii OSGi. W założeniu opiera się on o strukturę plików xml, które definiują jak komponenty są tworzone oraz łączone aby stworzyć działającą aplikację. Sposób działania kontera opiera się o wzorzec Extender. W czasie inicjalizacji paczki (a więc w czasie działania kontenera) Blueprint Container sprawdza czy wszystkie wymagane zależności są spełnione, tworzy wszystkie wymagane obiekty oraz rejestruje usługi. 
 
 \subsection{Technologia web services}
 Technologia web services to system zaprojektowany do wspierania komunikacji między rożnymi komputerami za pomocą sieci.  Podstawowe cechy każdej implementacji tej technologii to:
@@ -51,21 +51,21 @@ Technologia web services to system zaprojektowany do wspierania komunikacji mię
 \end{itemize}  
 Można rozróżnić 2 główne klasy technologii web services :
 \begin{itemize}
-	\item technologie web services zgodne z architekturą REST'ową
+	\item technologie web services zgodne z architekturą technologii REST
 	\item technologie arbitrary web services z których każda może udostępniać dowolny zbiór operacji
 \end{itemize}  
 \subsubsection{Technologia REST web services}
-Usługi z tej grupy \cite{fielding2000} ograniczają swój interfejs do zbioru dobrze znanych i wspieranych przez protokół transportowy operacji takich jak: PUT, GET, POST itd. dla  HTTP. Nacisk jest tutaj skierowany na interakcję z zasobami bezstanowymi. Koncepcja usług REST'owych opiera się na sześciu kluczowych punktach:
+Usługi z tej grupy \cite{fielding2000} ograniczają swój interfejs do zbioru dobrze znanych i wspieranych przez protokół transportowy operacji takich jak: PUT, GET, POST itd. dla  HTTP. Nacisk jest tutaj skierowany na interakcję z zasobami bezstanowymi. Koncepcja usług technologii REST opiera się na sześciu kluczowych punktach:
 \begin{itemize}
 	\item model klient-serwer - wprowadza rozdzielenie odpowiedzialności, oznacza to, że na przykład klient nie interesuje się przechowywaniem danych, jest to sprawa wewnętrznej implementacji serwera, a serwer nie interesuje się interfejsem użytkownika co wprowadza prostotę i zwiększa skalowalność
 	\item bezstanowość - kontekst aplikacji klienckiej nie jest przechowywany na serwerze pomiędzy zapytaniami, każde nowe zapytanie zawiera wszystkie potrzebne informacje żeby mogło zostać obsłużone
-	\item możliwość cache'owania - aplikacje klienckie mogą cache'ować odpowiedzi, wymaga to od serwera by odpowiedź była pośrednio lub bezpośrednio zdefiniowana jako możliwa do cache'owania lub nie, poprawne zarządzanie tą cechą może w sposób znaczy ograniczyć komunikację na linii klient-serwer
+	\item możliwość przechowywania w pamięci podręcznej - aplikacje klienckie mogą przechowywać odpowiedzi w pamięci podręcznej, wymaga to od serwera by odpowiedź była pośrednio lub bezpośrednio zdefiniowana jako możliwa do przechowywania w pamięci podręcznej lub nie, poprawne zarządzanie tą cechą może w sposób znaczny ograniczyć komunikację na linii klient-serwer
 	\item warstwowy system - klient nie jest w stanie stwierdzić czy jest bezpośrednio podpięty do usługi czy po drodze znajdują sie inne usługi, takie jak na przykład load-balancer
 	\item opcjonalnie wykonanie kodu na żądanie - możliwe jest żeby serwer wykonał kod przesłany przez klienta
 	\item jednolity interfejs - upraszcza oraz rozluźnia powiązanie między klientem a serwerem, dzięki temu możliwa jest ich niezależna ewolucja
 \end{itemize}   
 \subsubsection{Technologia arbitrary web services}
-Usługi z tej grupy reprezentują bardziej klasyczne podejście. Do opisania swoich interfejsów mogą (nie jest to wymagane jednak bardzo popularne, co więcej konieczne jeżeli chce się użyć framework'ku do generowania kodu) wykorzystywać WSDL. Jest to skrót od Web Service Description Language, formacie bazującym na XML, wykorzystywanym do opisywania jak wywołać daną usługę, jakie parametry wejściowe przyjmuje i jakie struktury danych zwraca. Inne systemy mogą komunikować się z technologią web serwices za pomocą protokołu SOAP. Skrót pochodzi od angielskiej nazwy Simple Object Access Protocol. Dostarcza on standardowy, rozszerzalny, dobrze zdefiniowany fremwork do wymiany wiadomości XML. Wspiera kilka różnych protokołów transportowych takich jak:
+Usługi z tej grupy reprezentują bardziej klasyczne podejście. Do opisania swoich interfejsów mogą (nie jest to wymagane jednak bardzo popularne, co więcej konieczne jeżeli chce się użyć frameworku do generowania kodu) wykorzystywać WSDL. Jest to skrót od Web Service Description Language, formacie bazującym na XML, wykorzystywanym do opisywania jak wywołać daną usługę, jakie parametry wejściowe przyjmuje i jakie struktury danych zwraca. Inne systemy mogą komunikować się z technologią web serwices za pomocą protokołu SOAP. Skrót pochodzi od angielskiej nazwy Simple Object Access Protocol. Dostarcza on standardowy, rozszerzalny, dobrze zdefiniowany fremwork do wymiany wiadomości XML. Wspiera kilka różnych protokołów transportowych takich jak:
  \begin{itemize}
 	\item HTTP
 	\item SMTP
@@ -80,7 +80,7 @@ Usługi z tej grupy reprezentują bardziej klasyczne podejście. Do opisania swo
 
 \subsection{Apache ServiceMix}
 Apache ServiceMix pomaga rozwiązać problem integracji będąc bazującym na standardach, lekkim oraz stosującym paradygmat "luźnego powiązania" narzędziem. Dzięki bazowaniu na standardach w sposób znaczący zmniejsza szanse na uzależnienie się od konkretnego dostawcy oprogramowania, przez stosowanie luźnego powiązania pomiędzy poszczególnymi komponentami zmniejsza złożoność integracji. Jest to otwarta implementacja ESB, zbudowana w oparciu o JBI i wydana na licencji Apache, od wersji 4 ServiceMix wykorzystuje OSGi do uproszczenia podziału aplikacji na komponenty. 	
-Architekturę ServiceMix'a można podzielić na 3 warstwy:
+Architekturę Apache ServiceMix można podzielić na 3 warstwy:
 \begin{enumerate}
 	\item Warstwa jądra
 	\item Warstwa usług
@@ -119,27 +119,27 @@ Każda z tych warstw ma inne zadania i odpowiada za inne czynności.
 		\item Tworzenie usług webowych zgodnych ze wzorcem REST - bazuje na Apache CXF, umożliwia w prosty sposób, tworzenie i osadzanie jako paczka OSGi usług zgodnych z REST implementujących API JAX-RS
 		\item Tworzenie i osadzanie jednostek i zespołów usług bazujących na JBI
 		\item Komunikacje - udostępnia usługę wiadomości w całości zbudowaną na Apache ActiveMQ, umożliwiający tworzenie i osadzanie zarówno klientów jak i nadawców wiadomości JMS
-		\item Menadżer transakcji - bazuje na Apache Aries, wystawia interfejs transakcji jako usługę, umożliwia tworzenie i osadzanie zarówno aplikacji bazujących na framework'u JTA jak i na Spring'u
+		\item Menadżer transakcji - bazuje na Apache Aries, wystawia interfejs transakcji jako usługę, umożliwia tworzenie i osadzanie zarówno aplikacji bazujących na frameworku JTA jak i na technologii Spring
 		\item Znormalizowany ruter wiadomości - jego główną rolą jest przekazywanie wiadomości pomiędzy różnymi aplikacjami osadzonymi w kontenerze OSGi oraz, jeżeli zachodzi taka konieczność, pomiędzy aplikacjami z OSGi a aplikacjami osadzonymi w kontenerze JBI
 	\end{itemize}
 	\item Warstwa aplikacji - w tym miejscu znajdując się aplikacje użytkownika, ServiceMix 4 dostarcza wielu różnych API(częściowo wymienionych w warstwie usług) za pomocą których aplikacje klienckie mogą łączyć się i korzystać z usług oferowanych przez komponenty działające wewnątrz kontenera
 \end{itemize}
 
 \subsection{Apache Camel}
-Apache Camel \cite{camel2012} \cite{ibsen2010} to framework używany na szeroką skalę w systemach których celem jest rozwiązywanie problemu integracji, na przykład w ServiceMixie. Najważniejszą funkcjonalnością Camel'a jest mechanizm routingu. W celu lepszego zrozumienia sposobu działania tego framework'u należy wyjaśnić kilka pojęć:
+Apache Camel \cite{camel2012} \cite{ibsen2010} to framework używany na szeroką skalę w systemach których celem jest rozwiązywanie problemu integracji, na przykład w ServiceMixie. Najważniejszą funkcjonalnością Apache Camel jest mechanizm routingu. W celu lepszego zrozumienia sposobu działania tego frameworku należy wyjaśnić kilka pojęć:
 \begin{itemize}
 	\item Punkt końcowy - implementacja wzorca Message Endpoint \cite{hohpe2003}, może odnosić się do adresu lub do usługi znajdującego się pod tym adresem (np. źródło RSS, serwer FTP), pozwala wysyłać i odbierać wiadomości  
 	\item Komponent - fabryki punktów końcowych, pozwalają w elegancki sposób tworzyć punkty końcowe preferowanego typu na przykład WS, JMS, RSS itd.
 	\item Procesor - konsument lub translator wiadomości, może wykonać logikę biznesową lub też wywołać jakąś usługę
-	\item Wiadomość - wiadomość Camel'owa
+	\item Wiadomość - wiadomość technologii Apache Camel
 	\item Ścieżka - trasa jaką pokonuje wiadomość, zaczyna się w punkcie końcowym (producent), następnie przechodzi przez procesory(konsumenci) i opcjonalnie może zostać skierowana do innego punktu końcowego
-	\item CamelContext - kontekst Camel'a, miejsce w którym komponenty, punkty końcowe i procesory są zdefiniowane oraz są utworzone ścieżki z ich wykorzystaniem
+	\item CamelContext - kontekst technologii Apache Camel, miejsce w którym komponenty, punkty końcowe i procesory są zdefiniowane oraz są utworzone ścieżki z ich wykorzystaniem
 \end{itemize}  
 Korzystając z wszystkich wymienionych wyżej elementów Camel daje możliwość stworzenia bardzo skomplikowanego systemu złożonego z wielu różnych elementów. Za jego pomocą można łatwo zaimplementować system który pobierze plik graficzny z serwera FTP, skieruje go do usługi OCR, następnie tak otrzymany tekst skieruje do usługi TTS. Różnych scenariuszy może być dużo i wszystkie one są łatwe do implementacji z wykorzystaniem technologi Apache Camel. Umożliwia on dwa różne sposoby definiowania ścieżek, za pomocą pliku XML i za pomocą DSL bazującego na języku Java.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.95]{camel.png} 
-	\caption{Sposób definiowania ścieżek w Camel'u}
+	\caption{Sposób definiowania ścieżek w technologii Apache Camel}
 \end{figure}
 	
 \section{Technologie przetwarzania mowy}		
@@ -171,7 +171,7 @@ oraz w kilku różnych językach programowania:
 	\item ObjectiveC
 	\item platforma .NET
 \end{itemize}
-Dostęp do Speech Cloud'a możliwy jest zarówno za pomocą protokołu SOAP oraz przez reprezentację REST'ową. W tej chwili niezależnie od używanego API można uzyskać następującą funkcjonalność:
+Dostęp do technologii Speech Cloud możliwy jest zarówno za pomocą protokołu SOAP oraz przez reprezentację technologii REST. W tej chwili niezależnie od używanego API można uzyskać następującą funkcjonalność:
 \begin{itemize}
 	\item wygenerowanie pliku dźwiękowego z podanego tekstu
 	\item pobranie informacji o dostępnych głosach i kodekach
@@ -195,7 +195,7 @@ Poza wyborem języka istnieje też możliwość wyboru lektora, różnią się o
  Aby korzystać ze zdalnego API należy posiadać konto w systemie Ivony, jest ono wykorzystywane do pobierania opłat. Co bardzo istotne, Ivona wspiera protokół SSML, umożliwiający klientowi dokładniejsze sterowanie generowanym głosem. 
 
 \subsection{Google Translate}
-Google Translate to płatna usługa Google'a umożliwiająca tłumaczenie tekstu pomiędzy tysiącami dostępnych par języków. Poza tłumaczeniem usługa ta umożliwia również rozpoznanie języka. API udostępniane przez korporację opiera się o architekturę REST, składa się z trzech metod:
+Google Translate to płatna usługa Google umożliwiająca tłumaczenie tekstu pomiędzy tysiącami dostępnych par języków. Poza tłumaczeniem usługa ta umożliwia również rozpoznanie języka. API udostępniane przez korporację opiera się o architekturę REST, składa się z trzech metod:
 \begin{itemize}
 	\item translate - tłumaczy tekst z języka źródłowego na docelowy, przykład:
 		\lstset{caption={Tłumaczenie słowa hello z angielskiego na polskil},label=DescriptiveLabel}
