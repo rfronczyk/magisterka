@@ -39,9 +39,9 @@ Podejście warstwowe ułatwia dekompozycję systemu na niezależne komponenty, k
 
 Warstwa \textit{Data Endpoints Layer} odpowiada za udostępnianie interfejsów dla aplikacji klienckich oraz za transformacje danych do wspólnego formatu. Głównymi elementami tej warstwy są punkty końcowe i translatory danych. Punkty końcowe wystawiają interfejsy umożliwiające dostęp do platformy przy użyciu różnych technologii takich jak REST, FTP, SOAP czy RSS. Zadaniem translatorów jest ujednolicenie danych do postaci używanej w kolejnych warstwach. Dzięki temu komponenty z warstw niższych mają uproszczoną implementację ponieważ skupiają się na obsłudze tylko jednego, dobrze zdefiniowanego formatu. 
 
-Warstwa \textit{Routing Layer} odpowiada za routowanie zadań przetwarzania od punktów końcowych do odpowiednich serwisów, a także za przesyłanie wyników z powrotem do punktów końcowych. Zadania mogą być jedno etapowe jak np. \textit{przetłumacz ten tekst z języka polskiego na język angielski} albo dwu lub więcej etapowe jak np. \textit{rozpoznaj tekst na tym zdjęciu, jeżeli trzeba przetłumacz na język angielski i na jego podstawie wygeneruj dźwięk}.
+Warstwa \textit{Routing Layer} odpowiada za routowanie zadań przetwarzania od punktów końcowych do odpowiednich komponentów udostępniających usługi przetwarzania mowy, a także za przesyłanie wyników z powrotem do punktów końcowych. Zadania mogą być jedno etapowe jak np. \textit{przetłumacz ten tekst z języka polskiego na język angielski} albo dwu lub więcej etapowe jak np. \textit{rozpoznaj tekst na tym zdjęciu, jeżeli trzeba przetłumacz na język angielski i na jego podstawie wygeneruj dźwięk}.
 
-Głównym elementami ostatniej warstwy, \textit{Services Layer}, jest repozytorium serwisów oraz konkretne ich instancje. Główne zadanie repozytorium to wyszukiwanie i zwracanie odpowiednich instancji w odpowiedzi na żądania warstwy routującej. Najważniejszą cechą wyróżniającą poszczególne serwisy jest typ przetwarzania mowy jaki dostarczają. Ze względu na to kryterium zostały one podzielone na 5 grup, a każda z nich posiada dodatkowe cechy, które także mają wpływ na wynik wyszukiwania:
+Głównym elementami ostatniej warstwy, \textit{Services Layer}, jest repozytorium komponentów odpowiadających za przetwarzanie mowy oraz konkretne ich instancje. Główne zadanie repozytorium to wyszukiwanie i zwracanie odpowiednich instancji w odpowiedzi na żądania warstwy routującej. Najważniejszą cechą wyróżniającą poszczególne komponenty jest typ przetwarzania mowy jaki dostarczają. Ze względu na to kryterium zostały one podzielone na 5 grup, a każda z nich posiada dodatkowe cechy, które także mają wpływ na wynik wyszukiwania:
 
 \begin{itemize}
 	\item OCR
@@ -90,7 +90,7 @@ Głównym elementami ostatniej warstwy, \textit{Services Layer}, jest repozytori
 	\end{itemize}
 \end{itemize}
 
-Oczywiście konkretny serwis może udostępniać więcej niż jeden typ przetwarzania np. serwis translacji może od razu być w stanie rozpoznać język źródłowy, dzięki czemu nie musi mieć tej informacji dostarczonej razem z tekstem.
+Oczywiście konkretny komponent może udostępniać więcej niż jeden typ przetwarzania np. komponent translacji może od razu być w stanie rozpoznać język źródłowy, dzięki czemu nie musi mieć tej informacji dostarczonej razem z tekstem.
 
 \begin{figure}[!h]
 	\centering
@@ -117,7 +117,7 @@ Ponieważ przetwarzanie mowy może być procesem czasochłonnym, budowana platfo
 \subsection{Warstwa \textit{Routing Layer}}
 
 \subsubsection*{Przepływ regularnych wiadomości}
-Diagram \ref{fig:routing_layer_project} przedstawia, przepływ wiadomości, które zostały wysłane na adres warstwy routującej. Żądania, które już wcześniej były poddane transformacji, są gotowe aby wysłać je do odpowiednich serwisów. Komponent routujący, nie posiada stałych, wyznaczonych tras, lecz wybiera je za każdym razem gdy pojawi się jakaś wiadomość na jego kanale wejściowym. Jeżeli zadanie zostanie uznane za zakończone zostaje ono odesłane na adres zwrotny zapisany w wiadomości. Adres ten wskazuje kanał odbiorczy odpowiedniego punktu końcowego, za pomocą którego zostało zlecone dane zadanie przetwarzania. Jeżeli do zakończenia zadania potrzebny jest jeszcze jakiś etap przetwarzania, router wykonuje zapytanie do rejestru serwisów w celu uzyskania adresu serwisu spełniającego wymagania zadania. Jeżeli zostanie znaleziony odpowiedni serwis, żądanie przetwarzania zostaje opakowane w dodatkową kopertę, której adres zwrotny wskazuje na kanał wejściowy routera. Tak przygotowana wiadomość zostaje wysłana na adres uzyskany od rejestru serwisów. Po przetworzeniu, wiadomość jest odsyłana na adres wejściowy routera i jest podawana procesowi routowania ponownie. Jeżeli repozytorium nie zawiera serwisu spełniającego wymagania zadania, wiadomość jest odsyłana z powrotem do punktu końcowego z odpowiednim kodem błędu. 
+Diagram \ref{fig:routing_layer_project} przedstawia, przepływ wiadomości, które zostały wysłane na adres warstwy routującej. Żądania, które już wcześniej były poddane transformacji, są gotowe aby wysłać je do odpowiednich komponentów przetwarzających. Komponent routujący, nie posiada stałych, wyznaczonych tras, lecz wybiera je za każdym razem gdy pojawi się jakaś wiadomość na jego kanale wejściowym. Jeżeli zadanie zostanie uznane za zakończone zostaje ono odesłane na adres zwrotny zapisany w wiadomości. Adres ten wskazuje kanał odbiorczy odpowiedniego punktu końcowego, za pomocą którego zostało zlecone dane zadanie przetwarzania. Jeżeli do zakończenia zadania potrzebny jest jeszcze jakiś etap przetwarzania, router wykonuje zapytanie do rejestru w celu uzyskania adresu komponentu spełniającego wymagania zadania. Jeżeli zostanie znaleziony odpowiedni komponent, żądanie przetwarzania zostaje opakowane w dodatkową kopertę, której adres zwrotny wskazuje na kanał wejściowy routera. Tak przygotowana wiadomość zostaje wysłana na adres uzyskany od rejestru komponentów. Po przetworzeniu, wiadomość jest odsyłana na adres wejściowy routera i jest podawana procesowi routowania ponownie. Jeżeli repozytorium nie zawiera żadnego komponentu spełniającego wymagania zadania, wiadomość jest odsyłana z powrotem do punktu końcowego z odpowiednim kodem błędu. 
 
 \begin{figure}[!h]
 	\centering
@@ -133,7 +133,7 @@ Diagram \ref{fig:routing_layer_project} przedstawia, przepływ wiadomości, któ
 
 \subsubsection*{Przepływ wiadomości asynchronicznych}
 W celu obsługi wiadomości w sposób asynchroniczny, jeżeli wykorzystywany punkt końcowy nie zapewnia wparcia dla takiej komunikacji, należy poprzedzić proces routowania dodatkowymi krokami.
-Diagram \ref{fig:asynchronous_detour} przedstawia rozwiązanie zastosowane w SpeechProcessingPlatform. Ważnym aspektem w prezentowanej koncepcji jest wprowadzenie dodatkowego typu serwisów, przechowywania danych, których zadaniem jest przechowywanie odpowiedzi pod odpowiednim kluczem. Pierwszym etapem jest rozdzielenie wiadomości na dwie grupy synchroniczne i asynchroniczne. Podział ten jest dokonywany na podstawie oznaczenia wykonanego przez punkt końcowy zlecający, a także na podstawie obecności chociaż jednego serwisu przechowywania danych. Jeżeli chociaż jeden z tych warunków nie jest spełniony żądanie będzie obsłużony w sposób opisany w poprzednim podrozdziale. Jeżeli obydwa warunki są spełnione wiadomość jest poddawana kilku dodatkowym operacjom przed wysłaniem jej do routera. Pierwsza z nich to usunięcie oznaczenia do przetwarzania asynchronicznego. Druga to wygenerowanie i dodanie do wiadomości unikalnego identyfikatora, który posłuży jako klucz przy przechowywaniu docelowej odpowiedzi. Następnym krokiem jest wygenerowanie zastępczej odpowiedzi i wysłanie jej do punktu końcowego. Odpowiedz ta zawiera wygenerowany wcześniej identyfikator, który pozwoli aplikacji klienckiej na odpytanie systemu o odpowiedź na oryginalne zadanie. Ostatnim krokiem jest podmiana adresu zwrotnego w oryginalnej wiadomości na adres serwisu przechowywania danych, do którego to odpowiedź zostanie wysłana po zakończonym przetwarzaniu.  Dalsze przetwarzanie wygląda tak samo jak w wypadku wiadomości synchronicznych.
+Diagram \ref{fig:asynchronous_detour} przedstawia rozwiązanie zastosowane w SpeechProcessingPlatform. Ważnym aspektem w prezentowanej koncepcji jest wprowadzenie dodatkowego typu komponentów, przechowywania danych, których zadaniem jest przechowywanie odpowiedzi pod odpowiednim kluczem. Pierwszym etapem jest rozdzielenie wiadomości na dwie grupy synchroniczne i asynchroniczne. Podział ten jest dokonywany na podstawie oznaczenia wykonanego przez punkt końcowy zlecający, a także na podstawie obecności chociaż jednego komponentu przechowywania danych. Jeżeli chociaż jeden z tych warunków nie jest spełniony żądanie będzie obsłużony w sposób opisany w poprzednim podrozdziale. Jeżeli obydwa warunki są spełnione wiadomość jest poddawana kilku dodatkowym operacjom przed wysłaniem jej do routera. Pierwsza z nich to usunięcie oznaczenia do przetwarzania asynchronicznego. Druga to wygenerowanie i dodanie do wiadomości unikalnego identyfikatora, który posłuży jako klucz przy przechowywaniu docelowej odpowiedzi. Następnym krokiem jest wygenerowanie zastępczej odpowiedzi i wysłanie jej do punktu końcowego. Odpowiedz ta zawiera wygenerowany wcześniej identyfikator, który pozwoli aplikacji klienckiej na odpytanie systemu o odpowiedź na oryginalne zadanie. Ostatnim krokiem jest podmiana adresu zwrotnego w oryginalnej wiadomości na adres komponentu przechowywania danych, do którego to odpowiedź zostanie wysłana po zakończonym przetwarzaniu.  Dalsze przetwarzanie wygląda tak samo jak w wypadku wiadomości synchronicznych.
 
 
  % mozna dodać obrazek do correlation idetifier po słowach : ...nagłówki: unikalny idetyfikator, oraz....
@@ -152,8 +152,8 @@ Diagram \ref{fig:asynchronous_detour} przedstawia rozwiązanie zastosowane w Spe
 
 \subsection{Warstwa \textit{Services Layer}}
 
-Pierwszym komponentem z warstwy \textit{Services Layer}, który bierze udział podczas przetwarzania wiadomości jest repozytorium serwisów. Użycie tego komponentu nie jest wymagane , jednak jego brak wymusiłby zapisanie gdzieś w implementacji warstwy \textit{Routing Layer} stałych ścieżek lub zestawu reguł na podstawie których podejmowana byłaby decyzja o dalszej trasie wiadomości. Takie podejście mocno związałoby platformę z konkretnymi serwisami, dodanie nowego serwisu wiązało by się ze zmianą implementacji. Dzięki zastosowaniu repozytorium, które wprowadza dodatkową warstwę abstrakcji nad konkretnymi serwisami syntezy mowy, całość systemu nie jest związana z konkretnym dostawcą usług syntezy. Dodatkowym plusem takiego rozwiązania jest możliwość dynamicznego wyboru serwisów w zależności od zmieniających się warunków zewnętrznych. Platformę można rozszerzyć o komponenty monitorujące zachowanie się serwisów w czasie rzeczywistym co pozwoli na wybór najlepszej instancji w danym momencie. 
-Aby nie wiązać platformy z konkretną implementacją repozytorium został wprowadzony interfejs, który musi być zaimplementowany przez komponenty chcące pełnić role repozytorium serwisów. Takie podejście pozwoli na użycie różnych implementacji opartych na rozmaitych technologiach jak np. Spring czy OSGi. Fragment kodu \ref{lst:repository_interface} przedstawia omawiany interfejs:
+Pierwszym komponentem z warstwy \textit{Services Layer}, który bierze udział podczas przetwarzania wiadomości jest repozytorium. Użycie tego komponentu nie jest wymagane , jednak jego brak wymusiłby zapisanie gdzieś w implementacji warstwy \textit{Routing Layer} stałych ścieżek lub zestawu reguł na podstawie których podejmowana byłaby decyzja o dalszej trasie wiadomości. Takie podejście mocno związałoby platformę z konkretnymi komponentami odpowiedzialnymi za przetwarzanie mowy, a dodanie nowego komponentu wiązało by się ze zmianą implementacji. Dzięki zastosowaniu repozytorium, które wprowadza dodatkową warstwę abstrakcji nad konkretnymi komponentami syntezy mowy, całość systemu nie jest związana z konkretnym dostawcą usług syntezy. Dodatkowym plusem takiego rozwiązania jest możliwość dynamicznego wyboru komponentów w zależności od zmieniających się warunków zewnętrznych. Platformę można rozszerzyć o komponenty monitorujące zachowanie się komponentów w czasie rzeczywistym co pozwoli na wybór najlepszej instancji w danym momencie. 
+Aby nie wiązać platformy z konkretną implementacją repozytorium został wprowadzony interfejs, który musi być zaimplementowany przez komponenty chcące pełnić role repozytorium. Takie podejście pozwoli na użycie różnych implementacji opartych na rozmaitych technologiach jak np. Spring czy OSGi. Fragment kodu \ref{lst:repository_interface} przedstawia omawiany interfejs:
 
 \lstset{language=Java, tabsize=4, caption=Definicja interfejsu ISreviceRepository w języku Java.,label=lst:repository_interface}
 
@@ -168,7 +168,7 @@ public interface SreviceRepository {
 \end{lstlisting}
 \end{center}
 
-Chociaż repozytorium serwisów jest ważnym komponentem to nie bierze ono czynnego udziału w przetwarzaniu wiadomości. Adres serwisu który zostaje zwrócony jako odpowiedź na żądanie routera służy do wysłania zadania do odpowiedniej instancji serwisu. Diagram \ref{fig:services_layer_project} przedstawia przepływ wiadomości w warstwie \textit{Services Layer}. Przepływ ten jest stosunkowo prosty. Wiadomości pojawiające się w kanale wejściowym są odbierane i poddawane przetwarzaniu. Odpowiedź odsyłana jest na adres zwrotny zawarty w wiadomości, który zawsze wskazuje na adres kanału wejściowego routera. 
+Chociaż repozytorium komponentów jest ważną częścią systemu to nie bierze ono czynnego udziału w przetwarzaniu wiadomości. Adres komponentu który zostaje zwrócony jako odpowiedź na żądanie routera służy do wysłania zadania do odpowiedniej instancji. Diagram \ref{fig:services_layer_project} przedstawia przepływ wiadomości w warstwie \textit{Services Layer}. Przepływ ten jest stosunkowo prosty. Wiadomości pojawiające się w kanale wejściowym są odbierane i poddawane przetwarzaniu. Odpowiedź odsyłana jest na adres zwrotny zawarty w wiadomości, który zawsze wskazuje na adres kanału wejściowego routera. 
 
 \begin{figure}[!h]
 	\centering
@@ -176,7 +176,7 @@ Chociaż repozytorium serwisów jest ważnym komponentem to nie bierze ono czynn
 	\caption{Diagram przepływu wiadomości w warstwie \textit{Services Layer}}\label{fig:services_layer_project}
 \end{figure}
 
-Pierwszym wymaganiem stawianym konkretnym instancjom serwisów jest implementacja interfejsu \textit{MessageEnabledService} \ref{lst:service_interface}. Interfejs ten posiada tylko jedną metodę, która zwraca adres kanału wejściowego danego serwisu. Spełnienie tego wymagania jest konieczne aby repozytorium było w stanie odnaleźć serwis i zwrócić jego adres routerowi, jednak aby dana instancja pełniła jakąkolwiek rolę w systemie musi także udostępniać informację o funkcjonalności przez niej dostarczanej. W tym celu instancje muszą implementować dodatkowe interfejsy, które jednoznacznie określają udostępnianą funkcjonalność. Ponieważ komunikacja między serwisami, a resztą systemu odbywa się przez kanały wiadomości, interfejsy te służą tylko do oznaczenia serwisów a nie jako kontrakt miedzy nimi a, komponentami z nich korzystającymi. Takie użycie interfejsu jest znane jako wzorzec \textit{Marker interface} \cite{bloch2008}.
+Pierwszym wymaganiem stawianym konkretnym instancjom komponentów przetwarzających mowę jest implementacja interfejsu \textit{MessageEnabledService} \ref{lst:service_interface}. Interfejs ten posiada tylko jedną metodę, która zwraca adres kanału wejściowego danego komponentu. Spełnienie tego wymagania jest konieczne aby repozytorium było w stanie odnaleźć komponent i zwrócić jego adres routerowi, jednak aby dana instancja pełniła jakąkolwiek rolę w systemie musi także udostępniać informację o funkcjonalności przez niej dostarczanej. W tym celu instancje muszą implementować dodatkowe interfejsy, które jednoznacznie określają udostępnianą funkcjonalność. Ponieważ komunikacja między komponentami przetwarzania mowy, a resztą systemu odbywa się przez kanały wiadomości, interfejsy te służą tylko do oznaczenia komponentów a nie jako kontrakt miedzy nimi a, innymi komponentami z nich korzystającymi. Takie użycie interfejsu jest znane jako wzorzec \textit{Marker interface} \cite{bloch2008}.
 
 \lstset{language=Java, tabsize=4, caption=Definicja interfejsu MessageEnabledService w języku Java.,label=lst:service_interface}
 
@@ -188,9 +188,9 @@ public interface MessageEnabledService {
 \end{lstlisting}
 \end{center}
 
-Jak było wspomniane wcześniej serwisy syntezy mowy zostały podzielone na 5 podstawowych grup, lecz nic nie stoi na przeszkodzie aby dodać kolejne, tak jak to ma miejsce z serwisami przechowywania danych. Jedyne co trzeba zrobić to zarejestrować serwis pod odpowiednim interfejsem. Fragment kodu \ref{lst:services_interfaces} przedstawia 5 interfejsów syntezy mowy plus interfejs serwisów przechowywania danych.
+Jak było wspomniane wcześniej, komponenty syntezy mowy zostały podzielone na 5 podstawowych grup, lecz nic nie stoi na przeszkodzie aby dodać kolejne, tak jak to ma miejsce z komponentami przechowywania danych. Jedyne co trzeba zrobić to zarejestrować komponent pod odpowiednim interfejsem. Fragment kodu \ref{lst:services_interfaces} przedstawia 5 interfejsów syntezy mowy plus interfejs przechowywania danych.
 
-\lstset{language=Java, tabsize=4, caption=Definicja interfejsów serwisów w języku Java.,label=lst:services_interfaces}
+\lstset{language=Java, tabsize=4, caption=Definicja interfejsów komponentów dostarczających usługi przetwarzania mowy i przechowywania danych w języku Java.,label=lst:services_interfaces}
 
 \begin{center}
 \begin{lstlisting}
@@ -215,10 +215,10 @@ public interface StorageService {
 \end{lstlisting}
 \end{center}
 
-Drugim i ostatnim wymaganiem stawianym przed implementacjami serwisów jest obsługa wiadomości w wewnętrznym formacie używanym przez resztę komponentów systemu. Jest to spowodowane brakiem informacji na temat formatu wiadomości obsługiwanego przez dany serwis. Podczas procesu routowania, znany jest tylko adres i typ docelowego serwisu, dlatego router nie jest w stanie przetransformować wiadomości do obsługiwanego formatu. 
+Drugim i ostatnim wymaganiem stawianym przed implementacjami usług przetwarzania mowy jest obsługa wiadomości w wewnętrznym formacie używanym przez resztę komponentów systemu. Jest to spowodowane brakiem informacji na temat formatu wiadomości obsługiwanego przez dany komponent. Podczas procesu routowania, znany jest tylko adres i typ docelowego komponentu, dlatego router nie jest w stanie przetransformować wiadomości do obsługiwanego formatu. 
 
 
-Większość dostępnych serwisów syntezy mowy nie była tworzona z myślą o obsłudze komunikacji opartej na wiadomościach, a nawet jeśli, to na pewno nie obsługują one formatu używanego w budowanym systemie. Aby możliwe było użycie gotowych serwisów w budowanym systemie należy użyć komponenty które będą działać na zasadzie proxy i to one będą rejestrować się w rejestrze serwisów. Po otrzymaniu wiadomości komponent proxy, podda ją wymaganej transformacji po czym wyśle zadanie do konkretnej instancji serwisu, używając przy tym odpowiedniego adaptera, jeżeli zajdzie taka potrzeba. 
+Większość dostępnych usług syntezy mowy nie była tworzona z myślą o obsłudze komunikacji opartej na wiadomościach, a nawet jeśli, to na pewno nie obsługują one formatu używanego w budowanym systemie. Aby możliwe było użycie gotowych usług w budowanym systemie należy użyć komponenty które będą działać na zasadzie proxy i to one będą rejestrować się w rejestrze komponentów. Po otrzymaniu wiadomości komponent proxy, podda ją wymaganej transformacji po czym wyśle zadanie do konkretnej instancji usługi, używając przy tym odpowiedniego adaptera, jeżeli zajdzie taka potrzeba. 
 
 \begin{figure}[!h]
 	\centering
@@ -229,8 +229,7 @@ Większość dostępnych serwisów syntezy mowy nie była tworzona z myślą o o
 
 \section{Implementacja}
 
-Do implementacji systemu SpeechProcessingPlatform została użyta platforma integracyjna Apache ServiceMix, która w znaczący sposób ułatwia rozwiązywanie problemów integracji, dzięki dostarczaniu dużej ilości gotowych komponentów. Zastosowanie kontenera OSGi, na którym platforma ta jest oparta, pozawala na dynamiczną adaptację systemu w zależności od zaistniałych warunków. Dodatkowo pozwala podzielić system na niezależne, wymienialne części (bundle), z których każda posiada niezależny od reszty cykl życia. Dodawanie nowych części, takich jak kolejne punkty końcowe, czy kolejne serwisy może być realizowane w trakcie pracy systemu i nie wymaga jego ponownego uruchomienia \cite{hall2011}. 
-Do implementacji przepływów wiadomości został użyty Apache Camel, który jest jedną z części składowych ServiceMix-a. Framework ten zawiera bardzo dużą liczbę wbudowanych punktów końcowych, obsługujących większość z popularnych protokołów komunikacji takich jak: FTP, HTTP, IMAP czy XMPP. Dzięki temu dodanie obsługi większej ilości protokołów nie stanowi żadnego problemu. Framework ten, pozwala również w prosty w sposób zaimplementować większość wzorców EIP, dlatego implementacja opisanych w poprzednim podrozdziale przepływów wiadomości jest stosunkowo prosta.
+Do implementacji systemu SpeechProcessingPlatform została użyta platforma integracyjna Apache ServiceMix, która w znaczący sposób ułatwia rozwiązywanie problemów integracji, dzięki dostarczaniu dużej ilości gotowych komponentów. Zastosowanie kontenera OSGi, na którym platforma ta jest oparta, pozawala na dynamiczną adaptację systemu w zależności od zaistniałych warunków. Dodatkowo pozwala podzielić system na niezależne, wymienialne części (bundle), z których każda posiada niezależny od reszty cykl życia. Dodawanie nowych części, takich jak kolejne punkty końcowe, czy kolejne komponenty udostępniające usługi przetwarzania mowy może być realizowane w trakcie pracy systemu i nie wymaga jego ponownego uruchomienia \cite{hall2011}. Do implementacji przepływów wiadomości został użyty Apache Camel, który jest jedną z części składowych ServiceMix-a. Framework ten zawiera bardzo dużą liczbę wbudowanych punktów końcowych, obsługujących większość z popularnych protokołów komunikacji takich jak: FTP, HTTP, IMAP czy XMPP. Dzięki temu dodanie obsługi większej ilości protokołów nie stanowi żadnego problemu. Framework ten, pozwala również w prosty w sposób zaimplementować większość wzorców EIP, dlatego implementacja opisanych w poprzednim podrozdziale przepływów wiadomości jest stosunkowo prosta.
 
 \subsection{Wewnętrzny format wiadomości}
 Wiadomości przesyłane wewnątrz systemu mają postać obiektów, a pliki wejściowe są dołączone do nich jako załączniki. Takie podejście ułatwia operacje na wiadomościach, np. sprawdzenie czy zadanie jest już zakończone sprowadza się do wywołania metody. Fragment kodu \ref{lst:task_interface} przedstawia interfejs który musi być implementowany przez obiekty wiadomości.
@@ -283,7 +282,7 @@ Dzięki bogatej bazie komponentów dostępnych w Apache Camel, implementacja kon
 \end{lstlisting}
 \end{center}
 
-Aby użyć niektórych rodzajów punktów końcowych, wymagany nakład pracy jest trochę większy, lecz nadal stosunkowo mały. Chcąc udostępnić system za pomocą technologii Web services należało stworzyć również opis serwisu, jednak sprowadza się to do implementacji prostego interfejsu z dodatkowymi adnotacjami.  Fragment kodu \ref{lst:rest_service} przedstawia definicje serwisu REST-owego, która zastała użyta do konfiguracji punktu końcowego cxfrs. Metody w poniższej klasie nie są wywoływane, służą one tylko do konfiguracji punktu końcowego. Za całe przetwarzanie odpowiedzialna jest reszta ścieżki Apache Camel.
+Aby użyć niektórych rodzajów punktów końcowych, wymagany nakład pracy jest trochę większy, lecz nadal stosunkowo mały. Chcąc udostępnić system za pomocą technologii Web services należało stworzyć również opis usługi, jednak sprowadza się to do implementacji prostego interfejsu z dodatkowymi adnotacjami.  Fragment kodu \ref{lst:rest_service} przedstawia definicje usługi zgodnej z technologią REST web services, która zastała użyta do konfiguracji punktu końcowego cxfrs. Metody w poniższej klasie nie są wywoływane, służą one tylko do konfiguracji punktu końcowego. Za całe przetwarzanie odpowiedzialna jest reszta ścieżki Apache Camel.
 
 
 \lstset{language=Java, tabsize=4, caption=Definicja REST-owego punktu końcowego.,label=lst:rest_service}
@@ -353,7 +352,7 @@ Fragment kodu \ref{lst:email_endpoint} przedstawia kompletną implementację prz
 
 \subsection{Warstwa \textit{Routing Layer}}
 
-Najważniejszym elementem tej warstwy jak i całego systemu jest router. Jedyną zależnością pomiędzy routerem a innymi komponentami systemu jest jego adres, dzięki czemu system jest bardzo słabo powiązany z konkretną implementacją komponentu routującego, dzięki czemu implementacje te można dowolnie podmieniać stosownie do zaistniałych potrzeb. Apache Camel bardzo upraszcza proces implementacji routera. Dzięki użyciu elementu \textit{dynamicRouter} jedyne co zostaje do implementacji to metoda zwracająca odpowiedni adres URI. Ponieważ \textit{dynamicRouter} musi być ostatnim elementem ścieżki, ustawienie poprawnego adresu zwrotnego musi zostać podzielone na dwa etapy. Pierwszy etap następuje przed etapem routowania i polega na dodaniu adresu zwrotnego routera niezależnie od tego gdzie ostatecznie wiadomość zostanie przesłana. Drugi etap polega na usunięciu adresu routera z wiadomości i następuje tylko jeżeli proces przetwarzania został zakończony, czyli jeżeli wszystkie wymagane kroki zostały wykonane albo któryś z nich nie może zostać wykonany z powodu braku odpowiedniego serwisu. Poniżej przedstawiona została przykładowa ścieżka Apache Camel odpowiadająca za przepływ wiadomości w opisywanej warstwie jak i przykładowa implementacja komponentu routującego.
+Najważniejszym elementem tej warstwy jak i całego systemu jest router. Jedyną zależnością pomiędzy routerem a innymi komponentami systemu jest jego adres, dzięki czemu system jest bardzo słabo powiązany z konkretną implementacją komponentu routującego, dzięki czemu implementacje te można dowolnie podmieniać stosownie do zaistniałych potrzeb. Apache Camel bardzo upraszcza proces implementacji routera. Dzięki użyciu elementu \textit{dynamicRouter} jedyne co zostaje do implementacji to metoda zwracająca odpowiedni adres URI. Ponieważ \textit{dynamicRouter} musi być ostatnim elementem ścieżki, ustawienie poprawnego adresu zwrotnego musi zostać podzielone na dwa etapy. Pierwszy etap następuje przed etapem routowania i polega na dodaniu adresu zwrotnego routera niezależnie od tego gdzie ostatecznie wiadomość zostanie przesłana. Drugi etap polega na usunięciu adresu routera z wiadomości i następuje tylko jeżeli proces przetwarzania został zakończony, czyli jeżeli wszystkie wymagane kroki zostały wykonane albo któryś z nich nie może zostać wykonany z powodu braku odpowiedniego komponentu. Poniżej przedstawiona została przykładowa ścieżka Apache Camel odpowiadająca za przepływ wiadomości w opisywanej warstwie jak i przykładowa implementacja komponentu routującego.
 
 \lstset{language=XML, tabsize=4, caption=Scieżka Apache Camel odpowiadająca za przepływ wiadomości w warstwie \textit{Routing Layer}.,label=lst:routin_layer_impl}
 
@@ -385,7 +384,7 @@ Najważniejszym elementem tej warstwy jak i całego systemu jest router. Jedyną
 \end{lstlisting}
 \end{center}
 
-\lstset{language=Java, tabsize=4, caption=Implementacja metody routującej wiadomości do odpowiednich serwisów.,label=lst:router_impl}
+\lstset{language=Java, tabsize=4, caption=Implementacja metody routującej wiadomości do odpowiednich komponentów przetwarzania mowy.,label=lst:router_impl}
 
 \begin{center}
 \begin{lstlisting}
@@ -429,17 +428,17 @@ end
 
 \subsection{Warstwa \textit{Services Layer}}
 
-Implementacja repozytorium serwisów zastosowana w systemie SpeechProcessingPlatform jest oparta na technologii OSGi, lecz dzięki dobrze wyspecifikowanemu interfejsowi, system ten nie jest związany z tą jedną, konkretną implementacją. Bazowanie na kontenerze OSGi pozwala dodać dynamiczną naturę do systemu. Takie podejście pozwala dodawać nowe serwisy bez zatrzymywania systemu. Ponieważ OSGi posiada wbudowany rejestr serwisów, więc cała logika związana z rejestrowaniem się i utrzymywaniem listy dostępnych serwisów jest zapewniona, jedyne co zostaje do zaimplementowania to proces odpytywania rejestru o odpowiedni serwis. Podstawowym typem wyszukiwania jakie udostępnia rejestr OSGi jest wyszukiwanie po typie serwisu. Dodatkowo udostępnia on metodę wyszukiwania, która przyjmuje standardowy filtr LDAP \cite{ldaprfc1996} w postaci ciągu znaków. Rejestr OSGi porównuje parametry z filtru z parametrami w definicji serwisu i na tej podstawie podejmuje decyduję które referencje do serwisów zwrócić. Fragment \ref{lst:ldap_tts_query} przedstawia przykładowe zapytanie LDAP zawierające parametry dotyczące przetwarzania mowy. Oprócz opisu serwisów w postaci typu oraz parametrów, OSGi pozwala również na nadawanie im rankingu, dzięki czemu jeżeli więcej niż jeden serwis spełnia zadane wymagania, pozwala zdecydować który serwis jest lepszy. Kompletny algorytm wyboru najlepiej pasującego serwisu można znaleźć w \cite{hall2011}. Fragment kodu \ref{lst:service_repository_impl} przedstawia klasę OSGIServiceRepository, która pełni funkcję fasady nad rejestrem wbudowanym w OSGi.
+Implementacja repozytorium zastosowana w systemie SpeechProcessingPlatform jest oparta na technologii OSGi, lecz dzięki dobrze wyspecifikowanemu interfejsowi, system ten nie jest związany z tą jedną, konkretną implementacją. Bazowanie na kontenerze OSGi pozwala dodać dynamiczną naturę do systemu. Takie podejście pozwala dodawać nowe komponenty bez zatrzymywania systemu. Ponieważ OSGi posiada wbudowany rejestr usług, więc cała logika związana z rejestrowaniem się i utrzymywaniem listy dostępnych komponentów jest zapewniona, jedyne co zostaje do zaimplementowania to proces odpytywania rejestru o odpowiedni komponent. Podstawowym typem wyszukiwania jakie udostępnia rejestr OSGi jest wyszukiwanie po typie usługi. Dodatkowo udostępnia on metodę wyszukiwania, która przyjmuje standardowy filtr LDAP \cite{ldaprfc1996} w postaci ciągu znaków. Rejestr OSGi porównuje parametry z filtru z parametrami w definicji usługi i na tej podstawie podejmuje decyzję które adresy do komponentów zwrócić. Fragment \ref{lst:ldap_tts_query} przedstawia przykładowe zapytania LDAP zawierające parametry dotyczące przetwarzania mowy. Oprócz opisu usług w postaci typu oraz parametrów, OSGi pozwala również na nadawanie im rankingu, dzięki czemu jeżeli więcej niż jedna usługa spełnia zadane wymagania, pozwala zdecydować która usługa jest lepszy. Kompletny algorytm wyboru najlepiej pasującej usługi można znaleźć w \cite{hall2011}. Fragment kodu \ref{lst:service_repository_impl} przedstawia klasę OSGIServiceRepository, która pełni funkcję fasady nad rejestrem wbudowanym w OSGi.
 
-\lstset{language=Java, tabsize=4, caption=Przykładowe zapytanie LDAP zawierające parametry dotyczące serwisu TTS ,label=lst:ldap_tts_query}
+\lstset{language=Java, tabsize=4, caption=Przykładowe zapytania LDAP zawierające parametry dotyczące usług przetwarzania mowy. ,label=lst:ldap_tts_query}
 
 \begin{center}
 \begin{lstlisting}
 
-//zapytanie o serwis TTS
+//zapytanie o usluge TTS
 "(&(language=en)(codec=mp3))"
 
-/zaptanie o serwis OCR
+/zaptanie o usluge OCR
 "(&(language=pl)(|(imageFormat=jpg)(imageFormat=jpeg)))"
 
 
@@ -470,16 +469,16 @@ public class TTSTask implements SreviceRepository{
 \end{lstlisting}
 \end{center}
 % MOZNA DODAC REFERENCJE DO LBUEPRINTA
-Ostatnimi elementami systemu są konkretne serwisy, jednak aby jakiś serwis mógł zostać użyty w systemie musi spełniać parę warunków. Pierwszyw warunkiem jest umiejętność obsługi wiadomości co jest równoznaczne z udostępnianiem jakiegoś kanału wejściowego, który pozwoli na komunikącje routera z daną implementacją. Drugim warunkiem jest rejestracja w rejestrze OSGi pod odpowiednimi interfejsami oraz z odpowiednimi parametrami, co pozwoli na wyszukanie serwisu podczas procesu routowania. W celu rejestracji serwisów został użyty kontener Blueprint, który jest dostarczony razem z frameworkiem OSGi. Pozwala on na łatwą i przejrzystą definicję serwisów za pomocą plików konfiguracyjnych w formacie xml. Oprócz tego, pozwala on również na definicję oraz wstrzykiwanie zależności co upraszcza konfiguracje systemu. Fragment kodu \ref{lst:blueprint_definition} przedstawia definicje serwisu OCR przy uzyciu kontenera Blueprint.
+Ostatnimi elementami systemu są konkretne komponenty dostarczające usługi przetwarzania mowy, jednak aby jakiś komponent mógł zostać użyty w systemie musi spełniać parę warunków. Pierwszym warunkiem jest umiejętność obsługi wiadomości co jest równoznaczne z udostępnianiem jakiegoś kanału wejściowego, który pozwoli na komunikację routera z daną implementacją. Drugim warunkiem jest rejestracja w rejestrze OSGi pod odpowiednimi interfejsami oraz z odpowiednimi parametrami, co pozwoli na wyszukanie komponentu podczas procesu routowania. W celu rejestracji komponentów jako usług OSGi został użyty kontener Blueprint, który jest dostarczony razem z frameworkiem OSGi. Pozwala on na łatwą i przejrzystą definicję usług za pomocą plików konfiguracyjnych w formacie xml. Oprócz tego, pozwala on również na definicję oraz wstrzykiwanie zależności co upraszcza konfiguracje systemu. Fragment kodu \ref{lst:blueprint_definition} przedstawia definicje usługi OCR przy użyciu kontenera Blueprint.
 
-\lstset{language=XML, tabsize=4, caption=Definicja serwisu OCR przy użyciue kontenera Blueprint.,label=lst:blueprint_definition}
+\lstset{language=XML, tabsize=4, caption=Definicja usługi OCR przy użyciu kontenera Blueprint.,label=lst:blueprint_definition}
 
 %SPRAWDZIĆ
 \begin{center}
 \begin{lstlisting}
 <blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0">
 
-	 <!-- definicja beanu ktory zostanie zarejestrowany jako serwis, jako argument przyjmuje nazwe kanalu wejsciowego -->
+	 <!-- definicja beanu ktory zostanie zarejestrowany jako usluga, jako argument przyjmuje nazwe kanalu wejsciowego -->
 	<bean id="freeOCRServiceImpl" class="pl.edu.agh.speechprocessing.services.FreeOCRService">
 		 <argument value="direct:freeOCRService"/> 
 	</bean>
@@ -508,14 +507,14 @@ Ostatnimi elementami systemu są konkretne serwisy, jednak aby jakiś serwis mó
 \end{lstlisting}
 \end{center}
 
-Serwisy rejestrowane w rejestrze OSGi pełnią tylko pomocniczą role. Ich zadaniem jest umożliwienie wyszukiwania oraz dostarczanie adresu pod który należy wysłać wiadomość do zainteresowanych routera. Całe przetwarzanie zaczyna się po otrzymaniu wiadomości w kanale odbiorczym udostępnianym przez dany serwis. Oczywiście obiekt, który jest rejestrowany może również brać czynny udział w przetwarzaniu, ale nie musi. Jako ża właściwe serwisy, które dokonują przetwarzania są na zewnątrz systemu, jedyne zadanie jakie pozostaje to przyogotwanie wiadomości, wywołanie serwisu używając odpowiedniego protokołu, przetłumaczenie odpowiedzi na format wewnętrzny i odesłanie jej do routera. 
+Usługi rejestrowane w rejestrze OSGi pełnią tylko pomocniczą role. Ich zadaniem jest umożliwienie wyszukiwania oraz dostarczanie adresu pod który należy wysłać wiadomość do zainteresowanych routera. Całe przetwarzanie zaczyna się po otrzymaniu wiadomości w kanale odbiorczym udostępnianym komponentu reprezentowanego przez usługę zarejestrowaną w rejestrze OSGi. Oczywiście obiekt, który jest rejestrowany może również brać czynny udział w przetwarzaniu, ale nie musi. Jako że właściwe usługi, które dokonują przetwarzania są na zewnątrz systemu, jedyne zadanie jakie pozostaje to przygotowanie wiadomości, wywołanie usługi używając odpowiedniego protokołu, przetłumaczenie odpowiedzi na format wewnętrzny i odesłanie jej do routera. 
 
 
 % Można dodać fragment implementacji.
 
 \section*{Podsumowanie} 
 
-Powyższy rozdział przedstawił projekt i implementację przykładowej platformy integracyjnej dla przetwarzania mowy. Zastosowanie architekryury z luźno powiązanymi warstwami zostawia dużo opcji do przyszłego rozwoju systemu. Prezentowany system jest też przykładem na to jak użycie wyspecjalizowanych technologii upraszcza proces integracji. Apache ServiceMix integrujący w sobie takie technologie jak OSGi czy Apache Camel pozwala budować systemu integracyjne z gotowych elementów pozwalając ich twórcom skupić sie na logice przypływu danych. Zaimplementowany system należy poddać weryfikacji względem wymagań postawionych w rozdziale 2, a także sprawdzić jego wydajność w porównaniu z tradycyjnym podejściem do systemów przetwarzania mowy.
+Powyższy rozdział przedstawił projekt i implementację przykładowej platformy integracyjnej dla przetwarzania mowy. Zastosowanie architektury z luźno powiązanymi warstwami zostawia dużo opcji do przyszłego rozwoju systemu. Prezentowany system jest też przykładem na to jak użycie wyspecjalizowanych technologii upraszcza proces integracji. Apache ServiceMix integrujący w sobie takie technologie jak OSGi czy Apache Camel pozwala budować systemu integracyjne z gotowych elementów pozwalając ich twórcom skupić się na logice przypływu danych. Zaimplementowany system należy poddać weryfikacji względem wymagań postawionych w rozdziale 2, a także sprawdzić jego wydajność w porównaniu z tradycyjnym podejściem do systemów przetwarzania mowy.
 
 
 % można wrzucic obrazek całego systemu
