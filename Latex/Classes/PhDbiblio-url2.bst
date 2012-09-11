@@ -364,7 +364,12 @@ FUNCTION {format.names}
 FUNCTION {format.authors}
 { author empty$
     { "" }
-    { author format.names scapify }
+    { author format.names scapify 
+	  num.names$ #1 >
+	{ ", " authors * }
+	{ author * }
+      if$
+	}
   if$
 }
 

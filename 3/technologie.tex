@@ -49,7 +49,7 @@ Technologia web services to system zaprojektowany do wspierania komunikacji mię
 	\item może być zlokalizowany za pomocą UDDI
 	\item jest wykorzystywany przez inne aplikacje
 \end{itemize}  
-Można rożróżnić 2 główne klasy web serwisów:
+Można rożróżnić 2 główne klasy technologii web services :
 \begin{itemize}
 	\item technologie web services zgodne z architekturą REST'ową
 	\item technologie arbitrary web services z których każda może udostępniać dowolny zbiór operacji
@@ -65,7 +65,7 @@ Serwisy z tej grupy \cite{fielding2000} ograniczają swój interfejs do zbioru d
 	\item jednolity interfejs - upraszcza oraz rozluźnia powiązanie między klientem a serwerem, dzięki temu możliwa jest ich niezależna ewolucja
 \end{itemize}   
 \subsubsection{Technologia arbitrary web services}
-Serwisy z tej grupy reprezentują bardziej klasyczne podejście. Do opisania swoich interfejsów mogą (nie jest to wymagane jednak bardzo popularne, co więcej konieczne jeżeli chce się użyć framework'ku do generowania kodu) wykorzystywać WSDL. Jest to skrót od Web Service Description Language, formacie bazującym na XML, wykorzystywanym do opisywania jak wywołać dany serwis, jakie parametry wejściowe przyjmuje i jakie struktury danych zwraca. Inne systemy mogą komunikować się z web serwisem za pomocą protokułu SOAP. Skrót pochodzi od angielskiej nazyw Simple Object Access Protocol. Dostarcza on standardowy, rozszerzalny, dobrze zdefiniowany fremwork do wymiany wiadomości XML. Wspiera kilka różnych protokołów transportowych takich jak:
+Serwisy z tej grupy reprezentują bardziej klasyczne podejście. Do opisania swoich interfejsów mogą (nie jest to wymagane jednak bardzo popularne, co więcej konieczne jeżeli chce się użyć framework'ku do generowania kodu) wykorzystywać WSDL. Jest to skrót od Web Service Description Language, formacie bazującym na XML, wykorzystywanym do opisywania jak wywołać dany serwis, jakie parametry wejściowe przyjmuje i jakie struktury danych zwraca. Inne systemy mogą komunikować się z technologią web serwices za pomocą protokułu SOAP. Skrót pochodzi od angielskiej nazyw Simple Object Access Protocol. Dostarcza on standardowy, rozszerzalny, dobrze zdefiniowany fremwork do wymiany wiadomości XML. Wspiera kilka różnych protokołów transportowych takich jak:
  \begin{itemize}
 	\item HTTP
 	\item SMTP
@@ -128,12 +128,12 @@ Każda z tych warstw ma inne zadania i odpowiada za inne czynności.
 \subsection{Apache Camel}
 Apache Came \cite{camel2012} \cite{ibsen2010} to framework używany na szeroką skalę w systemach których celem jest rozwiązywanie problemu integracji, na przykład w ServiceMixie. Najważniejszą funkcjonalnością Camel'a jest mechanizm routingu. W celu lepszego zrozumienia sposobu działania tego framework'u należy wyjaśnić kilka pojęć:
 \begin{itemize}
-	\item Endpoint - implementacja wzorca Message Endpoint \cite{hohpe2003}, może odnosić się do adresu lub do serwisu znajdującego się pod tym adresem (np. źródło RSS, serwer FTP), pozwala wysyłać i odbierać wiadomości  
-	\item Komponent - fabryki endpoint'ów, pozwalają w elegancki sposób tworzyć endpoint'y preferowanego typu na przykład WS, JMS, RSS itd.
+	\item Punkt końcowy - implementacja wzorca Message Endpoint \cite{hohpe2003}, może odnosić się do adresu lub do serwisu znajdującego się pod tym adresem (np. źródło RSS, serwer FTP), pozwala wysyłać i odbierać wiadomości  
+	\item Komponent - fabryki punktów końcowych, pozwalają w elegancki sposób tworzyć punkty końcowe preferowanego typu na przykład WS, JMS, RSS itd.
 	\item Procesor - konsument lub translator wiadomości, może wykonać logike biznesową lub też wywołać jakiś serwis
 	\item Wiadomość - wiadomość Camel'owa
-	\item Ścieżka - trasa jaką pokonuje wiadomość, zaczyna się w endpoint (producent), następnie przechodzi przez procesory(konsumenci) i opcjonalnie może zostać skierowana do innego endpoint'u 
-	\item CamelContext - kontekst Camel'a, miejsce w którym komponenty, endpoint'y i procesory są zdefiniowane oraz są utworzone ścieżki z ich wykorzystaniem
+	\item Ścieżka - trasa jaką pokonuje wiadomość, zaczyna się w punkcie końcowym (producent), następnie przechodzi przez procesory(konsumenci) i opcjonalnie może zostać skierowana do innego punktu końcowego
+	\item CamelContext - kontekst Camel'a, miejsce w którym komponenty, punkty końcowe i procesory są zdefiniowane oraz są utworzone ścieżki z ich wykorzystaniem
 \end{itemize}  
 Korzystając z wszystkich wymienionych wyżej elementów Camel daje możliwość stworzenia bardzo skomplikowanego systemu złożonego z wielu różnych elementów. Za jego pomocą można łatwo zaimplementować system który pobierze plik graficzny z serwera FTP, skieruje go do serwisu OCR, następnie tak otrzymany tekst skieruje do serwisu TTS. Różnych scenariuszy może być dużo i wszystkie one są łatwe do implementacji z wykorzystaniem Camel'a. Umożliwia on dwa różne sposoby definiowania ścieżek, za pomocą pliku XML i za pomocą DSL bazującego na Javi'e.
 \begin{figure}[!h]
@@ -216,7 +216,7 @@ Google Translate to płatna usługa Google'a umożliwiająca tłumaczenie tekstu
 Parametr key=INSERT-YOUR-KEY służy korporacji do indentyfikowania usługobiorcy, na jego podstawie naliczane są opłaty. Jak widać REST w API Google Translate różni się nieznacznie od tradycyjnego pojmowania tej architektury. Zamiast dostarczać dostęp do zasobów, dostarczarczany jest dostęp do usług, stosując takie podejście uzyskano możliwość wykorzystania jednego URI jako całego API. 
 
 \subsection{OCR Web Service}
-OCR Web Service jest to jeden z najpopularniejszych web serwisów tego rodzaju. Rozpoznaje aż dwadzieścia osiem języków między innymi:
+OCR Web Service jest to jeden z najpopularniejszych technologii web serwices tego rodzaju. Rozpoznaje aż dwadzieścia osiem języków między innymi:
 \begin{itemize}
 	\item polski
 	\item angielski
@@ -232,4 +232,4 @@ Przyjmuje różne formaty wejściowe, takie jak: JPEG/JPG, BMP, PCX, GIF, PNG, P
 	\item HTML
 	\item RTF
 \end{itemize}
-Oczywiście istnieje też możliwość otrzymania zwykłego pliku txt. Wymagania tego serwisu co do jakości obrazu w pliku otrzymanym na wejściu też nie są duże, zaleca się aby rozdzielczość wynosiła między 200 a 400 dpi. Web serwis ten jako protokół komunikacyjny wykorzystuje SOAP w wersji 1.1 lub 1.2. WSDL potrzebny do wygenerowania szkieletu kodu można pobrać ze strony projektu. Jedną z niewielu wad tego serwisu jest to, że podobnie jak Google Translate jest płatny. 
+Oczywiście istnieje też możliwość otrzymania zwykłego pliku txt. Wymagania tego serwisu co do jakości obrazu w pliku otrzymanym na wejściu też nie są duże, zaleca się aby rozdzielczość wynosiła między 200 a 400 dpi. Ten serwis jako protokół komunikacyjny wykorzystuje SOAP w wersji 1.1 lub 1.2. WSDL potrzebny do wygenerowania szkieletu kodu można pobrać ze strony projektu. Jedną z niewielu wad tego serwisu jest to, że podobnie jak Google Translate jest płatny. 
