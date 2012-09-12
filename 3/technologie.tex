@@ -9,14 +9,20 @@
 
 
 % ----------------------- contents from here ------------------------
-W rozdziale tym, zostaną zaprezentowane oraz po krotce opisane najważniejsze technologie wykorzystane przy implementacji przykładowego systemu  powstałego na bazie tej pracy.
+W rozdziale tym, zostaną zaprezentowane oraz po krotce opisane najważniejsze technologie wykorzystane przy implementacji systemu SpeechProcessingPlatform. Rysunek \ref{fig:architecture_and_technologies} przedstawia w której części systemu wykorzystywane są poszczególne technologie.
+
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{layered_architecture_and_technologies.png} 
+	\caption{Architektura systemu SpeechProcessingPlatform wraz z wykorzystywanymi technologiami.}
+\label{fig:architecture_and_technologies}
+\end{figure}
 
 \section{Technologie integracyjne}
 \subsection{OSGi}
 Technologia OSGi to zbiór specyfikacji definiujących dynamiczne środowisko komponentowe. Taka struktura pozwala na tworzenie aplikacji złożonych z wielu, różnych komponentów(paczek) które mogą być wykorzystywane wiele razy. Specyfikacja OSGi pozwala komponentowi na ukrywanie swojej implementacji przed innymi i komunikację tylko przy użyciu specjalnych usług, które są dzielone pomiędzy wszystkimi komponentami. Pozwala to na zmniejszenie złożoności tworzonych systemów.
 
 OSGi posiada architekturę warstwową, przedstawiona jest ona, wraz z krótkim opisem, na poniższym diagramie.
-\newpage
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.65]{osgiArchitektura.png} 
@@ -40,6 +46,8 @@ Najważniejszą ideą umożliwiającą istnienie i działanie takiej platformy j
  Możliwe jest oczywiście, żeby dowolna liczba komponentów zarejestrowała ten sam typ usługi lub też pobrała tą samą implementację usługi. Oczywiście zarejestrowane usługi można rozróżniać, każda ma powiązany ze sobą zestaw właściwości(properties), które mogą służyć do specyfikacji. Cała warstwa usług jest dynamiczna, paczki mogą dodawać, usuwać itd. usługi bez konieczności restartu kontenera.  \\
 Do tworzenia i definiowana zależności między bundlami OSGi wykorzystuje Blueprint Container. Jest to framework którego celem jest zarządzanie wstrzykiwaniem zależności. Został zaprojektowany żeby radzić sobie z dynamiczną specyfikacją technologii OSGi (możliwość pojawienia się i zniknięcia usługi w dowolnym momencie). Jego specyfikacja pozwala mu też na działania w środowisku innym niż technologii OSGi. W założeniu opiera się on o strukturę plików xml, które definiują jak komponenty są tworzone oraz łączone aby stworzyć działającą aplikację. Sposób działania kontera opiera się o wzorzec Extender. W czasie inicjalizacji paczki (a więc w czasie działania kontenera) Blueprint Container sprawdza czy wszystkie wymagane zależności są spełnione, tworzy wszystkie wymagane obiekty oraz rejestruje usługi. 
 
+Technologia OSGi jest środowiskiem w którym działa budowany system. Każdy komponent systemu jest dostarczany jako osobna paczka OSGi, dzięki czemu może być niezależnie uruchamiany i zarządzany. 
+
 \subsection{Technologia web services}
 Technologia web services to system zaprojektowany do wspierania komunikacji między rożnymi komputerami za pomocą sieci.  Podstawowe cechy każdej implementacji tej technologii to:
 \begin{itemize}
@@ -49,6 +57,9 @@ Technologia web services to system zaprojektowany do wspierania komunikacji mię
 	\item może być zlokalizowany za pomocą UDDI
 	\item jest wykorzystywany przez inne aplikacje
 \end{itemize}  
+
+Technologia web services jest używana w celu udostępnienia tworzonego systemu jako usługi(Data Endpoints Layer) oraz w celu integracji usług przetwarzania mowy wykorzystujących tą technologię(Services Layer).
+
 Można rozróżnić 2 główne klasy technologii web services :
 \begin{itemize}
 	\item technologie web services zgodne z architekturą technologii REST
@@ -141,6 +152,8 @@ Korzystając z wszystkich wymienionych wyżej elementów Camel daje możliwość
 	\includegraphics[scale=0.95]{camel.png} 
 	\caption{Sposób definiowania ścieżek w technologii Apache Camel}
 \end{figure}
+
+W platformie SpeechProcessingPlatform technologia Apache Camel używana jest do komunikacji między poszczególnymi komponentami. Technologia ta dostarcza adresację oraz prosty interfejs do MOM.
 	
 \section{Technologie przetwarzania mowy}		
 \subsection{FreeTTS}
