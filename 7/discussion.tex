@@ -22,7 +22,15 @@ Co do wyboru sposobu integracji, jak zostało to zaprezentowane wyżej istnieje 
 	\item Różnorodność - wszystkie istniejące implementacje ESB oferują wiele różnych punktów końcowych, służących jako interfejsy wejścia/wyjścia, obsługujących wiele formatów
 \end{itemize}
 Wykorzystanie takiego podejścia daje też inny duży, plus jakim niewątpliwie jest łatwość ukrywania implementacji. Klienci systemu opartego na takim rozwiązaniu nie będą wiedzieć z jakich konkretnie usług korzystają, przez co w razie wystąpienia kłopotów czy też pojawienia się nowszego, lepszego lub ciekawszego rozwiązania można taką usługę łatwo podmienić, bez konieczności zmieniania API. Kolejną dużą zaletą wykorzystania ESB, jest możliwość wykorzystania routingu. Dzięki temu sterowanie całym systemem i kolejnością wywoływania poszczególnych usług jest możliwa za pomocą prostego pliku xml.  \\
-Zaprezentowana praca magisterska zagłębia się w dziedzinę, która jest dość nowatorska. Zaproponowane rozwiązanie i przykładowa implementacja pokazują zarówno, iż temat jest ciekawy i warty dalszych badań oraz, że istniejące w tej chwili rozwiązania integracyjne są odpowiednie dla specyficznej dziedziny jaką jest przetwarzanie mowy i można je z powodzeniem stosować. 
+Zaprezentowana praca magisterska zagłębia się w dziedzinę, która jest dość nowatorska. Zaproponowane rozwiązanie i przykładowa implementacja pokazują zarówno, iż temat jest ciekawy i warty dalszych badań oraz, że istniejące w tej chwili rozwiązania integracyjne są odpowiednie dla specyficznej dziedziny jaką jest przetwarzanie mowy i można je z powodzeniem stosować. W rozdziale pierwszym przedstawiono listę kilku pytań, na które, na podstawie, tej pracy można udzielić odpowiedzi, tak więc:
+\begin{itemize}
+	\item czy modele i wzorce proponowane przy innych rozwiązaniach integracyjnych mają zastosowanie dla tak specyficznej dziedziny problemu? - tak, rozwiązania oparte o technologię ESB sprawdzają się bardzo dobrze
+	\item czy integracja systemów przetwarzania mowy ma sens? - tak, powstałe systemy mają szeroki zakres funkcjonalności, mogą być wykorzystywane w wielu dziedzinach
+	\item czy istnieje zapotrzebowanie na platformę integrującą systemy przetwarzania mowy? - tak, istnieje wiele dziedzin w których można wykorzystać aplikacje bazujące na takiej platformie, co więcej przykładowe aplikacje pokazują, że jest ona funkcjonalna
+	\item jakie mogą być zastosowania takiego zintegrowanego systemu? - wiele różnych zastosowań, opisane wyżej Automatyczne Dyktando, Lektor SMS, czy platforma Google Goggles 
+	\item jakie są zalety istnienia takiej platformy? - uproszczenie interfejsu dla programisty aplikacji klienckich, łatwa możliwość konfiguracji, wiele zastosowań, innowacyjność
+	\item jakie są wady takiej platformy? - dodatkowy koszt czasowy, narzuceci dostarczyciele usług
+\end{itemize}
 
 % ----------------------- contents from here ------------------------
 
