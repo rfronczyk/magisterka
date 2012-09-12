@@ -232,7 +232,7 @@ Większość dostępnych usług syntezy mowy nie była tworzona z myślą o obs�
 Do implementacji systemu SpeechProcessingPlatform została użyta platforma integracyjna Apache ServiceMix, która w znaczący sposób ułatwia rozwiązywanie problemów integracji, dzięki dostarczaniu dużej ilości gotowych komponentów. Zastosowanie kontenera OSGi, na którym platforma ta jest oparta, pozawala na dynamiczną adaptację systemu w zależności od zaistniałych warunków. Dodatkowo pozwala podzielić system na niezależne, wymienialne części (bundle), z których każda posiada niezależny od reszty cykl życia. Dodawanie nowych części, takich jak kolejne punkty końcowe, czy kolejne komponenty udostępniające usługi przetwarzania mowy może być realizowane w trakcie pracy systemu i nie wymaga jego ponownego uruchomienia \cite{hall2011}. Do implementacji przepływów wiadomości został użyty Apache Camel, który jest jedną z części składowych ServiceMix-a. Framework ten zawiera bardzo dużą liczbę wbudowanych punktów końcowych, obsługujących większość z popularnych protokołów komunikacji takich jak: FTP, HTTP, IMAP czy XMPP. Dzięki temu dodanie obsługi większej ilości protokołów nie stanowi żadnego problemu. Framework ten, pozwala również w prosty w sposób zaimplementować większość wzorców EIP, dlatego implementacja opisanych w poprzednim podrozdziale przepływów wiadomości jest stosunkowo prosta.
 
 \subsection{Wewnętrzny format wiadomości}
-Wiadomości przesyłane wewnątrz systemu mają postać obiektów, a pliki wejściowe są dołączone do nich jako załączniki. Takie podejście ułatwia operacje na wiadomościach, np. sprawdzenie czy zadanie jest już zakończone sprowadza się do wywołania metody. Fragment kodu \ref{lst:task_interface} przedstawia interfejs który musi być implementowany przez obiekty wiadomości.
+Wiadomości przesyłane wewnątrz systemu mają postać obiektów. Obiekty te posiadają wszystkie potrzebne informacje aby można było przeprowadzić przetwarzanie, czyli typ przetwarzanie, dane wejściowe i parametry przetwarzania. Wynik przetwarzania jest również przechowywany w obiekcie wiadomości, dzięki czemu może on posłużyć jako dane wejściowe dla kolejnego etapu albo jako wynik końcowy całego procesu. Takie podejście ułatwia operacje na wiadomościach, np. sprawdzenie czy zadanie jest już zakończone sprowadza się do wywołania metody. Fragment kodu \ref{lst:task_interface} przedstawia interfejs który musi być implementowany przez obiekty wiadomości.
 
 \lstset{language=Java, tabsize=4, caption=Definicja interfejsu Task w języku Java.,label=lst:task_interface}
 
@@ -245,6 +245,8 @@ public interface Task {
 	Map<String, String> getMetaData();
 	String getReturnAddress();
 	void addReturnAddress(String address);
+	Object getInputData();
+	void setOuputData(Object data);
 }
 \end{lstlisting}
 \end{center}
@@ -261,7 +263,7 @@ Każdy z opisanych wcześniej rodzajów przetwarzania mowy posiada swoją klasę
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.7]{tasks_hierarhy.png}
+	\includegraphics[scale=0.65]{tasks_hierarhy.png}
 	\caption{Struktura dziedziiczenia klasy Task}\label{fig:task_class_hierarchy}
 \end{figure}
 
@@ -271,7 +273,7 @@ Każdy z opisanych wcześniej rodzajów przetwarzania mowy posiada swoją klasę
 Dzięki bogatej bazie komponentów dostępnych w Apache Camel, implementacja konkretnych punktów końcowych sprowadza się raczej do konfiguracji. W większości przypadków jedyne co trzeba zrobić to dostarczyć odpowiedni adres URI, który pozwoli frameworkowi stworzyć i uruchomić wymagany punkt końcowy. Fragment kodu \ref{lst:camel_uris} przedstawia przykładowe formaty adresów URI
 
 \lstset{language=Java, tabsize=4, caption=Przykładowe formaty adresów URI dla punktów końcowych Apache Camel.,label=lst:camel_uris}
-
+\begin{minipage}{\linewidth}
 \begin{center}
 \begin{lstlisting}
 	ftp://[username@]hostname[:port]/directoryname[?options]
@@ -281,6 +283,7 @@ Dzięki bogatej bazie komponentów dostępnych w Apache Camel, implementacja kon
 	cxfrs:bean:rsEndpoint[?options]
 \end{lstlisting}
 \end{center}
+\end{minipage}
 
 Aby użyć niektórych rodzajów punktów końcowych, wymagany nakład pracy jest trochę większy, lecz nadal stosunkowo mały. Chcąc udostępnić system za pomocą technologii Web services należało stworzyć również opis usługi, jednak sprowadza się to do implementacji prostego interfejsu z dodatkowymi adnotacjami.  Fragment kodu \ref{lst:rest_service} przedstawia definicje usługi zgodnej z technologią REST web services, która zastała użyta do konfiguracji punktu końcowego cxfrs. Metody w poniższej klasie nie są wywoływane, służą one tylko do konfiguracji punktu końcowego. Za całe przetwarzanie odpowiedzialna jest reszta ścieżki Apache Camel.
 
