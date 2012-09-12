@@ -172,6 +172,7 @@ Ponieważ użyto tej samej usługi tłumaczącej jego efekt za każdym razem by�
 \end{figure}
 
 Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{tab:translacja}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi translacji, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
+
 \begin{center}
 	\begin{table}[h]
 	\centering
@@ -210,7 +211,9 @@ Ponieważ użyto tej samej usługi OCR jego efekt za każdym razem był taki sam
 \includegraphics[scale=0.9]{OCRExample.jpg}
 \caption{Wynik działania usługi OCR}\label{fig:OCRResult}
 \end{figure}
+
 Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{tab:ocr}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi OCR, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
+\newpage
 \begin{center}
 	\begin{table}[h]
 	\centering
@@ -238,6 +241,7 @@ Koszt czasowy wykorzystania prototypu nie jest duży, co więcej nie odnotowano 
 
 \subsection{Test złożony}
 Celem tego testu było wypróbowanie bardziej złożonego scenariusza jakim jest wysłanie do prototypowej implementacji systemu pliku graficznego wraz z plikiem konfiguracyjnym xml przedstawionym na rysunku \ref{fig:xmlConf}.
+
 \begin{figure}[!h]
 \centering
 \includegraphics[scale=0.9]{xmlConf.png}
@@ -245,7 +249,7 @@ Celem tego testu było wypróbowanie bardziej złożonego scenariusza jakim jest
 \end{figure}
 W jego wyniku otrzymano plik dźwiękowy w formacie mp3, zawierający odczyt tekstu będącego tłumaczeniem tekstu znajdującego się na obrazku \ref{fig:OCRExample} wysłanym na wejście. Gdyby zapisać zdania czytane przez lektora wyglądałyby one następująco: ''To jest przykład użycia OCR usług. Jak możemy zobaczyć, jest to dość proste. I to działa całkiem dobrze.''. Nie stwierdzono żadnych niewyraźnie przeczytanych wyrazów, ani innych nieprawidłowości. Tłumaczenie również jest całkiem poprawne. Test powtórzono dziesięciokrotnie, wyniki są zaprezentowane w tabeli \ref{tab:bigTest}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usług, a ''Prototyp'' wywołanie tych samych usług poprzez przykładową implementację platformy integracyjnej.
 \begin{center}
-	\begin{table}[t]
+	\begin{table}[h]
 	\caption{Test złożony}
 	\label{tab:bigTest}
 	\centering
@@ -267,7 +271,6 @@ W jego wyniku otrzymano plik dźwiękowy w formacie mp3, zawierający odczyt tek
 	\end{tabular}
 	\end{table}
 \end{center}
-\newpage
 Jako czas potrzebny na wykonanie scenariusza w przypadku bezpośredniego wywołania usług wzięto sumę czasów potrzebnych do wywołania każdej z osobna. W przypadku wykorzystania prototypowego systemu czas wykonania zadania nie jest znacząco większy niż przy bezpośrednim wywołaniu usług. Co więcej jest on mniejszy niż gdyby zsumować czas potrzebny na wywołanie każdej z usług osobno za pomocą platformy. Prawdopodobnie wynika to z faktu, że przy wywołaniu złożonego scenariusza mamy tylko jedno zapytanie na drodze klient - platforma, zamiast trzech które byłyby potrzebne do wywołania każdej usługi osobno.  
 
 \section{Wnioski}
