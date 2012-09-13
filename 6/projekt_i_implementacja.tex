@@ -218,7 +218,7 @@ public interface StorageService {
 Drugim i ostatnim wymaganiem stawianym przed implementacjami usług przetwarzania mowy jest obsługa wiadomości w wewnętrznym formacie używanym przez resztę komponentów systemu. Jest to spowodowane brakiem informacji na temat formatu wiadomości obsługiwanego przez dany komponent. Podczas procesu routowania, znany jest tylko adres i typ docelowego komponentu, dlatego router nie jest w stanie przetransformować wiadomości do obsługiwanego formatu. 
 
 
-Większość dostępnych usług syntezy mowy nie była tworzona z myślą o obsłudze komunikacji opartej na wiadomościach, a nawet jeśli, to na pewno nie obsługują one formatu używanego w budowanym systemie. Aby możliwe było użycie gotowych usług w budowanym systemie należy użyć komponenty które będą działać na zasadzie proxy i to one będą rejestrować się w rejestrze komponentów. Po otrzymaniu wiadomości komponent proxy, podda ją wymaganej transformacji po czym wyśle zadanie do konkretnej instancji usługi, używając przy tym odpowiedniego adaptera, jeżeli zajdzie taka potrzeba. 
+Aby możliwe było użycie gotowych usług, które nie obsługują komunikacji opartej o wiadomości należy użyć komponenty które będą działać na zasadzie proxy i to one będą rejestrować się w rejestrze komponentów. Po otrzymaniu wiadomości komponent proxy, podda ją wymaganej transformacji po czym wyśle zadanie do konkretnej instancji usługi, używając przy tym odpowiedniego adaptera, jeżeli zajdzie taka potrzeba. 
 
 \begin{figure}[!h]
 	\centering
