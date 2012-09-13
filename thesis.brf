@@ -9,7 +9,7 @@
 \backcite {chappell2004}{{19}{2.8}{figure.caption.10}}
 \backcite {bloch2008}{{37}{3.2.3}{figure.caption.23}}
 \backcite {hall2011}{{40}{3.3}{section.3.3}}
-\backcite {gamma1995}{{41}{3.3.1}{lstnumber.3.4.8}}
+\backcite {gamma1995}{{41}{3.3.1}{lstnumber.3.4.10}}
 \backcite {jaxb2008}{{43}{3.3.2}{lstnumber.3.6.16}}
 \backcite {ldaprfc1996}{{47}{3.3.4}{subsection.3.3.4}}
 \backcite {hall2011}{{47}{3.3.4}{subsection.3.3.4}}
@@ -25,6 +25,6 @@
 \backcite {hohpe2003}{{63}{5.1.4}{subsection.5.1.4}}
 \backcite {freettssite}{{64}{5.2.1}{subsection.5.2.1}}
 \backcite {ivonasite}{{65}{5.2.2}{subsection.5.2.2}}
-\backcite {chappell2004}{{91}{7}{chapter*.55}}
-\backcite {googlegoggles}{{91}{7}{chapter*.55}}
-\backcite {oddcasts}{{92}{7}{chapter*.55}}
+\backcite {chappell2004}{{99}{8}{chapter*.57}}
+\backcite {googlegoggles}{{99}{8}{chapter*.57}}
+\backcite {oddcasts}{{100}{8}{chapter*.57}}

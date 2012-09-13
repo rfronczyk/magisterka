@@ -168,7 +168,7 @@ W przypadku usługi IVONA, funkcjonalność tą otrzymana przy pomocy nowej ści
 
 \subsection {Krok nr. 4: Rejestracja komponentu}
 
-Ostatnim krokiem wymaganym aby była w pełni zintegrowana w platformie jest rejestracja komponentu w rejestrze OSGi co umożliwi jego wyszukanie podczas procesu routowania. Proces ten będzie w większości identyczny niezależnie od integrowanej usługi.
+Ostatnim krokiem wymaganym aby usługa była w pełni zintegrowana w platformie jest rejestracja komponentu w rejestrze OSGi co umożliwi jego wyszukanie podczas procesu routowania. Proces ten będzie w większości identyczny niezależnie od integrowanej usługi.
 W celu poprawnej rejestracji, klasa IvonaTextToSpeechService implementuje dwa interfejsy TTSService oraz MessageEnabledService. Pierwszy z nich służy tylko do oznaczenia typu przetwarzania jaki oferuje dany komponent a drugi wymusza implementację metody zwracającej adres pod którym komponent będzie nasłuchiwał na przychodzące wiadomości. Dodatkowo, podczas rejestracji należy podać parametry przetwarzania, które są obsługiwane przez daną usługę.
 
 \lstset{language=Java, tabsize=4, caption=Implementacja metody z interfejsu MessageEnabledService. ,label=lst:ivona_message}
