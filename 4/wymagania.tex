@@ -297,7 +297,7 @@ Jak widać większość słów jest niezrozumiała. Efekt przetłumaczenia takie
 \caption{Efekt działania tłumaczenia na zepsutym pliku}\label{fig:zepsuteWyjscieTlumaczenia}
 \end{figure} 
 
-Oczywistym jest, że usługa TTS nie była w stanie wygenerować poprawnego dźwięku na podstawie takich danych wejściowych. Jak się okazało, powstały plik dźwiękowy, poza kilkoma krótkimi fragmentami, był niezrozumiały. Jest to spowodowane faktem, że system integracyjny nie ma żadnej możliwości sprawdzenia jakośc wyników zwracanych przez wywoływane usługi. Co gorsza wywołanie kilku usług na wadliwych danych wejściowych tylko potęguje wielkość błędu. Jeżeli chodzi o wydajność to wyniki testu znajdują się tabeli \ref{tab:brokenTestResults}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usług, a ''Prototyp'' wywołanie tych samych usług poprzez przykładową implementację platformy integracyjnej. 
+Oczywistym jest, że usługa TTS nie była w stanie wygenerować poprawnego dźwięku na podstawie takich danych wejściowych. Jak się okazało, powstały plik dźwiękowy, poza kilkoma krótkimi fragmentami, był niezrozumiały. Jest to spowodowane faktem, że system integracyjny nie ma żadnej możliwości sprawdzenia jakości wyników zwracanych przez wywoływane usługi. Co gorsza wywołanie kilku usług na wadliwych danych wejściowych tylko potęguje wielkość błędu. Jeżeli chodzi o wydajność to wyniki testu znajdują się tabeli \ref{tab:brokenTestResults}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usług, a ''Prototyp'' wywołanie tych samych usług poprzez przykładową implementację platformy integracyjnej. 
 
 \begin{center}
 	\begin{table}[h]
@@ -322,7 +322,7 @@ Oczywistym jest, że usługa TTS nie była w stanie wygenerować poprawnego dźw
 	\end{tabular}
 	\end{table}
 \end{center}
-Założenia i uwagi są takie samem jak w poprzednim pod rozdziale. Należy też zauważyć, że niepoprawne dane wejściowe wydłużyły czas działania aplikacji. 
+Założenia i uwagi są takie samem jak w poprzednim pod rozdziale. Należy też zauważyć, że niepoprawne dane wejściowe wydłużyły czas przetwarzania.
 
 \section{Wnioski}
 Jak widać zastosowanie prototypowej platformy wprowadza pewien narzut czasowy, nie jest on jednak duży. W zamian klient takiej usługi otrzymuje znacznie prostszy interfejs, który mimo swojej prostoty daje duże możliwości. Co więcej klient nie musi martwić się o potencjalne błędy, konwersje między formatami, niedostępność którejś z usług składowych itd. Z drugiej strony nie istnieje możliwość sprawdzenia jakości wykonanej usługi, przez co w przypadku niepoprawnych danych wejściowych błąd jest powielany, z powodu specyficznej dziedziny danych, wielkość błędu również rośnie. Podsumowując, pomimo braku możliwości zabezpieczenia przed niepoprawnymi danymi, zastosowanie takiej platformy jest uzasadnione, jest ona funkcjonalna, nie wprowadza opóźnień oraz posiada szeroki zakres usług.
