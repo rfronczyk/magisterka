@@ -23,7 +23,7 @@ Rozdział ten jest podzielony na trzy części. Część pierwsza opisuje jak wy
 	\item Lektor SMS
 	\item Konwerter plików graficznych do tekstowych
 \end{itemize}
-Każdej z proponowanych aplikacji poświęcono osobny podrozdział, w którym jest zdefiniowany przypadek użycia, przedstawione są wymagania funkcjonalne i niefunkcjonalne oraz przedstawiona jest weryfikacja podejścia. Część druga tego rozdziału opisuje testy (i ich wyniki) którym została poddana prototypowa implementacja systemu. Ostatnia część wynikające z części poprzednich.
+Każdej z proponowanych aplikacji poświęcono osobny podrozdział, w którym jest zdefiniowany przypadek użycia, przedstawione są wymagania funkcjonalne i niefunkcjonalne oraz przedstawiona jest weryfikacja podejścia. Część druga tego rozdziału opisuje testy (i ich wyniki) którym została poddana prototypowa implementacja systemu. Ostatnia część to wnioski wynikające z części poprzednich.
 
 \section{Weryfikacja funkcjonalności}
 \subsection{Automatyczne dyktando}
@@ -273,8 +273,59 @@ W jego wyniku otrzymano plik dźwiękowy w formacie mp3, zawierający odczyt tek
 \end{center}
 Jako czas potrzebny na wykonanie scenariusza w przypadku bezpośredniego wywołania usług wzięto sumę czasów potrzebnych do wywołania każdej z osobna. W przypadku wykorzystania prototypowego systemu czas wykonania zadania nie jest znacząco większy niż przy bezpośrednim wywołaniu usług. Co więcej jest on mniejszy niż gdyby zsumować czas potrzebny na wywołanie każdej z usług osobno za pomocą platformy. Prawdopodobnie wynika to z faktu, że przy wywołaniu złożonego scenariusza mamy tylko jedno zapytanie na drodze klient - platforma, zamiast trzech które byłyby potrzebne do wywołania każdej usługi osobno.  
 
+\subsection{Test złożony - wadliwy obrazek wejściowy}
+Celem tego testu było zbadanie zachowania platformy przy złożonym scenariuszu, polegającym na wywołaniu usługi rozpoznawania tekstu, przetłumaczenia go na wybrany język i wywołania serwisu TTS. Kluczowym założeniem, jest fakt, że początkowy plik graficzny \ref{fig:uszkodzoneWejscie}, jest uszkodzony. Do sterowania systemem użyto tego samego pliku konfiguracyjnego co w poprzednim podrozdziale, przedstawionego na rysunku: \ref{fig:xmlConf}
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.9]{brokenOCRExample.jpg}
+\caption{Uszkodzony plik graficzny}\label{fig:uszkodzoneWejscie}
+\end{figure} 
+
+ W tym konkretnym przypadku wynik działania OCR został przedstawiony na rysunku \ref{fig:zepsuteWyjscieOCR}.
+
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.9]{zepsuteWyjscieOCR.png}
+\caption{Efekt działania usługi OCR na przekłamanym pliku wejściowym}\label{fig:zepsuteWyjscieOCR}
+\end{figure} 
+
+Jak widać większość słów jest niezrozumiała. Efekt przetłumaczenia takiego tekstu na język polski można zobaczyć na rysunku \ref{fig:zepsuteWyjscieTlumaczenia}
+\begin{figure}[!h]
+\centering
+\includegraphics[scale=0.9]{zepsuteWyjscieTlumaczenia.png}
+\caption{Efekt działania tłumaczenia na zepsutym pliku}\label{fig:zepsuteWyjscieTlumaczenia}
+\end{figure} 
+
+Oczywistym jest, że usługa TTS nie była w stanie wygenerować poprawnego dźwięku na podstawie takich danych wejściowych. Jak się okazało, powstały plik dźwiękowy, poza kilkoma krótkimi fragmentami, był niezrozumiały. Jest to spowodowane faktem, że system integracyjny nie ma żadnej możliwości sprawdzenia jakośc wyników zwracanych przez wywoływane usługi. Co gorsza wywołanie kilku usług na wadliwych danych wejściowych tylko potęguje wielkość błędu. Jeżeli chodzi o wydajność to wyniki testu znajdują się tabeli \ref{tab:brokenTestResults}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usług, a ''Prototyp'' wywołanie tych samych usług poprzez przykładową implementację platformy integracyjnej. 
+
+\begin{center}
+	\begin{table}[h]
+	\caption{Test złożony - wadliwe dane}
+	\label{tab:brokenTestResults}
+	\centering
+	\begin{tabular}{| l | l | l |}	
+		\hline
+		\textbf{Numer testu} & \textbf{Web services [ms]} & \textbf{Prototyp [ms]} \\ \hline
+		1 & 7401 & 8100\\ \hline
+		2 & 6532 & 7020\\ \hline
+		3 & 7943 & 7917\\ \hline
+		4 & 7321 & 7001\\ \hline
+		5 & 7431 & 7143\\ \hline
+		6 & 7904 & 7294\\ \hline
+		7 & 7198 & 7923\\ \hline
+		8 & 6423 & 7198\\ \hline
+		9 & 6490 & 7331\\ \hline
+		10 & 7011 & 8098\\ \hline
+		\textbf{Średnia/Odchylenie standardowe} & 7165.4/563.1875 & 7502.5/559.3079\\ 
+		\hline
+	\end{tabular}
+	\end{table}
+\end{center}
+Założenia i uwagi są takie samem jak w poprzednim pod rozdziale. Należy też zauważyć, że niepoprawne dane wejściowe wydłużyły czas działania aplikacji. 
+
 \section{Wnioski}
-Jak widać zastosowanie prototypowej platformy wprowadza pewien narzut czasowy, nie jest on jednak duży. W zamian klient takiej usługi otrzymuje znacznie prostszy interfejs, który mimo swojej prostoty daje duże możliwości. Co więcej klient nie musi martwić się o potencjalne błędy, konwersje między formatami, niedostępność którejś z usług składowych itd. Podsumowując, zastosowanie takiej platformy jest uzasadnione, jest ona funkcjonalna, nie wprowadza opóźnień oraz posiada szeroki zakres usług. 
+Jak widać zastosowanie prototypowej platformy wprowadza pewien narzut czasowy, nie jest on jednak duży. W zamian klient takiej usługi otrzymuje znacznie prostszy interfejs, który mimo swojej prostoty daje duże możliwości. Co więcej klient nie musi martwić się o potencjalne błędy, konwersje między formatami, niedostępność którejś z usług składowych itd. Z drugiej strony nie istnieje możliwość sprawdzenia jakości wykonanej usługi, przez co w przypadku niepoprawnych danych wejściowych błąd jest powielany, z powodu specyficznej dziedziny danych, wielkość błędu również rośnie. Podsumowując, pomimo braku możliwości zabezpieczenia przed niepoprawnymi danymi, zastosowanie takiej platformy jest uzasadnione, jest ona funkcjonalna, nie wprowadza opóźnień oraz posiada szeroki zakres usług.
 % ---------------------------------------------------------------------------
 %: ----------------------- end of thesis sub-document ------------------------
 % ---------------------------------------------------------------------------
