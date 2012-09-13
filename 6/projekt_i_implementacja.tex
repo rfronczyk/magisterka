@@ -362,6 +362,7 @@ Najważniejszym elementem tej warstwy jak i całego systemu jest router. Jedyną
 %SPRAWDZIĆ
 \begin{center}
 \begin{lstlisting}
+
 <bean id="dynamicRouter" class="pl.edu.agh.speechprocessing.routing.DynamicRouter"/>
 
 <camelContext xmlns="http://camel.apache.org/schema/spring">
@@ -373,6 +374,7 @@ Najważniejszym elementem tej warstwy jak i całego systemu jest router. Jedyną
 			<method ref="dynamicRouter" method="route" />
 		</dynamicRouter>
 	</route>
+
 
 	<route>
 		<from uri="direct:responseChannel">
@@ -400,6 +402,7 @@ class DynamicRouter {
 		if (task.isFinished()) {
 			return "direct:responseChannel";
 		} else {
+			//jezeli zostal znaleziony serwis to zwracamy jego adres
 			String uri = serviceRepository.lookupServiceURI(task.getRequiredServiceType(), task.getMetaData());
 			if (service != null) {
 				return uri;
@@ -413,19 +416,22 @@ class DynamicRouter {
 		return task.getReturnAddress();
 	}
 
+
 	public Task removeRouterAddress(Task task) {
 		//usuniecie adresu routera z listy adresow zwrotnych
 		task.getReturnAddress();
 		return task;
 	}
 
+
 	public Task addRouterAddress(Task task) {
+		//dodanie adresu routera do listy adresow zwrotnych
 		task.addReturnAddress(getRouterAddress());
 		return task;
 	}
 
 	...
-end
+}
 \end{lstlisting}
 \end{center}
 
