@@ -150,7 +150,7 @@ Ponieważ w obu przypadkach wykorzystano ten sam tekst jakość odczytu była ta
 		8 & 1234 & 1503\\ \hline
 		9 & 1184 & 1131\\ \hline
 		10 & 1230 & 1543\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 1256.6/145.182 & 1415.9/84.14\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 1256/145 & 1415/84\\ 
 		\hline
 	\end{tabular}
 	\end{table}
@@ -189,7 +189,7 @@ Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \re
 		8 & 430 & 501\\ \hline
 		9 & 394 & 578\\ \hline
 		10 & 410 & 618\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 464.1/38.01645 & 620.4/41.7235\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 464/38 & 620/41\\ 
 		\hline
 	\end{tabular}
 	\caption{Test Translacji}
@@ -230,7 +230,7 @@ Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \re
 		8 & 4321 & 3632\\ \hline
 		9 & 5363 & 5381\\ \hline
 		10 & 3589 & 3764\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 4101/472.1354 & 4224/457.2335\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 4101/472 & 4224/457\\ 
 		\hline
 	\end{tabular}
 	\caption{Test OCR}
@@ -247,6 +247,12 @@ Celem tego testu było wypróbowanie bardziej złożonego scenariusza jakim jest
 \includegraphics[scale=0.9]{xmlConf.png}
 \caption{Plik konfiguracyjny xml}\label{fig:xmlConf}
 \end{figure}
+Użycie pliku xml z taką zawartością spowodowało wywołanie nastepujących serwisów:
+\begin{itemize}
+	\item OCR Web Service
+	\item Google Translate z parametrami: source=en i target=pl
+	\item IVONA SaaS TTS z parametrami: voiceId=en_gb_emma i codecId=mp3/22050
+\end{itemize}
 W jego wyniku otrzymano plik dźwiękowy w formacie mp3, zawierający odczyt tekstu będącego tłumaczeniem tekstu znajdującego się na obrazku \ref{fig:OCRExample} wysłanym na wejście. Gdyby zapisać zdania czytane przez lektora wyglądałyby one następująco: ''To jest przykład użycia OCR usług. Jak możemy zobaczyć, jest to dość proste. I to działa całkiem dobrze.''. Nie stwierdzono żadnych niewyraźnie przeczytanych wyrazów, ani innych nieprawidłowości. Tłumaczenie również jest całkiem poprawne. Test powtórzono dziesięciokrotnie, wyniki są zaprezentowane w tabeli \ref{tab:bigTest}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usług, a ''Prototyp'' wywołanie tych samych usług poprzez przykładową implementację platformy integracyjnej.
 \begin{center}
 	\begin{table}[h]
@@ -266,7 +272,7 @@ W jego wyniku otrzymano plik dźwiękowy w formacie mp3, zawierający odczyt tek
 		8 & 5985 & 6424\\ \hline
 		9 & 6941 & 5685\\ \hline
 		10 & 5229 & 5234\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 5824.7/843.4343 & 6147.7/823.7793\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 5824/843 & 6147/823\\ 
 		\hline
 	\end{tabular}
 	\end{table}
@@ -317,7 +323,7 @@ Oczywistym jest, że usługa TTS nie była w stanie wygenerować poprawnego dźw
 		8 & 6423 & 7198\\ \hline
 		9 & 6490 & 7331\\ \hline
 		10 & 7011 & 8098\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 7165.4/563.1875 & 7502.5/559.3079\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 7165/563 & 7502/559\\ 
 		\hline
 	\end{tabular}
 	\end{table}

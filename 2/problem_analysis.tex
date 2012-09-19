@@ -22,11 +22,11 @@ Rozdział ten podzielony jest na cztery części. Celem pierwszej jest zdefiniow
 Mowa jest naturalnym, wytworzonym przez człowieka w procesie ewolucji, sposobem komunikacji. Jej niewątpliwe zalety to:
 \begin{itemize}
 	\item komunikacja mimo braku fizycznego kontaktu
-	\item nie wymaganie stosowania żadnych narzędzi
-	\item nie istnienie potrzeby widzenia rozmówcy
+	\item nie wymaga zastosowania żadnych narzędzi
+	\item nie zachodzi potrzeba widzenia rozmówcy
 	\item umożliwianie komunikacji w czasie wykonywania innych czynności
 \end{itemize}
-Wraz z rozwojem cywilizacyjnym ewoluował także sposób komunikacji i jej format, ponieważ mowa ma charakter ulotny, zaczęto ją spisywać, celem jej przechowania i powielenia, w ten sposób powstał tekst. Najpierw tworzono go ręcznie, był to bardzo żmudny, długi i niezbyt wydajny proces, następnie wynaleziono maszynę drukarską co umożliwiło znacznie szybsze powielanie tekstu, jednak dopiero powstanie komputerów i stosowanie pamięci cyfrowej umożliwiło nie tylko przechowywanie mowy ale także jej przetwarzanie. Pod tym pojęciem może kryć się wiele różnych procesów. Najważniejsze oraz najczęściej stosowane z nich to:
+Wraz z rozwojem cywilizacyjnym ewoluował także sposób komunikacji i jej format, ponieważ mowa ma charakter ulotny, zaczęto ją spisywać, celem jej przechowania i powielenia, w ten sposób powstał tekst. Najpierw tworzono go ręcznie, był to bardzo żmudny, długi i niezbyt wydajny proces, następnie wynaleziono maszynę drukarską co umożliwiło znacznie szybsze powielanie tekstu, jednak dopiero powstanie komputerów i stosowanie pamięci cyfrowej umożliwiło szybkie i łatwe przechowywanie oraz przetwarzanie mowy. Pod tym pojęciem może kryć się wiele różnych procesów. Najważniejsze oraz najczęściej stosowane z nich to:
 \begin{itemize}
 	\item rozpoznawanie mowy, często oznaczane skrótem ASR (z języka angielskiego automatic speech recognition)
 		\setlength\fboxsep{20pt}
@@ -53,7 +53,7 @@ Wraz z rozwojem cywilizacyjnym ewoluował także sposób komunikacji i jej forma
 			\fbox{\includegraphics[scale=0.55]{OCRImage.png} }
 			\caption{Rozpoznawanie tekstu; wejście: plik graficzny z tekstem -\textgreater wyjście: tekst}\label{fig:hub_and_spoke}
 		\end{figure}
-	\item tłumaczenie mowy
+	\item tłumaczenie maszynowe mowy
 		\setlength\fboxsep{20pt}
 		\setlength\fboxrule{1pt}
 		\begin{figure}[!h]
@@ -158,11 +158,11 @@ system nauczy się, że:
 \end{enumerate} 
 Następnie aplikacja może zastosować w ten sposób nabytą wiedzę w bardziej zaawansowanych przypadkach.
 \subsection{Rozpoznawanie języka}
-Rozpoznawanie języka to proces którego celem jest stwierdzenie w jakim języku naturalnym jest podany na wejście tekst \cite{adamsresnik1997} . Tradycyjne podejście, stosowane np. w księgarniach, opiera się na ręcznym zidentyfikowaniu najczęściej występujących słów i liter które są charakterystyczne dla danego języka i sprawdzenie ich w odpowiednich tabelach. Implementacja algorytmów działających na podobnej zasadzie jest możliwa jednak jest to rozwiązanie mało efektywne. Obecnie stosuje się kilka różnych podejść bazujących na statystyce:
+Rozpoznawanie języka \cite{adamsresnik1997}  to proces którego celem jest stwierdzenie w jakim języku naturalnym jest podana na wejście próbka tekst lub mowy. Praca ta skupia się na rozwiązaniach rozpoznających język tekstu. Tradycyjne podejście, stosowane np. w księgarniach, opiera się na zidentyfikowaniu najczęściej występujących słów i liter które są charakterystyczne dla danego języka i sprawdzenie ich w odpowiednich tabelach. Implementacja algorytmów działających na podobnej zasadzie jest możliwa jednak jest to rozwiązanie mało efektywne. Obecnie stosuje się kilka różnych podejść bazujących na statystyce:
  \begin{itemize}
 	\item Bardzo prostą techniką jest porównywanie jakości kompresji badanego tekstu z jakością kompresji tekstów w znanych językach, im bardziej zbliżone wyniki tym większe prawdopodobieństwo, że teksty są w tym samym języku. Podejście to nazywa się miarą odległości wzajemnej informacji.
 	\item Bardziej zaawansowanym algorytmem jest ten zaproponowany przez W.Cavnar'a i J.Trenkle'a w 1994 roku pod nazwą: ''N-Gram-Based Text Categorization''. Najpierw należy utworzyć znakowy n-gramowy model języka na podstawie materiałów treningowych dla każdego z języków które mają być obsługiwane. Następnie dla każdego tekstu którego język ma być zidentyfikowany, tworzy się podobny model i porównuje z modelami bazowymi. Im bardziej są do siebie podobne tym większa szansa, że to ten sam język. Problematyczne w tym podejściu są języki dla których nie można skonstruować takiego modelu. 
-	\item Rozszerzeniem poprzedniego algorytmu jest technika zaproponowana przez Panów Rehurek i Kolkus \cite{rehurek2009} . Największymi zaletami ulepszonej wersji jest fakt, że nie zawodzi ona w sytuacji w której próbka tekstu jest napisana w wielu językach, a także nie stanowi dla niej problemu rozróżnianie języków należących do tej samej rodziny (np. polski i słowacki). 
+	\item Rozszerzeniem poprzedniego algorytmu jest technika zaproponowana przez Rehurka i Kolkusa \cite{rehurek2009} . Największymi zaletami ulepszonej wersji jest fakt, że nie zawodzi ona w sytuacji w której próbka tekstu jest napisana w wielu językach, a także nie stanowi dla niej problemu rozróżnianie języków należących do tej samej rodziny (np. polski i słowacki). 
 \end{itemize} 
 Jak widać przetwarzanie mowy samo w sobie jest bardzo obszernym i skomplikowanym tematem, w skład którego wchodzi wiele różnych procesów które można zintegrować tworząc efektywne i bardzo funkcjonalne systemy.
 
@@ -172,14 +172,14 @@ SOA czyli Service Oriented Architecture(Architektura zorientowana na usługi) to
 	\item orkiestracja
 	\item choreografia
 \end{itemize}  
-Orkiestracja charakteryzuje się tym, iż istnieje jedna usługa orkiestrator, dyrygent lub koordynator który zarządza innymi usługami w celu udostępniania jednej funkcjonalności. Prowadzi to do luźniejszego połączenia usług, sprawia też, że nie są one świadome bycia częścią większego procesu. Orkiestracja jest scentralizowaną formą współpracy z dobrze zdefiniowanymi operacjami i kolejnością wywoływania usług. Powstał nawet specjalny język BPEL ułatwiający taką integrację usług.   
+Orkiestracja charakteryzuje się tym, iż istnieje jedna usługa orkiestrator, dyrygent lub koordynator który zarządza innymi usługami w celu udostępniania jednej funkcjonalności. Prowadzi to do luźniejszego połączenia usług, sprawia też, że nie są one świadome bycia częścią większego procesu. Orkiestracja jest scentralizowaną formą współpracy z dobrze zdefiniowanymi operacjami i kolejnością wywoływania usług. Istnieją specjalne języki, ułatwiające taką integrację usług, na przykład BPEL.
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.75]{orkiestracja.png} 
 	\caption{Orkiestracja}
 \end{figure}
 \newpage
-Choreografia to sposób współpracy usług, charakteryzujący się tym,  iż każdy z nich musi być świadoma bycia częścią czegoś większego, od niej zależy kiedy i z kim się skomunikuje. Nie ma tutaj centralnego zarządzania, koordynatora czy też usługi nadrzędnej. Stworzenie alternatywnego scenariusza w przypadku awarii jest ciężkie albo wręcz niemożliwe. 
+Choreografia to sposób współpracy usług, charakteryzujący się tym,  iż każda z nich musi być świadoma bycia częścią czegoś większego, od niej zależy kiedy i z kim się skomunikuje. Nie ma tutaj centralnego zarządzania, koordynatora czy też usługi nadrzędnej. 
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.75]{choreogragia.png} 
@@ -187,12 +187,12 @@ Choreografia to sposób współpracy usług, charakteryzujący się tym,  iż ka
 \end{figure}
 
 \section{Sposoby integracji systemów komputerowych}
-Dzięki postępowi technologicznemu przepustowość łączy internetowych wciąż wzrasta powodując, bardzo szybki rozwój systemów komputerowych i usług przez nie oferowanych. Powstają nowe rodzaje usług, które kiedyś nie mogły by zostać zrealizowane, przy tworzeniu zaś niektórych aplikacji, to co kiedyś było problemem i na czym skupiali swój wysiłek twórcy oprogramowania, dzisiaj schodzi na drugi plan. Z drugiej jednak strony zwiększają się wymagania użytkowników co do jakości, są wprowadzane coraz to nowe formaty, które wymagają ogromnych przepustowości, przez co mogą zapychać łącza i tworzyć opóźnienia. Jest to szczególnie istotne w systemach czasu rzeczywistego, w których istnienie opóźnień jest nieakceptowalne. Czasami jednak aplikacje i ich użytkownicy nie mają takich ścisłych wymagań co do wielkości opóźnienia. W ich przypadku opóźnienie nawet rzędu kilkudziesięciu sekund nie stanowi problemu i jest akceptowalne przez użytkowników. W takim wypadku nie trzeba się skupiać na szukaniu idealnego rozwiązania dla danego problemu, lecz można skupić się na stworzeniu architektury która ułatwi i przyspieszy budowanie systemów spełniających dane wymagania.
+Dzięki postępowi technologicznemu przepustowość łączy internetowych wciąż wzrasta powodując, bardzo szybki rozwój systemów komputerowych i usług przez nie oferowanych. Powstają nowe rodzaje usług, które kiedyś nie mogły by zostać zrealizowane, przy tworzeniu zaś niektórych aplikacji, to co kiedyś było problemem i na czym skupiali swój wysiłek twórcy oprogramowania, dzisiaj schodzi na drugi plan. Z drugiej jednak strony zwiększają się wymagania użytkowników co do jakości, są wprowadzane coraz to nowe formaty, które wymagają ogromnych przepustowości, przez co mogą zapychać łącza i tworzyć opóźnienia. Jest to szczególnie istotne w systemach czasu rzeczywistego, w których nacisk na jak najmniejsze opóźnienia jest bardzo silny. Czasami jednak aplikacje i ich użytkownicy nie mają takich ścisłych wymagań co do wielkości opóźnienia. W ich przypadku opóźnienie nawet rzędu kilkudziesięciu sekund nie stanowi problemu i jest akceptowalne przez użytkowników. W takim wypadku nie trzeba się skupiać na szukaniu idealnego rozwiązania dla danego problemu, lecz można skupić się na stworzeniu architektury która ułatwi i przyspieszy budowanie systemów spełniających dane wymagania.
 
 Przy takim podejściu do tworzenia systemu zazwyczaj pojawia się problem integracji budowanego systemu z istniejącymi już usługami. Często też, budowany system jest całkowicie problemem integracyjnym, czyli wszystkie składowe usługi potrzebne do realizacji celu biznesowego są dostępne, a jedyne zadanie stawiane budowanemu systemowi to odpowiednia integracja tych usług. Podejście takie ułatwia parę kwestii, ale w zamian wprowadza także nowe, specyficzne dla siebie problemy. Głównym problemem jest różnorodność dostępnych podsystemów. Każdy z nich może być stworzony przy użyciu innych technologii (Java, COM, .Net, CORBA, ICE, itp.) działać na innej platformie (MS WINDOWS, LINUX, SOLARIS) i co najważniejsze mogą wykorzystywać inne protokoły do komunikacji (RPC, SOAP, własnościowe protokoły, itp). Z tego powodu decyzja o sposobie integracji nie może być podejmowana zbyt szybko,  powinna być podjęta bazując na pewnych kryteriach:  \cite{hohpewoolf2003} 
 
 \begin{itemize}
-	\item \textbf{powiązanie aplikacji} - integracja aplikacji powinna minimalizować powiązania i zależności między nimi, co pozwoli na swobodne rozwijanie każdej aplikacji z osobna. Ściśle powiązane aplikacje współdziałają przy wielu założeniach z każdej ze stron. Jeżeli któraś z aplikacji zostanie zmieniona i założenia co do niej nie będą już spełnione wtedy cała integracja przestanie działać. Dlatego też, projektowane interfejsy powinny być na tyle specyficzne aby umożliwiały implementacje użytecznych funkcjonalności, lecz także na tyle ogólne aby umożliwiały zmianę implementacji, jeżeli zajdzie taka potrzeba.
+	\item \textbf{powiązanie aplikacji} - integracja aplikacji powinna minimalizować powiązania i zależności między nimi, co pozwoli na swobodne rozwijanie każdej aplikacji z osobna. Ściśle powiązane aplikacje współdziałają przy wielu założeniach z każdej ze stron. Jeżeli któraś z aplikacji zostanie zmieniona i założenia co do niej nie będą już spełnione wtedy cały system przestanie działać. Dlatego też, projektowane interfejsy powinny być na tyle specyficzne aby umożliwiały implementacje użytecznych funkcjonalności, lecz także na tyle ogólne aby umożliwiały zmianę implementacji, jeżeli zajdzie taka potrzeba.
 	\item \textbf{poziom ingerencji} - podczas integracji aplikacji, powinno się minimalizować zarówno zmiany w samej aplikacji jak i ilość kodu tworzonego na rzecz integracji. Jednak bardzo często zarówno zmiany w aplikacji jak i tworzenie dodatkowe kodu odpowiadającego za integracje jest nieuniknione aby uzyskać odpowiednią funkcjonalność. Rozwiązania mniej ingerujące w aplikacje mogą nie zapewniać integracji w odpowiednim stopniu.
 	\item \textbf{wybór technologii} - do wyboru mamy mnóstwo technologii integracyjnych, które różnią się od siebie wymaganiami zarówno co do specjalistycznego sprzętu jak i oprogramowania. Niektóre z nich są wymienne między sobą, natomiast wybranie innych może doprowadzić do zamknięcia się na dane rozwiązanie. Jeżeli podejmie się decyzję o zastosowaniu którejś z gotowych technologii integracyjnych może ona znacząco zwiększyć koszt całego system. Z drugiej strony, integracja od podstaw zazwyczaj kończy się większym nakładem pracy niż początkowo planowano i może oznaczać odkrywanie koła na nowo.
 	\item \textbf{format danych} - integrowane aplikacje muszą posługiwać się tym samym formatem podczas wymiany danych. Dostosowywanie istniejących aplikacji do jednolitego formatu danych może być bardzo trudne, albo wręcz nie możliwe. Inną opcją jest wprowadzenie elementu pośredniego, którego celem będzie tłumaczenie danych z jednego formatu na drugi. Problemem powiązanym z opisanym w tym podpunkcie jest rozszerzalność i rozwój formatu danych - jak może się zmieniać z biegiem czasu i jak te zmiany wpłyną na aplikacje.
@@ -252,7 +252,7 @@ Co równie ważne, wszystkie implementacje ESB oferują również bardzo wiele r
 
 \section{Integracja systemów przetwarzania mowy}
 
-Podrozdział ten ma na celu przedstawić  jakie wymagania można postawić przed przykładową aplikacją integrującą systemy przetwarzania mowy i jak wpłyną one na sposób integracji. Aby zdefiniować wymagania można rozważyć przykładową aplikację kliencką która mogłaby być zbudowana w oparciu o taki system. Podstawowe funkcje które taka aplikacja realizuje mogą być następujące:
+Podrozdział ten ma na celu przedstawić  jakie wymagania można postawić przed przykładową aplikacją integrującą systemy przetwarzania mowy i jak wpłyną one na sposób integracji. Aby zdefiniować wymagania można rozważyć przykładową aplikację kliencką która mogłaby być zbudowana w oparciu o taki system. Podstawowe funkcje, które taka aplikacja realizuje mogą być następujące:
 \begin{itemize}
 	\item zamiana pliku graficznego będącego zdjęciem tekstu na plik tekstowy (OCR)
 	\item synteza tekstu (TTS)
@@ -277,7 +277,7 @@ Zastosowanie takiego formatu ma dużo zalet, z czego najważniejsze to:
 \begin{itemize}
 	\item prostota
 	\item duża ilość narzędzi wspierających ten format
-	\item wysoki poziom zadomowienia tego formatu w środowisku SOA
+	\item popularność w środowisku SOA
 	\item czytelność dla człowieka
 	\item łatwa rozbudowa
 \end{itemize}
@@ -292,14 +292,14 @@ Przykładowy plik konfiguracyjny potrzebny do realizacji opisanego wyżej scenar
 	\caption{Przykładowy plik XML}
 \end{figure}
 
-Podsumowując, zakładając istnienie tak działającego systemu, jedyne zadania jakie musiałaby spełniać aplikacja kliencka:
+Podsumowując, zakładając istnienie tak działającego systemu, jedyne zadania stawiane przed użytkownikami to:
 \begin{itemize}
-	\item umożliwić użytkownikowi łatwe wygenerowanie pliku sterującego XML
-	\item opcjonalne (zależnie od scenariusza) pobranie pliku graficznego lub tekstowego i przesłanie go do systemu
-	\item pobranie strumienia dźwięku i przesłanie go do systemu
-	\item przekazać użytkownikowi rezultat działania systemu (np. plik z przetłumaczonym tekstem, plik dźwiękowy, strumień dźwięku itd.)
+	\item wygeneriwanie pliku sterującego XML
+	\item opcjonalne (zależnie od scenariuszu) przesłanie pliku graficznego do systemu
+	\item opcjonalne (zależnie od scenariuszu) przesłanie pliku dźwiękowego go do systemu
+	\item pobranie rezultatu działania systemu (np. plik z przetłumaczonym tekstem, plik dźwiękowy, strumień dźwięku itd.)
 \end{itemize}
-Jak widać są to rzeczy dość proste i możliwe do bardzo szybkiej implementacji. Oczywiście bardzo łatwo można wyobrazić sobie możliwości rozbudowy takiej platformy. Jednym z kierunków takiej rozbudowy może być chęć wykorzystania innych, niż opisane wyżej(plik graficzny, plik xml) formatów danych wejściowych.  Bardzo pomocne okażą się tutaj punkty końcowe, które są oferowane w bardzo wielu różnych rodzajach, tak jak to zostało opisane wyżej, przez wszystkie implementacje ESB. Łatwo wyobrazić sobie użycie punktów końcowych, można je na przykład wykorzystać aby umożliwić użytkownikowi dostęp do usługi drogą mailową. Wystarczy aby użytkownik wysłał na specjalny adres maila zawierającego, w postaci załączników, plik sterujący xml oraz plik wejściowy, na przykład zdjęcie tekstu albo tekst, w efekcie czego otrzymałby maila zwrotnego z danymi uzyskanymi w wyniku wykonania żądanych przez niego operacji. Innym przykładem użycia punktów końcowych, w celu zwiększenia funkcjonalności systemu, mogłoby być rozbudowanie pliku sterującego na przykład o tag \textless rssSource\textgreater który sprawi, że aplikacja zamiast pliku wejściowego pobierze wiadomości ze źródła RSS i na nich wywoła funkcje udostępniane przez różne usługi. Jak widać wykorzystanie punktów końcowych daje wiele możliwości i idealnie wkomponowuje się w dziedzinę problemu, co stanowi kolejny argument na rzecz wykorzystania ESB jako sposobu integracji.
+Jak widać są to rzeczy dość proste i możliwe do bardzo szybkiej implementacji. Oczywiście bardzo łatwo można wyobrazić sobie możliwości rozbudowy takiej platformy. Jednym z kierunków takiej rozbudowy może być chęć wykorzystania innych, niż opisane wyżej(plik graficzny, plik xml) formatów danych wejściowych.  Bardzo pomocne okażą się tutaj punkty końcowe, które są oferowane w bardzo wielu różnych rodzajach, tak jak to zostało opisane wyżej, przez wszystkie implementacje ESB. Łatwo wyobrazić sobie użycie punktów końcowych, można je na przykład wykorzystać aby umożliwić użytkownikowi dostęp do usługi drogą mailową. Wystarczy aby użytkownik wysłał na specjalny, oficjalny, podany mu wcześniej adres, maila zawierającego, w postaci załączników, plik sterujący xml oraz plik wejściowy, na przykład zdjęcie tekstu albo tekst, w efekcie czego otrzymałby maila zwrotnego z danymi uzyskanymi w wyniku wykonania żądanych przez niego operacji. Innym przykładem użycia punktów końcowych, w celu zwiększenia funkcjonalności systemu, mogłoby być rozbudowanie pliku sterującego na przykład o tag \textless rssSource\textgreater który sprawi, że aplikacja zamiast pliku wejściowego pobierze wiadomości ze źródła RSS i na nich wywoła funkcje udostępniane przez różne usługi. Jak widać wykorzystanie punktów końcowych daje wiele możliwości i idealnie wkomponowuje się w dziedzinę problemu, co stanowi kolejny argument na rzecz wykorzystania ESB jako sposobu integracji.
 
 \section*{Podsumowanie}
 Biorąc pod uwagę proponowane usługi, format danych wejściowych i wymagania stawiane przed platformą zdecydowanie najlepszym sposobem integracji wydaje się wykorzystanie jednej z istniejących implementacji ESB. Wszystkie one zapewniają routing, dużo różnych rodzajów punktów końcowych, wsparcie dla aplikacji pisanych przy użyciu technologii Spring i wiele innych rzeczy które nie tylko ułatwiają sam proces integracji ale również zapewniają możliwość łatwej rozbudowy w przyszłości.

@@ -25,7 +25,7 @@ Rozdział ten przedstawia konkretną konfigurację systemu SpeechProcessingPlatf
 	\caption{Przykładowa konfiguracja  systemu SpeechProcessingPlatform}\label{fig:esb_configuration}
 \end{figure}
 
-Rysunek \ref{fig:esb_configuration} przedstawai przykładową konfigurację platformy, która została wykorzystana do przeprowadzenia testów oraz weryfikacji proponowanej architektury. W tym celu z systemem zostały zintegrowane następujące usługi:
+Rysunek \ref{fig:esb_configuration} przedstawia przykładową konfigurację platformy, która została wykorzystana do przeprowadzenia testów oraz weryfikacji proponowanej architektury. W tym celu z systemem zostały zintegrowane następujące usługi:
 
 \begin{itemize}
 	\item TTS
@@ -59,7 +59,7 @@ Mimo tego można przedstawić proces integracji w postaci kroków, które należ
 \subsection {Krok nr. 1: Przygotowania}
 Krok ten obejmuje wszelkie działania niezwiązane z implementacją, lecz wymagane aby integracja w pełni się powiodła np. rejestracja w usłudze czy instalacja odpowiednich bibliotek.
 
-Ponieważ IVONA SaaS jest usługą płatna, pierwszą rzeczą, którą należy wykonać jest założenie konta na stronie usługi. Informacje podane podczas rejestracji będą potrzebne przy każdorazowej komunikacji z usługą w celu autoryzacji. W prezentowanej konfiguracji do integracji usługi IVONA użyto technologi REST, ale możliwe jest również użycie innych technologii. Po stronie systemu, do integracji użyto technologii JAX-RS, która ułatwia dostęp do usług zgodnych z wybraną do tej integracji technologią. Apache ServiceMix jest dystrybuowany z dużą ilością technologii integracyjnych dzięki czemu większość używanych bibliotek nie musi być dodana bezpośrednio do budowanej aplikacji. Aby było możliwe używanie danej technologii, wystarczy poszukać odpowiedniego zbioru paczek (\textit{feature}) i zainstalować go w kontenerze OSGi, co sprowadza się do wywołania odpowiedniej komendy z konsoli kontenera. W przypadku JAX-RS komenda ta ma postać następującą: 
+Ponieważ IVONA SaaS jest usługą płatną, pierwszą rzeczą, którą należy wykonać jest założenie konta na stronie usługi. Informacje podane podczas rejestracji będą potrzebne przy każdorazowej komunikacji z usługą w celu autoryzacji. W prezentowanej konfiguracji do integracji usługi IVONA użyto technologi REST, ale możliwe jest również użycie innych technologii. Po stronie systemu, do integracji użyto technologii JAX-RS, która ułatwia dostęp do usług zgodnych z wybraną do tej integracji technologią. Apache ServiceMix jest dystrybuowany z dużą ilością technologii integracyjnych dzięki czemu większość używanych bibliotek nie musi być dodana bezpośrednio do budowanej aplikacji. Aby było możliwe używanie danej technologii, wystarczy poszukać odpowiedniego zbioru paczek (\textit{feature}) i zainstalować go w kontenerze OSGi, co sprowadza się do wywołania odpowiedniej komendy z konsoli kontenera. W przypadku JAX-RS komenda ta ma postać następującą: 
 \begin{center}
 features:install cxf-jaxrs
 \end{center}
@@ -108,7 +108,7 @@ public class IvonaTextToSpeechService implements MessageEnabledService, TTSServi
 \end{center} 
 
 Po wygenerowaniu tokenu można przejść do właściwej operacji czyli do generowania dźwięku. Aby tego dokonać należy przygotować obiekt zawierający wszystkie parametry dotyczące procesu generacji w postaci klucz-wartość i wysłać go razem z żądaniem wygenerowania dźwięku. Ponieważ każda usługa posiada swoje własne nazewnictwo parametrów, trzeba dokonać odpowiedniego mapowania. 
-Odpowiedź usługi na żądanie przetwarzania jest w formacie JSON i zawiera ona adres URL pod którym można znaleźć plik z dźwiękiem. Plik ten należy pobrać i zapisać w postaci binarnej w obiekcie wiadomości jako dane wyjściowe tego etapu przetwarzania. Fragment kodu \ref{lst:ivona_speech} przedstawia proces generowania mowy oraz obsługę otrzymanej odpowiedzi.
+Odpowiedź usługi na żądanie przetwarzania jest w formacie JSON i zawiera ona adres URL pliku dźwiękowego. Plik ten należy pobrać i zapisać w postaci binarnej w obiekcie wiadomości jako dane wyjściowe tego etapu przetwarzania. Fragment kodu \ref{lst:ivona_speech} przedstawia proces generowania mowy oraz obsługę otrzymanej odpowiedzi.
 
 \lstset{language=Java, tabsize=4, caption=Proces generowania tokenu usługi IVONA,label=lst:ivona_speech}
 

@@ -13,7 +13,7 @@
 \fi
 
 %: ----------------------- contents from here ------------------------
-\chapter{Gotowe systemy integrujące przetwarzanie mowy} % top level followed by section, subsection
+\chapter{Istniejące systemy integrujące przetwarzanie mowy} % top level followed by section, subsection
 
 Po zaprezentowaniu przykładowej platformy integracyjnej dla systemów przetwarzania mowy rodzi się pytanie czy istnieją podobne systemy i w jaki sposób rozwiązują one zadany problem integracji. Chociaż istnieje wiele aplikacji integrujących ze sobą więcej niż jeden proces przetwarzania mowy, żadna z nich nie udostępnia podobnej funkcjonalności co platforma SpeechProcessingPlatform. Po wielu godzinach przeszukiwania nie udało się znaleźć systemu integrującego więcej niż dwa rożne procesy przetwarzania oraz pozwalającego na dowolne ich komponowanie w celu osiągnięcia zamierzonego celu biznesowego. Większość aplikacji wykorzystuje przetwarzanie mowy do konkretnego, założonego z góry celu i nie udostępnia żadnego interfejsu umożliwiającego ich ponowne użycie. Poniżej przedstawionych zostało trzy wybrane aplikacje integrujące różne rodzaje przetwarzania mowy.
 
@@ -27,7 +27,7 @@ Google Goggles\cite{googlegoggles} jest aplikacją mobilną dostępną na platfo
 	\caption{Przykłd działąnia aplikacji Google Goggles\cite{googlegoggles}. }\label{fig:google_goggles}
 \end{figure}
 
-Aplikacja ta korzysta z usługi o tej samej nazwie dostarczanej przez korporacje Google. Usługa ta nie jest publicznie dostępna dlatego żadne bardziej szczegółowy informacje na jej temat nie są dostępne, lecz można się domyślać, iż integruje ona w sobie inne usługi dostarczane przez korporacje takie jak Google Translate czy Google Docs OCR. 
+Aplikacja ta korzysta z usługi o tej samej nazwie dostarczanej przez korporacje Google. Usługa ta nie jest publicznie dostępna dlatego żadne bardziej szczegółowe informacje na jej temat nie są dostępne, lecz można się domyślać, iż integruje ona w sobie inne usługi dostarczane przez korporacje takie jak Google Translate czy Google Docs OCR. 
 
 \section {Oddcast Illustrated Characters}
 
@@ -45,7 +45,7 @@ Usługa ta integruje własnościowy syntezator mowy, który również jest dost�
 
 \section {Pediaphon} 
 
-Pediaphon\cite{pediaphon} jest aplikacją integrującą funkcjonalność TTS razem z darmową encyklopedią internetową: Wikipedia. Użytkownik podaje frazę, która zostaje wyszukana przy użyciu encyklopedii Wikipedia, a wynik wyszukiwania zostaje zamieniony na dźwięk. Użytkownik ma również opcję ustawienie parametrów przetwarzania, takich jak jakość i prędkość generowanej mowy oraz format wyjściowy. Aplikacja jest dostępna w różnych wersjach językowych w postaci strony internetowej oraz na platformy mobilne: iPhone, Android. Do syntezy mowy aplikacja wykorzystuje silnik eSpeak razem z zestawem głosów MBROLA. eSpeak jest otwartym, programowym syntezatorem mowy dostępnym w postaci bibliotek lub narzędzia wiersza poleceń. Jakość generowanego dźwięku jest znacznie gorsza od własnościowych rozwiązań takich jak IVONA.
+Pediaphon\cite{pediaphon} jest aplikacją integrującą funkcjonalność TTS razem z darmową encyklopedią internetową: Wikipedia. Użytkownik podaje frazę, która zostaje wyszukana przy użyciu encyklopedii Wikipedia, a wynik wyszukiwania zostaje zamieniony na dźwięk. Użytkownik ma również opcję ustawienie parametrów przetwarzania, takich jak jakość i prędkość generowanej mowy oraz format wyjściowy. Aplikacja jest dostępna w różnych wersjach językowych w postaci strony internetowej oraz na platformy mobilne: iPhone, Android. Do syntezy mowy aplikacja wykorzystuje silnik eSpeak razem z zestawem głosów MBROLA. eSpeak jest otwartym, programowym syntezatorem mowy dostępnym w postaci bibliotek lub narzędzia wiersza poleceń. Jakość generowanego dźwięku jest znacznie gorsza od komercyjnych rozwiązań takich jak IVONA.
 
 \section*{Podsumowanie} 
 Jak widać platforma SpeechProcessingPlatform jest systemem dostarczającym niespotykaną wcześniej funkcjonalność. Dzięki możliwości kompozycji różnych procesów przetwarzania mowy, oraz obsłudze dużej ilości protokołów, może ona być zastosowana przy implementacji rozmaitych aplikacji wykorzystujących przetwarzanie mowy w różnych postaciach. Przedstawione powyżej aplikacje prezentują różne scenariusze użycia, z których każdy całkowicie lub częściowo (usługi przetwarzania mowy) mógłby zostać zaimplementowany przy użyciu prezentowanej platformy. W kolejnych rozdziałach zostanie przedstawione jakie zalety i wady ma zastosowanie gotowej platformy integracyjne w porównaniu z tradycyjnym podejściem tworzenia aplikacji od zera.

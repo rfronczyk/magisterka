@@ -1,7 +1,7 @@
 % this file is called up by thesis.tex
 % content in this file will be fed into the main document
 
-\chapter{Podsumowanie} % top level followed by section, subsection
+\chapter{Podsumowanie} % top level followed by section, subsection	
 
 
 % ----------------------- paths to graphics ------------------------
@@ -19,7 +19,7 @@ Co do wyboru sposobu integracji, jak zostało to zaprezentowane wyżej istnieje 
 	\item Łatwość rozbudowy - gdy powstanie jakaś nowa usługa, oferująca ciekawą funkcjonalność jedynym wysiłkiem jaki należy wykonać w celu użycia go, jest wpięcie usługi do szyny
 	\item Lekkość - warstwa abstrakcji nakładana przez ESB w celu połączenia dostępnych usług jest bardzo mała i nie ma wpływu na wydajność
 	\item Skalowalność - różne instancje ESB mogą łączyć się razem w celu uzyskania wyższej wydajności oraz rozproszenia geograficznego
-	\item Różnorodność - wszystkie istniejące implementacje ESB oferują wiele różnych punktów końcowych, służących jako interfejsy wejścia/wyjścia, obsługujących wiele formatów
+	\item Bogactwo interfejsów - wszystkie istniejące implementacje ESB oferują wiele różnych punktów końcowych, służących jako interfejsy wejścia/wyjścia, obsługujących wiele formatów
 \end{itemize}
 Wykorzystanie takiego podejścia daje też inny duży, plus jakim niewątpliwie jest łatwość ukrywania implementacji. Klienci systemu opartego na takim rozwiązaniu nie będą wiedzieć z jakich konkretnie usług korzystają, przez co w razie wystąpienia kłopotów czy też pojawienia się nowszego, lepszego lub ciekawszego rozwiązania można taką usługę łatwo podmienić, bez konieczności zmieniania API. Kolejną dużą zaletą wykorzystania ESB, jest możliwość wykorzystania routingu. Dzięki temu sterowanie całym systemem i kolejnością wywoływania poszczególnych usług jest możliwa za pomocą prostego pliku xml.  \\
 Zaprezentowana praca magisterska zagłębia się w dziedzinę, która jest dość nowatorska. Zaproponowane rozwiązanie i przykładowa implementacja pokazują zarówno, iż temat jest ciekawy i warty dalszych badań oraz, że istniejące w tej chwili rozwiązania integracyjne są odpowiednie dla specyficznej dziedziny jaką jest przetwarzanie mowy i można je z powodzeniem stosować. W rozdziale pierwszym przedstawiono listę kilku pytań, na które, na podstawie, tej pracy można udzielić odpowiedzi, tak więc:
@@ -29,7 +29,7 @@ Zaprezentowana praca magisterska zagłębia się w dziedzinę, która jest doś�
 	\item czy istnieje zapotrzebowanie na platformę integrującą systemy przetwarzania mowy? - tak, istnieje wiele dziedzin w których można wykorzystać aplikacje bazujące na takiej platformie, co więcej przykładowe aplikacje pokazują, że jest ona funkcjonalna
 	\item jakie mogą być zastosowania takiego zintegrowanego systemu? - wiele różnych zastosowań, opisane wyżej Automatyczne Dyktando, Lektor SMS, czy platforma Google Goggles 
 	\item jakie są zalety istnienia takiej platformy? - uproszczenie interfejsu dla programisty aplikacji klienckich, łatwa możliwość konfiguracji, wiele zastosowań, innowacyjność
-	\item jakie są wady takiej platformy? - dodatkowy koszt czasowy, narzuceni dostarczyciele usług
+	\item jakie są wady takiej platformy? - jedyne wady to dodatkowy koszt czasowy oraz narzuceni dostarczyciele usług
 \end{itemize}
 
 % ----------------------- contents from here ------------------------
