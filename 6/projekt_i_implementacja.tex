@@ -37,7 +37,7 @@ Rysunek \ref{fig:layered_architecture} przedstawia architekturę systemu SpeechP
 Podejście warstwowe ułatwia dekompozycję systemu na niezależne komponenty, które odpowiadają za dobrze zdefiniowany fragment wymaganej funkcjonalności. 
 % tu mozna cos dodac jak cos
 
-Warstwa \textit{Data Endpoints Layer} odpowiada za udostępnianie interfejsów dla aplikacji klienckich oraz za transformacje danych do wspólnego formatu. Głównymi elementami tej warstwy są punkty końcowe i translatory danych. Punkty końcowe wystawiają interfejsy umożliwiające dostęp do platformy przy użyciu różnych technologii takich jak REST, FTP, SOAP czy RSS. Zadaniem translatorów jest ujednolicenie danych do postaci używanej w kolejnych warstwach. Dzięki temu komponenty z warstw niższych mają uproszczoną implementację ponieważ skupiają się na obsłudze tylko jednego, dobrze zdefiniowanego formatu. 
+Warstwa \textit{Data Endpoints Layer} odpowiada za udostępnianie interfejsów dla aplikacji klienckich oraz za transformacje danych do wspólnego formatu. Głównymi elementami tej warstwy są punkty końcowe i translatory danych. Punkty końcowe wystawiają interfejsy umożliwiające dostęp do platformy przy użyciu różnych technologii takich jak: REST, FTP, SOAP czy RSS. Zadaniem translatorów jest ujednolicenie danych do postaci używanej w kolejnych warstwach. Dzięki temu komponenty z warstw niższych mają uproszczoną implementację ponieważ skupiają się na obsłudze tylko jednego, dobrze zdefiniowanego formatu. 
 
 Warstwa \textit{Routing Layer} odpowiada za routowanie zadań przetwarzania od punktów końcowych do odpowiednich komponentów udostępniających usługi przetwarzania mowy, a także za przesyłanie wyników z powrotem do punktów końcowych. Zadania mogą być jedno etapowe jak np. \textit{przetłumacz ten tekst z języka polskiego na język angielski} albo dwu lub więcej etapowe jak np. \textit{rozpoznaj tekst na tym zdjęciu, jeżeli trzeba przetłumacz na język angielski i na jego podstawie wygeneruj dźwięk}.
 
@@ -127,10 +127,10 @@ Diagram \ref{fig:routing_layer_project} przedstawia, przepływ wiadomości, któ
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.75]{router_activity.png}
+	\includegraphics[scale=0.67]{router_activity.png}
 	\caption{Diagram czynności komponentu routującego. }\label{fig:router_activity_diagram}
 \end{figure}
-
+\newpage
 \subsubsection*{Przepływ wiadomości asynchronicznych}
 W celu obsługi wiadomości w sposób asynchroniczny, jeżeli wykorzystywany punkt końcowy nie zapewnia wparcia dla takiej komunikacji, należy poprzedzić proces routowania dodatkowymi krokami.
 Diagram \ref{fig:asynchronous_detour} przedstawia rozwiązanie zastosowane w SpeechProcessingPlatform. Ważnym aspektem w prezentowanej koncepcji jest wprowadzenie dodatkowego typu komponentów, przechowywania danych, których zadaniem jest przechowywanie odpowiedzi pod odpowiednim kluczem. Pierwszym etapem jest rozdzielenie wiadomości na dwie grupy synchroniczne i asynchroniczne. Podział ten jest dokonywany na podstawie oznaczenia wykonanego przez punkt końcowy zlecający, a także na podstawie obecności chociaż jednego komponentu przechowywania danych. Jeżeli chociaż jeden z tych warunków nie jest spełniony żądanie będzie obsłużony w sposób opisany w poprzednim podrozdziale. Jeżeli obydwa warunki są spełnione wiadomość jest poddawana kilku dodatkowym operacjom przed wysłaniem jej do routera. Pierwsza z nich to usunięcie oznaczenia do przetwarzania asynchronicznego. Druga to wygenerowanie i dodanie do wiadomości unikalnego identyfikatora, który posłuży jako klucz przy przechowywaniu docelowej odpowiedzi. Następnym krokiem jest wygenerowanie zastępczej odpowiedzi i wysłanie jej do punktu końcowego. Odpowiedz ta zawiera wygenerowany wcześniej identyfikator, który pozwoli aplikacji klienckiej na odpytanie systemu o odpowiedź na oryginalne zadanie. Ostatnim krokiem jest podmiana adresu zwrotnego w oryginalnej wiadomości na adres komponentu przechowywania danych, do którego to odpowiedź zostanie wysłana po zakończonym przetwarzaniu.  Dalsze przetwarzanie wygląda tak samo jak w wypadku wiadomości synchronicznych.
@@ -140,7 +140,7 @@ Diagram \ref{fig:asynchronous_detour} przedstawia rozwiązanie zastosowane w Spe
 
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.55]{asynchronous_detour.png}
+	\includegraphics[scale=0.40]{asynchronous_detour.png}
 	\caption{Diagram przepływu dla komunikacji asynchronicznej}\label{fig:asynchronous_detour}
 \end{figure}
 
@@ -149,17 +149,17 @@ Diagram \ref{fig:asynchronous_detour} przedstawia rozwiązanie zastosowane w Spe
 	\includegraphics[scale=1.0]{asynchronous_activity_uml.png}
 	\caption{Diagram czynności dla wiadomości asynchronicznych. }\label{fig:asynchronous_activity}
 \end{figure}
-
+\newpage
 \subsection{Warstwa \textit{Services Layer}}
 
 Pierwszym komponentem z warstwy \textit{Services Layer}, który bierze udział podczas przetwarzania wiadomości jest repozytorium. Użycie tego komponentu nie jest wymagane , jednak jego brak wymusiłby zapisanie gdzieś w implementacji warstwy \textit{Routing Layer} stałych ścieżek lub zestawu reguł na podstawie których podejmowana byłaby decyzja o dalszej trasie wiadomości. Takie podejście mocno związałoby platformę z konkretnymi komponentami odpowiedzialnymi za przetwarzanie mowy, a dodanie nowego komponentu wiązało by się ze zmianą implementacji. Dzięki zastosowaniu repozytorium, które wprowadza dodatkową warstwę abstrakcji nad konkretnymi komponentami syntezy mowy, całość systemu nie jest związana z konkretnym dostawcą usług syntezy. Dodatkowym plusem takiego rozwiązania jest możliwość dynamicznego wyboru komponentów w zależności od zmieniających się warunków zewnętrznych. Platformę można rozszerzyć o komponenty monitorujące zachowanie się komponentów w czasie rzeczywistym co pozwoli na wybór najlepszej instancji w danym momencie. 
 Aby nie wiązać platformy z konkretną implementacją repozytorium został wprowadzony interfejs, który musi być zaimplementowany przez komponenty chcące pełnić role repozytorium. Takie podejście pozwoli na użycie różnych implementacji opartych na rozmaitych technologiach jak np. Spring czy OSGi. Fragment kodu \ref{lst:repository_interface} przedstawia omawiany interfejs:
 
-\lstset{language=Java, tabsize=4, caption=Definicja interfejsu ISreviceRepository w języku Java.,label=lst:repository_interface}
+\lstset{language=Java, tabsize=4, caption=Definicja interfejsu IServiceRepository w języku Java.,label=lst:repository_interface}
 
 \begin{center}
 \begin{lstlisting}
-public interface SreviceRepository {
+public interface ServiceRepository {
 	Collection<String> lookupServicesURIs(Class type);
 	Collection<String> lookupServicesURIs(Class type, Map<String, String> metaData);
 	String lookupServiceURI(Class type);
@@ -229,7 +229,7 @@ Aby możliwe było użycie gotowych usług, które nie obsługują komunikacji o
 
 \section{Implementacja}
 
-Do implementacji systemu SpeechProcessingPlatform została użyta platforma integracyjna Apache ServiceMix, która w znaczący sposób ułatwia rozwiązywanie problemów integracji, dzięki dostarczaniu dużej ilości gotowych komponentów. Zastosowanie kontenera OSGi, na którym platforma ta jest oparta, pozawala na dynamiczną adaptację systemu w zależności od zaistniałych warunków. Dodatkowo pozwala podzielić system na niezależne, wymienialne części (bundle), z których każda posiada niezależny od reszty cykl życia. Dodawanie nowych części, takich jak kolejne punkty końcowe, czy kolejne komponenty udostępniające usługi przetwarzania mowy może być realizowane w trakcie pracy systemu i nie wymaga jego ponownego uruchomienia \cite{hall2011}. Do implementacji przepływów wiadomości został użyty Apache Camel, który jest jedną z części składowych ServiceMix-a. Framework ten zawiera bardzo dużą liczbę wbudowanych punktów końcowych, obsługujących większość z popularnych protokołów komunikacji takich jak: FTP, HTTP, IMAP czy XMPP. Dzięki temu dodanie obsługi większej ilości protokołów nie stanowi żadnego problemu. Framework ten, pozwala również w prosty w sposób zaimplementować większość wzorców EIP, dlatego implementacja opisanych w poprzednim podrozdziale przepływów wiadomości jest stosunkowo prosta.
+Do implementacji systemu SpeechProcessingPlatform została użyta platforma integracyjna Apache ServiceMix, która w znaczący sposób ułatwia rozwiązywanie problemów integracji, dzięki dostarczaniu dużej ilości gotowych komponentów. Zastosowanie kontenera OSGi, na którym platforma ta jest oparta, pozawala na dynamiczną adaptację systemu w zależności od zaistniałych warunków. Dodatkowo pozwala podzielić system na niezależne, wymienialne części (bundle), z których każda posiada niezależny od reszty cykl życia. Dodawanie nowych części, takich jak kolejne punkty końcowe, czy kolejne komponenty udostępniające usługi przetwarzania mowy może być realizowane w trakcie pracy systemu i nie wymaga jego ponownego uruchomienia \cite{hall2011}. Do implementacji przepływów wiadomości został użyty Apache Camel, który jest jedną z części składowych ServiceMix-a. Framework ten zawiera bardzo dużą liczbę wbudowanych punktów końcowych, obsługujących większość z popularnych protokołów komunikacji takich jak: FTP, HTTP, IMAP czy XMPP. Dzięki temu dodanie obsługi większej ilości protokołów nie stanowi żadnego problemu. Framework ten, pozwala również w prosty sposób zaimplementować większość wzorców EIP, dlatego implementacja opisanych w poprzednim podrozdziale przepływów wiadomości jest stosunkowo prosta.
 
 \subsection{Wewnętrzny format wiadomości}
 Wiadomości przesyłane wewnątrz systemu mają postać obiektów. Obiekty te posiadają wszystkie potrzebne informacje aby można było przeprowadzić przetwarzanie, czyli typ przetwarzanie, dane wejściowe i parametry przetwarzania. Wynik przetwarzania jest również przechowywany w obiekcie wiadomości, dzięki czemu może on posłużyć jako dane wejściowe dla kolejnego etapu albo jako wynik końcowy całego procesu. Takie podejście ułatwia operacje na wiadomościach, np. sprawdzenie czy zadanie jest już zakończone sprowadza się do wywołania metody. Fragment kodu \ref{lst:task_interface} przedstawia interfejs który musi być implementowany przez obiekty wiadomości.
@@ -264,7 +264,7 @@ Każdy z opisanych wcześniej rodzajów przetwarzania mowy posiada swoją klasę
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.65]{tasks_hierarhy.png}
-	\caption{Struktura dziedziiczenia klasy Task}\label{fig:task_class_hierarchy}
+	\caption{Struktura dziedziczenia klasy Task}\label{fig:task_class_hierarchy}
 \end{figure}
 
 
@@ -458,7 +458,7 @@ Implementacja repozytorium zastosowana w systemie SpeechProcessingPlatform jest 
 
 \begin{center}
 \begin{lstlisting}
-public class TTSTask implements SreviceRepository{
+public class TTSTask implements ServiceRepository{
 	private BundleContext bundleContext;
 	...
 	
@@ -516,7 +516,7 @@ Ostatnimi elementami systemu są konkretne komponenty dostarczające usługi prz
 \end{lstlisting}
 \end{center}
 
-Usługi rejestrowane w rejestrze OSGi pełnią tylko pomocniczą role. Ich zadaniem jest umożliwienie wyszukiwania oraz dostarczanie adresu pod który należy wysłać wiadomość do zainteresowanych routera. Całe przetwarzanie zaczyna się po otrzymaniu wiadomości w kanale odbiorczym udostępnianym komponentu reprezentowanego przez usługę zarejestrowaną w rejestrze OSGi. Oczywiście obiekt, który jest rejestrowany może również brać czynny udział w przetwarzaniu, ale nie musi. Jako że właściwe usługi, które dokonują przetwarzania są na zewnątrz systemu, jedyne zadanie jakie pozostaje to przygotowanie wiadomości, wywołanie usługi używając odpowiedniego protokołu, przetłumaczenie odpowiedzi na format wewnętrzny i odesłanie jej do routera. 
+Usługi rejestrowane w rejestrze OSGi pełnią tylko pomocniczą role. Ich zadaniem jest umożliwienie wyszukiwania oraz dostarczanie adresu pod który należy wysłać wiadomość do zainteresowanych routera. Całe przetwarzanie zaczyna się po otrzymaniu wiadomości w kanale odbiorczym udostępnianego komponentu reprezentowanego przez usługę zarejestrowaną w rejestrze OSGi. Oczywiście obiekt, który jest rejestrowany może również brać czynny udział w przetwarzaniu, ale nie musi. Jako, że właściwe usługi, które dokonują przetwarzania są na zewnątrz systemu, jedyne zadanie jakie pozostaje to przygotowanie wiadomości, wywołanie usługi używając odpowiedniego protokołu, przetłumaczenie odpowiedzi na format wewnętrzny i odesłanie jej do routera. 
 
 
 % Można dodać fragment implementacji.

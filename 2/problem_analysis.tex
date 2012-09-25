@@ -22,7 +22,6 @@ Rozdział ten podzielony jest na cztery części. Celem pierwszej jest zdefiniow
 Mowa jest naturalnym, wytworzonym przez człowieka w procesie ewolucji, sposobem komunikacji. Jej niewątpliwe zalety to:
 \begin{itemize}
 	\item komunikacja mimo braku fizycznego kontaktu
-	\item nie wymaga zastosowania żadnych narzędzi
 	\item nie zachodzi potrzeba widzenia rozmówcy
 	\item umożliwianie komunikacji w czasie wykonywania innych czynności
 \end{itemize}
@@ -85,33 +84,33 @@ Stosując pierwsze kryterium, aplikacje można podzielić na
 Systemy należące do pierwszej grupy uczą się poprzez sesje w czasie których lektor czyta porcje tekstu, aplikacje analizują głos, ton oraz tempo  w efekcie czego mogą dostosować się do danego lektora co skutkuje uzyskaniem o wiele dokładniejszych wyników, w przedziale 95-100\%, oczywiście przy założeniu, że lektor ma podobny głos.  Systemy należące do drugiej grupy uczą się przy wykorzystaniu różnych lektorów. Uzyskiwane przez nie wyniki rzadko przekraczają 75\% jednak są dużo bardziej stabilne, to znaczy nie zależnie od lektora wyniki są w tej okolicy. 
 Stosując kryterium drugie wyróżniamy następujące grupy systemów \cite{gaikwad2010} :
 \begin{itemize}
-	\item Rozpoznające izolowane słowa - są to dość proste systemy, posiadające dwa stany: nasłuchujący i nie nasłuchujący,  wymagające ciszy na początku i na końcu każdej wypowiedzi,  akceptują jedno słowo lub krótką wypowiedź 
-	\item Rozpoznające łączone słowa - podobne do systemów z grupy powyżej, charakteryzują się znacznie większą czułością na przerwy pomiędzy kolejnymi słowami czyli umożliwiają osobnym wypowiedziom występować tylko, z minimalnymi przerwami pomiędzy nimi
+	\item Rozpoznające izolowane słowa - są to dość proste systemy, posiadające dwa stany: nasłuchujący i nie nasłuchujący,  wymagające ciszy na początku i na końcu każdej wypowiedzi,  akceptują jedno słowo lub krótką wypowiedź .
+	\item Rozpoznające łączone słowa - podobne do systemów z grupy powyżej, charakteryzują się znacznie większą czułością na przerwy pomiędzy kolejnymi słowami czyli umożliwiają osobnym wypowiedziom występować tylko, z minimalnymi przerwami pomiędzy nimi.
 	\item Rozpoznające mowę ciągłą -  systemy z tej grupy umożliwiają użytkownikowi mówienie w sposób niemal naturalny w czasie gdy one rozpoznają zawartość. Są to najnowsze i najbardziej zaawansowane systemy.
 \end{itemize}
 \subsection{Synteza mowy}   
 Synteza mowy jest wygenerowaną komputerową symulacją ludzkiej mowy. Syntezatory, czyli systemy komputerowe, które dokonują syntezy można podzielić na grupy stosując dwa różne kryteria:
 \begin{itemize}
-	\item sposób implementacji
-	\item sposób tworzenia mowy
+	\item sposób implementacji,
+	\item sposób tworzenia mowy.
 \end{itemize}
 Systemy należące do pierwszej grupy można podzielić na:
 \begin{itemize}
-	\item implementowane programowo
-	\item implementowane sprzętowo
+	\item implementowane programowo,
+	\item implementowane sprzętowo.
 \end{itemize}
 Kategoria pierwsza jest bardziej liczna, łatwiej dostępna, tańsza przez co też dużo bardziej popularna. Dużą zaletą aplikacji należących do pierwszej grupy jest ich uniwersalność,  mogą one być łatwo wykorzystani do różnych celów takich jak:
 \begin{itemize}
-	\item lektorzy filmowi/e-książek/wiadomości email
-	\item poczty głosowe
-	\item pomoc techniczna
-	\item interaktywna obsługa osoby  dzwoniącej
+	\item lektorzy filmowi/e-książek/wiadomości email,
+	\item poczty głosowe,
+	\item pomoc techniczna,
+	\item interaktywna obsługa osoby  dzwoniącej.
 \end{itemize}
 Najpopularniejsze syntezatory mowy dostępne na rynku to:
 \begin{itemize}
-	\item IvonaTTS
-	\item TextAloud
-	\item Loquendo
+	\item IvonaTTS,
+	\item TextAloud,
+	\item Loquendo.
 \end{itemize}
 Systemy należące do kategorii drugiej (implementowane sprzętowo) charakteryzują się dużo większą wydajnością i szybkością działania. Najlepsze z nich są w stanie generować mowę w czasie rzeczywistym. 
 Ze względu na sposób tworzenia mowy, systemy można podzielić na:
@@ -123,8 +122,8 @@ Ze względu na sposób tworzenia mowy, systemy można podzielić na:
 \subsection{Optyczne rozpoznawanie tekstu}
 Optyczne rozpoznawanie tekstu, dużo częściej występujące w wersji skróconej OCR, to mechaniczna lub elektroniczna konwersja obrazu pisma ręcznego lub maszynowego do tekstu przechowywanego w postaci cyfrowej, pozwalającej na dalszą jego obróbkę. Podobnie jak w przypadku syntezatorów mowy systemy OCR można podzielić na:
 \begin{itemize}
-	\item implementowane programowo
-	\item implementowane sprzętowo
+	\item implementowane programowo,
+	\item implementowane sprzętowo.
 \end{itemize}
 Podobnie jak przy syntezatorach zaletą implementacji sprzętowej jest szybkość oraz wydajność co umożliwia pracę w czasie rzeczywistym. Niezależnie od implementacji, sposób ich działania oraz algorytmy pozostają podobne. Podstawowe kroki jakie system musi podjąć w celu rozpoznania tekstu to \cite{noor2005} :
 \begin{enumerate}
@@ -137,11 +136,11 @@ Podobnie jak przy syntezatorach zaletą implementacji sprzętowej jest szybkoś�
 \end{enumerate}
 Nie jest to kompletna lista kroków, istnieje dużo innych mniejszych lub większych etapów, jednak każdy z wymienionych jest bardzo ważny, cały proces nie zakończy się sukcesem jeżeli zawiedzie którykolwiek z nich. 
 \subsection{Translacja mowy}
-Translacja mowy to tłumaczenie z jednego języka na inny. Aplikacje tłumaczące często nazywane są translatorami. Mimo, że z pozoru mogłoby się wydawać, że jest to czynność prostsza niż OCR czy też ASR to tak nie jest. Proces tłumaczenia jest bardzo trudny i do tej pory nie istnieją aplikacje nie popełniające błędów. W zasadzie można wyróżnić trzy typy translatorów, bazując na algorytmach jakie stosują co do tłumaczonego tekstu:
+Translacja mowy to tłumaczenie z jednego języka na inny. Aplikacje tłumaczące często nazywane są translatorami. Mimo, że z pozoru mogłoby się wydawać, że jest to czynność prostsza niż OCR czy też ASR, to tak nie jest. Proces tłumaczenia jest bardzo trudny i do tej pory nie istnieją aplikacje nie popełniające błędów. W zasadzie można wyróżnić trzy typy translatorów, bazując na algorytmach jakie stosują co do tłumaczonego tekstu:
 \begin{itemize}
-	\item algorytmy oparte na zasadach gramatyki
-	\item algorytmy bazujące na podejściu statystycznym
-	\item algorytmy stosujące translacje opartą o przykłady
+	\item algorytmy oparte na zasadach gramatyki,
+	\item algorytmy bazujące na podejściu statystycznym,
+	\item algorytmy stosujące translacje opartą o przykłady.
 \end{itemize}
 W podejściu pierwszym przeprowadza się tłumaczenie bazując na informacjach językowych na temat języka źródłowego i docelowego. Algorytm rozkłada zdanie na części pierwsze, analizuje je, następnie bazując na bazie wiedzy którą posiada, a w skład której wchodzą informacje na temat składni, budowy zdań, odmian oraz słownik dwujęzyczny, buduje zdanie w języku docelowym. Technika ta wymaga ogromnej mocy obliczeniowej oraz dużych zasobów danych, według ekspertów w dziedzinie translacji, takich jak Franz Josef Och \cite{och2003}, jest nieefektywna.
 W podejściu statystycznym tłumaczenia dokonuje się w oparciu o statystyczny model którego parametry są wyliczane na podstawie analizy tekstu. Jest do podejście mające bardzo mocne oparcie w teorii informacji. W chwili obecnej wydaje się, że jest ono najbardziej efektywne o czym może świadczyć fakt, że podejście to zostało zastosowane przez Google przy tworzeniu Google Translator, który wygrał międzynarodowe zawody w tłumaczeniu z angielskiego na arabski i angielskiego na chiński.
@@ -169,8 +168,8 @@ Jak widać przetwarzanie mowy samo w sobie jest bardzo obszernym i skomplikowany
 \section{Paradygmat SOA}
 SOA czyli Service Oriented Architecture(Architektura zorientowana na usługi) to zgodnie z definicją zaproponowaną przez W3C zbiór komponentów dostępnych w sieci posiadających dobrze opisane interfejsy. Opis ten pozwala na rozróżnianie komponentów i ich wyszukiwanie, a następnie wywoływanie. Najbardziej popularną obecnie implementacją tego paradygmatu jest ta opierająca się o technologię web services.  W paradygmacie SOA możemy wyróżnić dwa różne podejścia tworzenia złożonych usług:
  \begin{itemize}
-	\item orkiestracja
-	\item choreografia
+	\item orkiestracja,
+	\item choreografia.
 \end{itemize}  
 Orkiestracja charakteryzuje się tym, iż istnieje jedna usługa orkiestrator, dyrygent lub koordynator który zarządza innymi usługami w celu udostępniania jednej funkcjonalności. Prowadzi to do luźniejszego połączenia usług, sprawia też, że nie są one świadome bycia częścią większego procesu. Orkiestracja jest scentralizowaną formą współpracy z dobrze zdefiniowanymi operacjami i kolejnością wywoływania usług. Istnieją specjalne języki, ułatwiające taką integrację usług, na przykład BPEL.
 \begin{figure}[!h]
@@ -205,10 +204,10 @@ Do wyboru mamy wiele różnych technologii integracyjnych. Niektóre z nich są 
 Dostępne rozwiązania można podzielić na cztery grupy: \cite{chappell2004}
 
 \begin{itemize}
-	\item serwery aplikacji
-	\item EAI brokers
-	\item dedykowane rozwiązania MOM
-	\item ESB
+	\item serwery aplikacji,
+	\item EAI brokers,
+	\item dedykowane rozwiązania MOM,
+	\item ESB.
 \end{itemize}
 \setlength\fboxsep{20pt}
 \setlength\fboxrule{1pt}
@@ -218,7 +217,7 @@ Dostępne rozwiązania można podzielić na cztery grupy: \cite{chappell2004}
 	\caption{Różne podejścia integracyjne  \cite{chappell2004}}\label{fig:podejscia_integracyjne}
 \end{figure}
 
-Pierwsze dwie grupy rozwiązań oparte są na modelu \textbf{"Hub and Spoke"}  w modelu tym połączenia ułożone są na wzór koła rowerowego, w którym przebieg danych odbywa się wzdłuż szprych (spoke) połączonych z położoną w centrum piastą (hub). Zaletą takiego rozwiązania jest scentralizowanie takich funkcji systemu jak: zarządzanie, routowanie wiadomości, logika biznesowa, które to są zaimplementowane w węźle centralnym (hub). Dzięki temu poszczególne elementy integrowane są wyposażone tylko w niezbędną dla nich funkcjonalność. Kolejną zaletą jest ilość połączeń którą trzeba zrealizować w takim modelu. Przy założeniu, że tworzymy \begin{math}n\end{math}  systemów i każdy z nich musi komunikować się z resztą to suma połączeń które trzeba zrealizować wynosi  \begin{math}n\end{math}  złożoność powstałej sieci wynosi  \begin{math}O(n)\end{math}  Jak widać ostateczna złożoność jest znacznie lepsza niż przy połączeniach punk-punkt miedzy każdym systemem. Przy połączeniach system-system  ilość potrzebnych połączeń wynosi   \begin{math}\frac{n (n- 1)}{2}\end{math}  Złożoność takiej sieci połączeń wynosi  \begin{math}O(n^2)\end{math}  Wadami takiego rozwiązania jest słaba skalowalność, istnienie pojedynczego punktu awarii w postaci węzła centralnego(hub) oraz wprowadzenie dodatkowego opóźnienia, a mianowicie jednego dodatkowego przeskoku w porównani z komunikacją system-system).
+Pierwsze dwie grupy rozwiązań oparte są na modelu \textbf{"Hub and Spoke"}  w modelu tym połączenia ułożone są na wzór koła rowerowego, w którym przebieg danych odbywa się wzdłuż szprych (spoke) połączonych z położoną w centrum piastą (hub). Zaletą takiego rozwiązania jest scentralizowanie takich funkcji systemu jak: zarządzanie, routowanie wiadomości, logika biznesowa, które to są zaimplementowane w węźle centralnym (hub). Dzięki temu poszczególne elementy integrowane są wyposażone tylko w niezbędną dla nich funkcjonalność. Kolejną zaletą jest ilość połączeń którą trzeba zrealizować w takim modelu. Przy założeniu, że tworzymy \begin{math}n\end{math}  systemów i każdy z nich musi komunikować się z resztą to suma połączeń które trzeba zrealizować wynosi  \begin{math}n\end{math}  złożoność powstałej sieci wynosi  \begin{math}O(n)\end{math}  Jak widać ostateczna złożoność jest znacznie lepsza niż przy połączeniach punkt-punkt miedzy każdym systemem. Przy połączeniach system-system  ilość potrzebnych połączeń wynosi   \begin{math}\frac{n (n- 1)}{2}\end{math}  Złożoność takiej sieci połączeń wynosi  \begin{math}O(n^2)\end{math}  Wadami takiego rozwiązania jest słaba skalowalność, istnienie pojedynczego punktu awarii w postaci węzła centralnego (hub) oraz wprowadzenie dodatkowego opóźnienia, a mianowicie jednego dodatkowego przeskoku w porównani z komunikacją system-system).
 
 \setlength\fboxsep{20pt}
 \setlength\fboxrule{1pt}
@@ -236,50 +235,50 @@ Rozwiązania bazujące na MOM pozwalają na luźne łączenie poszczególnych sy
 
 Ostatnia grupa rozwiązań jest oparta na ESB. Jest to zdecydowanie najnowsza z wyżej opisanych technologii. Dzięki doświadczeniu zdobytemu przy użytkowaniu poprzedników, udało się stworzyć technologię, która nie posiada tych samych wad. Ogólnie rzecz ujmując ESB dostarcza warstwę abstrakcji opartą na implementacji biznesowego systemu wymiany wiadomości, dzięki temu pozwala wykorzystać zalety wiadomości bez pisania dodatkowego kodu. W przeciwieństwie do bardziej klasycznego podejścia (EAI) opartego o architekturę hub and spoke podstawa platformy jest zbudowana z funkcji bazowych podzielonych na części składowe które mogą być osadzane zarówno w jednolitym jak i rozproszonym środowisku wzajemnie ze sobą współpracując. Szkielet ESB do zarządzania usługami wykorzystuje komunikację działającą w oparciu o asynchroniczne przesyłanie wiadomości, ten sam system jest wykorzystywany do komunikacji pomiędzy usługami osadzonymi w kontenerze. Najważniejszą cechą ESB jest fakt, iż po wpięciu aplikacji przez ściśle zdefiniowany, bazujący na standardach interfejs, uzyskuje ona dostęp do całej infrastruktury i usług udostępnianych przez ESB a także do każdej innej, już działającej aplikacji. W chwili obecnej dostępnych jest wiele różnych implementacji ESB, większość z nich udostępnia podobne usługi więc ciężko je stosować jako kryterium, lepszym sposobem by rozróżnić implementacje jest zastosowanie następującej miary:
 \begin{itemize}
-	\item wspierane środowisko działania/osadzania
-	\item model kontenera - bazujący na standardach czy własnościowy
-	\item powiązanie z innymi elementami architektury
-	\item zależności
+	\item wspierane środowisko działania/osadzania,
+	\item model kontenera - bazujący na standardach czy własnościowy,
+	\item powiązanie z innymi elementami architektury,
+	\item zależności.
 \end{itemize}
 Co równie ważne, wszystkie implementacje ESB oferują również bardzo wiele różnych rodzajów punktów końcowych. Umożliwiają one bardzo łatwe pobieranie danych z różnych źródeł, takich jak:
 \begin{itemize}
-	\item mail
-	\item ftp
-	\item technologia web services
-	\item technologia REST web services
-	\item RSS
+	\item mail,
+	\item ftp,
+	\item technologia web services,
+	\item technologia REST web services,
+	\item RSS.
 \end{itemize}
 
 \section{Integracja systemów przetwarzania mowy}
 
 Podrozdział ten ma na celu przedstawić  jakie wymagania można postawić przed przykładową aplikacją integrującą systemy przetwarzania mowy i jak wpłyną one na sposób integracji. Aby zdefiniować wymagania można rozważyć przykładową aplikację kliencką która mogłaby być zbudowana w oparciu o taki system. Podstawowe funkcje, które taka aplikacja realizuje mogą być następujące:
 \begin{itemize}
-	\item zamiana pliku graficznego będącego zdjęciem tekstu na plik tekstowy (OCR)
-	\item synteza tekstu (TTS)
-	\item tłumaczenie tekstu 
-	\item zamiana mowy na tekst (ASR)
-	\item rozpoznanie języka tekstu - jest to specjalny przypadek, od wymienionych wyżej różni się tym, że nie przetwarza tekstu w dosłownym tego słowa znaczeniu, co prawda na wejściu potrzebny jest tekst, jednak na wyjściu otrzymujemy informację o nim, a nie jego przetworzoną wersję
+	\item zamiana pliku graficznego będącego zdjęciem tekstu na plik tekstowy (OCR),
+	\item synteza tekstu (TTS),
+	\item tłumaczenie tekstu,
+	\item zamiana mowy na tekst (ASR),
+	\item rozpoznanie języka tekstu - jest to specjalny przypadek, od wymienionych wyżej różni się tym, że nie przetwarza tekstu w dosłownym tego słowa znaczeniu, co prawda na wejściu potrzebny jest tekst, jednak na wyjściu otrzymujemy informację o nim, a nie jego przetworzoną wersję.
 \end{itemize}
 Oczywiście każde z wyżej wymienionych zadań może zostać zrealizowane osobno przez odpowiednie aplikacje. Dlatego, gotowy system powinien być w stanie realizować każdą z nich osobna jak i każdą możliwą i sensowną kombinację. Dobrym przykładem takiej złożonej funkcjonalności jest zamiana pliku w formacie graficznym, będącym zdjęciem np. strony książki(napisanej w nieznanym języku) na dźwięk w jakimś innym, konkretnym, zdefiniowanym przez użytkownika języku. Aby to osiągnąć należy poinformować system o tym z których usług należy skorzystać i w jakiej kolejności je wywołać. Oczywiście idealnym i na szczęście możliwym rozwiązaniem jest ukrycie całej implementacji za jednym prostym interfejsem. Jednym z przykładowych rozwiązań tego problemu może być plik konfiguracyjny (na przykład w formacie xml) wysyłany razem z danymi wejściowymi. Przykładowa struktura takiego pliku mogłaby wyglądać następująco:
  \begin{itemize}
-	\item \textless speechProcessingInstructions\textgreater - podstawowy element, będący korzeniem dla całego pliku
-	\item \textless readImage\textgreater - wystąpienie tego elementu oznacza, że na wejściu należy oczekiwać pliku graficznego, zawierającego tekst, na którym zostanie wywołana usługa OCR, w efekcie czego powstanie plik tekstowy
-	\item \textless identifyLanguage\textgreater - element oznaczający konieczność użycia usługi rozpoznającej język, na wejściu oczekującej pliku tekstowego, zwracającej informację o języku
+	\item \textless speechProcessingInstructions\textgreater - podstawowy element, będący korzeniem dla całego pliku,
+	\item \textless readImage\textgreater - wystąpienie tego elementu oznacza, że na wejściu należy oczekiwać pliku graficznego, zawierającego tekst, na którym zostanie wywołana usługa OCR, w efekcie czego powstanie plik tekstowy,
+	\item \textless identifyLanguage\textgreater - element oznaczający konieczność użycia usługi rozpoznającej język, na wejściu oczekującej pliku tekstowego, zwracającej informację o języku,
 	\item \textless translate\textgreater - element wymuszający użycie translatora, na wejściu oczekuje pliku tekstowego, zwraca plik tekstowy, posiada następujące węzły potomne:
 		 \begin{itemize}
 			\item \textless inputLanguage\textgreater - element, którego zastosowaniem jest zdefiniowane języka tekstu wejściowego, jeżeli operacją poprzednią  było rozpoznanie języka element ten zostanie pominięty
 			\item \textless outputLanguage\textgreater - element, którego zastosowaniem jest zdefiniowane języka tekstu docelowego
 		\end{itemize}
-	\item \textless performTTS\textgreater - element oznaczający konieczność wywołania usługi odpowiadającej za syntezę mowy, na wejściu oczekującej pliku tekstowego, zwracającej plik dźwiękowy
-	\item \textless performASR\textgreater - wystąpienie tego elementu oznacza użycie usługi odpowiedzialnej  za rozpoznawanie mowy, przyjmuje ona plik dźwiękowy, zwraca plik tekstowy
+	\item \textless performTTS\textgreater - element oznaczający konieczność wywołania usługi odpowiadającej za syntezę mowy, na wejściu oczekującej pliku tekstowego, zwracającej plik dźwiękowy,
+	\item \textless performASR\textgreater - wystąpienie tego elementu oznacza użycie usługi odpowiedzialnej  za rozpoznawanie mowy, przyjmuje ona plik dźwiękowy, zwraca plik tekstowy.
 \end{itemize}
 Zastosowanie takiego formatu ma dużo zalet, z czego najważniejsze to:
 \begin{itemize}
-	\item prostota
-	\item duża ilość narzędzi wspierających ten format
-	\item popularność w środowisku SOA
-	\item czytelność dla człowieka
-	\item łatwa rozbudowa
+	\item prostota,
+	\item duża ilość narzędzi wspierających ten format,
+	\item popularność w środowisku SOA,
+	\item czytelność dla człowieka,
+	\item łatwa rozbudowa.
 \end{itemize}
 \newpage
 Przykładowy plik konfiguracyjny potrzebny do realizacji opisanego wyżej scenariusza wyglądałby następująco:
@@ -294,12 +293,14 @@ Przykładowy plik konfiguracyjny potrzebny do realizacji opisanego wyżej scenar
 
 Podsumowując, zakładając istnienie tak działającego systemu, jedyne zadania stawiane przed użytkownikami to:
 \begin{itemize}
-	\item wygeneriwanie pliku sterującego XML
-	\item opcjonalne (zależnie od scenariuszu) przesłanie pliku graficznego do systemu
-	\item opcjonalne (zależnie od scenariuszu) przesłanie pliku dźwiękowego go do systemu
-	\item pobranie rezultatu działania systemu (np. plik z przetłumaczonym tekstem, plik dźwiękowy, strumień dźwięku itd.)
+	\item wygenerowanie pliku sterującego XML
+	\item opcjonalne (zależnie od scenariuszu) przesłanie pliku graficznego do systemu,
+	\item opcjonalne (zależnie od scenariuszu) przesłanie pliku dźwiękowego do systemu,
+	\item pobranie rezultatu działania systemu (np. plik z przetłumaczonym tekstem, plik dźwiękowy, strumień dźwięku itd.).
 \end{itemize}
-Jak widać są to rzeczy dość proste i możliwe do bardzo szybkiej implementacji. Oczywiście bardzo łatwo można wyobrazić sobie możliwości rozbudowy takiej platformy. Jednym z kierunków takiej rozbudowy może być chęć wykorzystania innych, niż opisane wyżej(plik graficzny, plik xml) formatów danych wejściowych.  Bardzo pomocne okażą się tutaj punkty końcowe, które są oferowane w bardzo wielu różnych rodzajach, tak jak to zostało opisane wyżej, przez wszystkie implementacje ESB. Łatwo wyobrazić sobie użycie punktów końcowych, można je na przykład wykorzystać aby umożliwić użytkownikowi dostęp do usługi drogą mailową. Wystarczy aby użytkownik wysłał na specjalny, oficjalny, podany mu wcześniej adres, maila zawierającego, w postaci załączników, plik sterujący xml oraz plik wejściowy, na przykład zdjęcie tekstu albo tekst, w efekcie czego otrzymałby maila zwrotnego z danymi uzyskanymi w wyniku wykonania żądanych przez niego operacji. Innym przykładem użycia punktów końcowych, w celu zwiększenia funkcjonalności systemu, mogłoby być rozbudowanie pliku sterującego na przykład o tag \textless rssSource\textgreater który sprawi, że aplikacja zamiast pliku wejściowego pobierze wiadomości ze źródła RSS i na nich wywoła funkcje udostępniane przez różne usługi. Jak widać wykorzystanie punktów końcowych daje wiele możliwości i idealnie wkomponowuje się w dziedzinę problemu, co stanowi kolejny argument na rzecz wykorzystania ESB jako sposobu integracji.
+Jak widać są to rzeczy dość proste i możliwe do bardzo szybkiej implementacji. Oczywiście bardzo łatwo można wyobrazić sobie możliwości rozbudowy takiej platformy. Jednym z kierunków takiej rozbudowy może być chęć wykorzystania innych, niż opisane wyżej(plik graficzny, plik xml) formatów danych wejściowych.  Bardzo pomocne okażą się tutaj punkty końcowe, które są oferowane w bardzo wielu różnych rodzajach, tak jak to zostało opisane wyżej, przez wszystkie implementacje ESB. Łatwo wyobrazić sobie użycie punktów końcowych, można je na przykład wykorzystać aby umożliwić użytkownikowi dostęp do usługi drogą mailową. Wystarczy aby użytkownik wysłał na specjalny, oficjalny, podany mu wcześniej adres, maila zawierającego, w postaci załączników, plik sterujący xml oraz plik wejściowy, na przykład zdjęcie tekstu albo tekst, w efekcie czego otrzymałby maila zwrotnego z danymi uzyskanymi w wyniku wykonania żądanych przez niego operacji. Innym przykładem użycia punktów końcowych, w celu zwiększenia funkcjonalności systemu, mogłoby być rozbudowanie pliku sterującego na przykład o tag \textless rssSource\textgreater który sprawi, że aplikacja zamiast pliku wejściowego pobierze wiadomości ze źródła RSS i na nich wywoła funkcje udostępniane przez różne usługi. Jak widać wykorzystanie punktów końcowych daje wiele możliwości i idealnie wkomponowuje się w dziedzinę problemu, co stanowi kolejny argument na rzecz wykorzystania ESB jako sposobu integracji. \\
+
+Kolejną ważną, wartą omówienia kwestią, wynikającą ze specyficznej dziedziny problemy, jest możliwość wykorzystania strumieniowania, oraz wad i zalet takiego podejścia. Strumieniowanie jest to technika przesyłania polegająca na ciągłym i nieustannym przetwarzaniu danych przez odbiorcę, gdy te wciąż są dostarczane przez nadawcę. Jest ona szeroko wykorzystywana do przesyłania multimediów, na przykład filmów lub też muzyki. Jej zastosowanie pozwala na zmniejszenie opóźnień, użytkownik może przetwarzać dane już po otrzymaniu niewielkiej ich części. Wadą tej techniki jest duże zapotrzebowanie na przepustowość łącza. Autorzy pracy zdecydowali, że przykładowa implementacja platformy dopuszcza istnienie opoźnień dlatego postanowili nie badać tego tematu i pozostawić go jako możliwe rozszerzenie tej pracy. %Warto tylko zaznaczyć, iż główne zastosowanie strumieniowania byłoby przy użyciu serwisów odpowiedzialnych za rozpoznawanie i syntezę mowy, których obecne implementacje dostarczają taką funkcjonalność.  
 
 \section*{Podsumowanie}
 Biorąc pod uwagę proponowane usługi, format danych wejściowych i wymagania stawiane przed platformą zdecydowanie najlepszym sposobem integracji wydaje się wykorzystanie jednej z istniejących implementacji ESB. Wszystkie one zapewniają routing, dużo różnych rodzajów punktów końcowych, wsparcie dla aplikacji pisanych przy użyciu technologii Spring i wiele innych rzeczy które nie tylko ułatwiają sam proces integracji ale również zapewniają możliwość łatwej rozbudowy w przyszłości.

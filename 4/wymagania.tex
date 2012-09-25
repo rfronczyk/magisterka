@@ -27,7 +27,17 @@ Każdej z proponowanych aplikacji poświęcono osobny podrozdział, w którym je
 
 \section{Weryfikacja funkcjonalności}
 \subsection{Automatyczne dyktando}
-Jest to aplikacja webowa umożliwiająca użytkownikowi ćwiczenie pisowni w różnych językach. Zasada działania jest bardzo prosta, użytkownik ładuje plik tekstowy lub graficzny na serwer oraz wybiera język docelowy, następnie zostaje przekierowany na stronę zawierającą formularz do pisania tekstu oraz odtwarzacz. Użytkownik słucha tekstu i zapisuje w polu tekstowym transkrypcję. W momencie w którym zatwierdzi formularz zostaje on przesłany na serwer i porównany z oryginalnym plikiem wejściowym, w efekcie użytkownik otrzymuje informację o ilości popełnionych błędów oraz o wyrazach które źle zapisał. 
+Jest to aplikacja webowa umożliwiająca użytkownikowi ćwiczenie pisowni w różnych językach. Zasada działania jest bardzo prosta, użytkownik ładuje plik tekstowy lub graficzny na serwer oraz wybiera język docelowy, następnie zostaje przekierowany na stronę zawierającą formularz do pisania tekstu oraz odtwarzacz. Użytkownik słucha tekstu i zapisuje w polu tekstowym transkrypcję (rys. \ref{fig:dictandoDictandoScreen}). W momencie w którym zatwierdzi formularz zostaje on przesłany na serwer i porównany z oryginalnym plikiem wejściowym, w efekcie użytkownik otrzymuje informację o ilości popełnionych błędów oraz o wyrazach które źle zapisał (rys. \ref{fig:dictandoScoreScreen}). 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.37]{dictandoDictandoScreen.png} 
+	\caption{Automatyczne dyktando - transkrypcja tekstu} \label{fig:dictandoDictandoScreen}
+\end{figure}
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{dictandoScoreScreen.png} 
+	\caption{Automatyczne dyktando - wyświetlanie wyników} \label{fig:dictandoScoreScreen}
+\end{figure}
 \subsubsection{Przypadek użycia}
 \begin{figure}[!h]
 	\centering
@@ -66,8 +76,12 @@ Zasada działania tej aplikacji jest bardzo prosta, mianowicie po włączenie pr
 	\item korzystając z usług udostępnianych przez przykładową implementację systemu integrującego usługi przetwarzania mowy
 	\item korzystając z wbudowanej w system Android funkcjonalności TTS
 \end{itemize} 
-Dzięki wykorzystaniu obu rozwiązań mamy możliwość bezpośredniego porównania. Wybór sposobu generowania dźwięku zależy od dostępności połączenia z internetem, jeżeli takie istnieje to aplikacja korzysta z zewnętrznego systemu, w przeciwnym razie wykorzystuje wbudowany TTS. Oczywiście użytkownik ma możliwość ustawienia dla których numerów aplikacja będzie działać.
-\newpage
+Dzięki wykorzystaniu obu rozwiązań mamy możliwość bezpośredniego porównania. Wybór sposobu generowania dźwięku zależy od dostępności połączenia z internetem, jeżeli takie istnieje to aplikacja korzysta z zewnętrznego systemu, w przeciwnym razie wykorzystuje wbudowany TTS. Oczywiście użytkownik ma możliwość ustawienia dla których numerów aplikacja będzie działać. Działająca aplikacja oprócz generowania głosu czytającego treść wiadomości pokazuje ją również na ekranie, w formie małego prostokąta z tekstem (rys. \ref{fig:SmsReaderScreen}).
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{SmsReaderScreen.png} 
+	\caption{Automatyczne dyktando - wyświetlanie wyników} \label{fig:SmsReaderScreen}
+\end{figure}
 \subsubsection{Przypadek użycia}
 \begin{figure}[!h]
 	\centering
@@ -93,12 +107,16 @@ Dzięki wykorzystaniu obu rozwiązań mamy możliwość bezpośredniego porówna
 Wykorzystanie sposobu integracji systemów przetwarzania mowy rozważanego w tej pracy pozwala na bardzo łatwą implementację aplikacji spełniającej wszystkie stawiane przed nią wymagania. Co więcej pozwala ona na łatwą rozbudowę. Można na przykład dodać funkcjonalność polegającą na tłumaczenie wiadomości na konkretny język docelowy, co w implementacji bez wykorzystania systemu byłoby dużo trudniejsze i wymagało przesłania większej ilości danych co ponosi za sobą koszty(szczególnie jeżeli telefon działa w roamingu). Z drugiej strony system Android daje dostęp do wbudowanej usługi TTS. Jest ona dość dobrej jakości, również obsługuje kilka języków, nie wymaga dostępu do internetu co jest jej dużym plusem. Implementacja aplikacji z jej wykorzystaniem również jest prostym zadaniem. Na podstawie wszystkich argumentów można dojść do wniosku, że w tym przypadku nie ma potrzeby korzystania z koncepcyjnego systemu. Dlatego też, w tym konkretnym przypadku, ciężko ocenić które rozwiązanie jest lepsze. Wszystko zależy od tego czy ważniejsza jest jakość wygenerowanego dźwięku, możliwość dodania dodatkowych funkcji czy szybkość działania i nie obciążanie połączenia internetowego.
 
 \subsection{Lektor RSS}
-Jest to aplikacje webowa której zadaniem jest odczytywanie wiadomości RSS ze źródeł podanych przez użytkownika, może on podać źródło przez specjalny formularz, załadować plik tekstowy zawierający adresy źródeł. Niezależnie od użytej metody można podać język wiadomości lub też użyć usługę rozpoznającą język. Możliwe jest również przetłumaczenie wiadomości na język podany przez użytkownika i dopiero wtedy przeczytanie jej przez odpowiedniego lektora. Użytkownik ma również możliwość ustawienia co jaki czas ma następować sprawdzanie źródła celem znalezienia nowych wiadomości.	 
-\newpage
+Jest to aplikacje webowa której zadaniem jest odczytywanie wiadomości RSS ze źródeł podanych przez użytkownika (rys. \ref{fig:RssReaderScreen}), może on podać źródło przez specjalny formularz, załadować plik tekstowy zawierający adresy źródeł. Niezależnie od użytej metody można podać język wiadomości lub też użyć usługę rozpoznającą język. Możliwe jest również przetłumaczenie wiadomości na język podany przez użytkownika i dopiero wtedy przeczytanie jej przez odpowiedniego lektora. Użytkownik ma również możliwość ustawienia co jaki czas ma następować sprawdzanie źródła celem znalezienia nowych wiadomości.	 
+\begin{figure}[!h]
+	\centering
+	\includegraphics[scale=0.45]{RssReaderScreen.png} 
+	\caption{Automatyczne dyktando - wyświetlanie wyników} \label{fig:RssReaderScreen}
+\end{figure}
 \subsubsection{Przypadek użycia}
 \begin{figure}[!h]
 	\centering
-	\includegraphics[scale=0.45]{useCaseRSS.png} 
+	\includegraphics[scale=0.44]{useCaseRSS.png} 
 	\caption{Przypadek użycia - LektorRSS}
 \end{figure}
 
@@ -109,7 +127,7 @@ Jest to aplikacje webowa której zadaniem jest odczytywanie wiadomości RSS ze �
 	\item Obsługiwanie więcej niż jednego języka wiadomości
 	\item Automatyczne sprawdzanie czy któreś ze źródeł nie zawiera nowej wiadomości
 	\item Możliwość ustawienia odstępów czasowych pomiędzy sprawdzaniem przez system źródeł
-	\item Automatyczne Odczytanie użytkownikowi nowych wiadomości (w przypadku istnienia) 
+	\item Automatyczne odczytanie użytkownikowi nowych wiadomości (w przypadku istnienia) 
 \end{enumerate}  
 \subsubsection{Wymagania niefunkcjonalne}
 \begin{enumerate}
@@ -155,6 +173,7 @@ Ponieważ w obu przypadkach wykorzystano ten sam tekst jakość odczytu była ta
 	\end{tabular}
 	\end{table}
 \end{center}
+\newpage
 Jak łatwo można zaobserwować koszt czasowy użycia prototypowego systemu nie jest duży. Co więcej jest on stabilny, nie odnotowano wystąpień dużych odchyleń. 
 
 \subsection{Usługa Translacji}
@@ -170,7 +189,7 @@ Ponieważ użyto tej samej usługi tłumaczącej jego efekt za każdym razem by�
 \includegraphics[scale=0.9]{translatorResult.png}
 \caption{Wynik translacji}\label{fig:translatorResult}
 \end{figure}
-
+\newpage
 Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{tab:translacja}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi translacji, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
 
 \begin{center}
@@ -205,6 +224,7 @@ Test dla usługi OCR polegał na rozpoznawaniu tekstu znajdującego się na obra
 \includegraphics[scale=0.9]{OCRExample.jpg}
 \caption{Plik wejściowy dla usługi OCR}\label{fig:OCRExample}
 \end{figure}
+\newpage
 Ponieważ użyto tej samej usługi OCR jego efekt za każdym razem był taki sam. Rysunek \ref{fig:OCRResult} przedstawia tekst wynikowy, efekt można uznać za bezbłędny acz należy wziąć pod uwagę prostotę tego przykładu.
 \begin{figure}[!h]
 \centering
@@ -213,7 +233,6 @@ Ponieważ użyto tej samej usługi OCR jego efekt za każdym razem był taki sam
 \end{figure}
 
 Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \ref{tab:ocr}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usługi OCR, a ''Prototyp'' wywołanie usługi poprzez przykładową implementację platformy integracyjnej.
-\newpage
 \begin{center}
 	\begin{table}[h]
 	\centering
@@ -251,9 +270,10 @@ Użycie pliku xml z taką zawartością spowodowało wywołanie nastepujących s
 \begin{itemize}
 	\item OCR Web Service
 	\item Google Translate z parametrami: source=en i target=pl
-	\item IVONA SaaS TTS z parametrami: voiceId=en_gb_emma i codecId=mp3/22050
+	\item IVONA SaaS TTS z parametrami: voiceId=en\_gb\_emma i codecId=mp3/22050
 \end{itemize}
 W jego wyniku otrzymano plik dźwiękowy w formacie mp3, zawierający odczyt tekstu będącego tłumaczeniem tekstu znajdującego się na obrazku \ref{fig:OCRExample} wysłanym na wejście. Gdyby zapisać zdania czytane przez lektora wyglądałyby one następująco: ''To jest przykład użycia OCR usług. Jak możemy zobaczyć, jest to dość proste. I to działa całkiem dobrze.''. Nie stwierdzono żadnych niewyraźnie przeczytanych wyrazów, ani innych nieprawidłowości. Tłumaczenie również jest całkiem poprawne. Test powtórzono dziesięciokrotnie, wyniki są zaprezentowane w tabeli \ref{tab:bigTest}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usług, a ''Prototyp'' wywołanie tych samych usług poprzez przykładową implementację platformy integracyjnej.
+\newpage
 \begin{center}
 	\begin{table}[h]
 	\caption{Test złożony}
@@ -304,7 +324,7 @@ Jak widać większość słów jest niezrozumiała. Efekt przetłumaczenia takie
 \end{figure} 
 
 Oczywistym jest, że usługa TTS nie była w stanie wygenerować poprawnego dźwięku na podstawie takich danych wejściowych. Jak się okazało, powstały plik dźwiękowy, poza kilkoma krótkimi fragmentami, był niezrozumiały. Jest to spowodowane faktem, że system integracyjny nie ma żadnej możliwości sprawdzenia jakości wyników zwracanych przez wywoływane usługi. Co gorsza wywołanie kilku usług na wadliwych danych wejściowych tylko potęguje wielkość błędu. Jeżeli chodzi o wydajność to wyniki testu znajdują się tabeli \ref{tab:brokenTestResults}. Należy zaznaczyć, że ''Web service'' oznacza bezpośrednie wywołanie usług, a ''Prototyp'' wywołanie tych samych usług poprzez przykładową implementację platformy integracyjnej. 
-
+\newpage
 \begin{center}
 	\begin{table}[h]
 	\caption{Test złożony - wadliwe dane}

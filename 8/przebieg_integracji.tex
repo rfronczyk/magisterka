@@ -56,7 +56,7 @@ Proces integracji jest unikalny dla każdej usługi. Zależy on od wielu czynnik
 
 Mimo tego można przedstawić proces integracji w postaci kroków, które należy podjąć aby usługa była w pełni zintegrowana z systemem. Kroki te zostaną przedstawione na przykładzie usługi IVONA SaaS.
 
-\subsection {Krok nr. 1: Przygotowania}
+\subsection {Krok nr 1: Przygotowania}
 Krok ten obejmuje wszelkie działania niezwiązane z implementacją, lecz wymagane aby integracja w pełni się powiodła np. rejestracja w usłudze czy instalacja odpowiednich bibliotek.
 
 Ponieważ IVONA SaaS jest usługą płatną, pierwszą rzeczą, którą należy wykonać jest założenie konta na stronie usługi. Informacje podane podczas rejestracji będą potrzebne przy każdorazowej komunikacji z usługą w celu autoryzacji. W prezentowanej konfiguracji do integracji usługi IVONA użyto technologi REST, ale możliwe jest również użycie innych technologii. Po stronie systemu, do integracji użyto technologii JAX-RS, która ułatwia dostęp do usług zgodnych z wybraną do tej integracji technologią. Apache ServiceMix jest dystrybuowany z dużą ilością technologii integracyjnych dzięki czemu większość używanych bibliotek nie musi być dodana bezpośrednio do budowanej aplikacji. Aby było możliwe używanie danej technologii, wystarczy poszukać odpowiedniego zbioru paczek (\textit{feature}) i zainstalować go w kontenerze OSGi, co sprowadza się do wywołania odpowiedniej komendy z konsoli kontenera. W przypadku JAX-RS komenda ta ma postać następującą: 
@@ -64,11 +64,11 @@ Ponieważ IVONA SaaS jest usługą płatną, pierwszą rzeczą, którą należy 
 features:install cxf-jaxrs
 \end{center}
 
-\subsection {Krok nr. 2: Implementacja komunikacji}
+\subsection {Krok nr 2: Implementacja komunikacji}
 
 W kroku tym należy zaimplementować komunikację między systemem a usługą zgodnie z wybraną technologią i wymaganiami narzucanymi przez usługę. Ten etap będzie najbardziej zróżnicowany pomiędzy różnymi usługami.
 
-W przypadku usługi IVONA komunikacja sprowadza się do wykonania żądania HTTP POST pod odpowiedni adres: http://www.ivona.com/api/saas/rest/speechfiles/. Jednak aby komunikacja powiodła się należy poddać się autoryzacji. Usługa IVONA używa autoryzacji opartej o tokeny. Każdy token może być użyty tylko raz i jest ważny przez pięć minut, dlatego każdą operację należy poprzedzić wygenerowaniem nowego tokenu. Po otrzymaniu tokenu należy wygenerować skrót md5 z kombinacji tokenu i hasła podanego podanego podczas rejestracji, który razem z tokenem musi zostać przesłany jako jeden z parametrów wywoływanej operacji. Fragment kodu \ref{lst:ivona_token} przedstawia proces generowania tokenu.
+W przypadku usługi IVONA komunikacja sprowadza się do wykonania żądania HTTP POST pod odpowiedni adres: http://www.ivona.com/api/saas/rest/speechfiles/. Jednak aby komunikacja powiodła się należy poddać się autoryzacji. Usługa IVONA używa autoryzacji opartej o tokeny. Każdy token może być użyty tylko raz i jest ważny przez pięć minut, dlatego każdą operację należy poprzedzić wygenerowaniem nowego tokenu. Po otrzymaniu tokenu należy wygenerować skrót md5 z kombinacji tokenu i hasła podanego podczas rejestracji, który razem z tokenem musi zostać przesłany jako jeden z parametrów wywoływanej operacji. Fragment kodu \ref{lst:ivona_token} przedstawia proces generowania tokenu.
 
 \lstset{language=Java, tabsize=4, caption=Proces generowania tokenu usługi IVONA,label=lst:ivona_token}
 
@@ -140,11 +140,11 @@ public class IvonaTextToSpeechService implements MessageEnabledService, TTSServi
 \end{lstlisting}
 \end{center} 
 
-\subsection {Krok nr. 3: Implementacja obsługi wiadomości}
+\subsection {Krok nr 3: Implementacja obsługi wiadomości}
 
 W kroku tym należy dodać obsługę wiadomości do komponentu odpowiadającego za komunikację. Proces ten może okazać się niepotrzebny, jeżeli technologia użyta w kroku nr. 2 dodaje wymaganą funkcjonalność.
 
-W przypadku usługi IVONA, funkcjonalność tą otrzymana przy pomocy nowej ścieżki Apache Camel, której elementem centralnym będzie opisana wcześniej klasa. Fragment \ref{lst:camel_ivona} przedstawia definicję ścieżki Apache Camel dla komponentu IvonaTextToSpeechService.
+W przypadku usługi IVONA, funkcjonalność tą otrzymano przy pomocy nowej ścieżki Apache Camel, której elementem centralnym będzie opisana wcześniej klasa. Fragment \ref{lst:camel_ivona} przedstawia definicję ścieżki Apache Camel dla komponentu IvonaTe	xtToSpeechService.
 
 \lstset{language=XML, tabsize=4, caption=Ścieżka Apache Camel dla komponentu IvonaTextToSpeechService.,label=lst:camel_ivona}
 
@@ -166,7 +166,7 @@ W przypadku usługi IVONA, funkcjonalność tą otrzymana przy pomocy nowej ści
 \end{lstlisting}
 \end{center}
 
-\subsection {Krok nr. 4: Rejestracja komponentu}
+\subsection {Krok nr 4: Rejestracja komponentu}
 
 Ostatnim krokiem wymaganym aby usługa była w pełni zintegrowana w platformie jest rejestracja komponentu w rejestrze OSGi co umożliwi jego wyszukanie podczas procesu routowania. Proces ten będzie w większości identyczny niezależnie od integrowanej usługi.
 W celu poprawnej rejestracji, klasa IvonaTextToSpeechService implementuje dwa interfejsy TTSService oraz MessageEnabledService. Pierwszy z nich służy tylko do oznaczenia typu przetwarzania jaki oferuje dany komponent a drugi wymusza implementację metody zwracającej adres pod którym komponent będzie nasłuchiwał na przychodzące wiadomości. Dodatkowo, podczas rejestracji należy podać parametry przetwarzania, które są obsługiwane przez daną usługę.

@@ -9,7 +9,7 @@
 
 
 % ----------------------- contents from here ------------------------
-W rozdziale tym, zostaną zaprezentowane oraz po krotce opisane najważniejsze technologie wykorzystane przy implementacji systemu SpeechProcessingPlatform. Rysunek \ref{fig:architecture_and_technologies} przedstawia w której części systemu wykorzystywane są poszczególne technologie.
+W rozdziale tym, zostaną zaprezentowane oraz po krótce opisane najważniejsze technologie wykorzystane przy implementacji systemu SpeechProcessingPlatform. Rysunek \ref{fig:architecture_and_technologies} przedstawia w której części systemu wykorzystywane są poszczególne technologie.
 
 \begin{figure}[!h]
 	\centering
@@ -157,7 +157,7 @@ W platformie SpeechProcessingPlatform technologia Apache Camel używana jest do 
 	
 \section{Technologie przetwarzania mowy}		
 \subsection{FreeTTS}
-FreeTTS \cite{freettssite} jest syntezatorem mowy, dostępnym na licencji opensource, w całości napisanym w języku Java. Bazuje na silniku Flite stworzonym i rozwijanym przez Carnegie Mellon University. Mimo swojej prostoty jego zaletami są duża wydajność, bardzo dobre radzenie sobie z językiem angielskim oraz częściowe wsparcie dla JSAPI 1.0(jako, że jest to syntezator nie wspiera częsci specyfikacji odpowiedzialnej za rozpoznawanie mowy). Dzięki temu ostatniemu w łatwy sposób umożliwia integrację z różnymi, wieloplatformowymi aplikacjami działającymi wewnątrz JVM. Przy opisywaniu tego syntezatora istotną kwestią jest fakt, że posiada dość dobrą dokumentację oraz liczne, łatwe do uruchomienia i, co bardzo ważne, działające dema. Standardowo oferuje 3 różne głosy, wszystkie w języku angielskim, umożliwia jednak rozszerzenie liczby głosów poprzez import nowych stworzonych przy pomocy narzędzi takich jak:
+FreeTTS \cite{freettssite} jest syntezatorem mowy, dostępnym na licencji opensource, w całości napisanym w języku Java. Bazuje na silniku Flite stworzonym i rozwijanym przez Carnegie Mellon University. Mimo swojej prostoty jego zaletami są duża wydajność, bardzo dobre radzenie sobie z językiem angielskim oraz częściowe wsparcie dla JSAPI 1.0 (jako, że jest to syntezator nie wspiera części specyfikacji odpowiedzialnej za rozpoznawanie mowy). Dzięki temu ostatniemu w łatwy sposób umożliwia integrację z różnymi, wieloplatformowymi aplikacjami działającymi wewnątrz JVM. Przy opisywaniu tego syntezatora istotną kwestią jest fakt, że posiada dość dobrą dokumentację oraz liczne, łatwe do uruchomienia i, co bardzo ważne, działające dema. Standardowo oferuje 3 różne głosy, wszystkie w języku angielskim, umożliwia jednak rozszerzenie liczby głosów poprzez import nowych stworzonych przy pomocy narzędzi takich jak:
 \begin{itemize}
 	\item FestVox,
 	\item MBROLA,
@@ -237,7 +237,7 @@ OCR Web Service jest to jeden z najpopularniejszych technologii web serwices teg
 	\item francuski
 	\item portugalski
 \end{itemize}
-Przyjmuje różne formaty wejściowe, takie jak: JPEG/JPG, BMP, PCX, GIF, PNG, PDF. Co więcej pozwala na przekonwertowanie rozpoznanego tekstu na aż sześć różnych formatów:
+Przyjmuje różne formaty wejściowe, takie jak: JPEG/JPG, BMP, PCX, GIF, PNG, PDF. Co więcej pozwala na przekonwertowanie rozpoznanego tekstu na aż pięć różnych formatów:
 \begin{itemize}
 	\item Adobe PDF
 	\item MS Word 2003
