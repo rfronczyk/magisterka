@@ -70,17 +70,17 @@ Jest to aplikacja webowa umożliwiająca użytkownikowi ćwiczenie pisowni w ró
 Jak widać w powyższym podrozdziale wymagania stawiane przed aplikacją są precyzyjne i klarowne. Zastosowane podejście integracyjne sprawia, że stworzenie aplikacji spełniającej wymagania staje się proste. Zapewnienie obsługi wielu języków nie wymaga praktycznie żadnego nakładu pracy ze strony programisty aplikacji klienckiej. Jak zostało to opisane w rozdziale drugim, przy zastosowanym podejściu wystarczy wygenerować i przesłać plik xml z informacją dotyczącą języka docelowego, działa to niezależnie od języka w którym jest tekst wejściowy (pod warunkiem, że w pliku konfiguracyjnym ustawi się tag odpowiedzialny za usługę rozpoznającą język). Podobnie przesłanie pliku graficznego, również wymaga tylko umieszczenia odpowiedniego tagu w pliku xml celem wywołania usługi OCR. Jak łatwo zauważyć wygenerowanie i przesłanie pliku xml nie jest dużym wyzwaniem programistycznym.Widać to szczególnie gdyby porównać to z implementacją bez wykorzystania systemu opartego o rozwiązanie opisane w tej pracy. Musiałaby ona łączyć się z kilkoma zewnętrznymi usługami, z których każdy prawdopodobnie miałby inny interfejs, konwertować różne formaty plików, obsługiwać błędy itd. Jak widać, w tym przypadku, zastosowane podejście w sposób znaczący pozytywnie wpływa na łatwość i szybkość implementacji aplikacji klienckiej, co więcej sprawia ono, że w przyszłości aplikacja może zostać rozbudowana lub też łatwo przeniesiona na inne platformy np. telefony. \\
 
 \subsection{Lektor SMS}
-Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskazuje jej funkcjonalność pozwala odczytywać na głos wiadomości tekstowe. Może okazać się bardzo przydatna w czasie jazdy samochodem, wiadomo, że używanie telefonu komórkowego jest zabronione z powodu bezpieczeństwa, tym bardziej, używanie rąk i skupianie wzroku na odczytywanej wiadomości tekstowej jeszcze w większym stopniu niż rozmowa przez telefon prowadzi do odwrócenia uwagi kierowcy od sytuacji na drodze.
+Jest to aplikacja przeznaczona dla systemu operacyjnego Android. Jak nazwa wskazuje jej funkcjonalność pozwala odczytywać na głos wiadomości tekstowe. Może okazać się bardzo przydatna w czasie jazdy samochodem, wiadomo, że używanie telefonu komórkowego jest zabronione z powodu bezpieczeństwa, tym bardziej, używanie rąk i skupianie wzroku na odczytywanej wiadomości tekstowej jeszcze w większym stopniu, niż rozmowa przez telefon, prowadzi do odwrócenia uwagi kierowcy od sytuacji na drodze.
 Zasada działania tej aplikacji jest bardzo prosta, mianowicie po włączenie przechwytuje ona każde zdarzenie oznaczające otrzymanie wiadomości tekstowej, pobiera jej treść i zamienia ją na dźwięk w dowolnym, wybranym przez użytkownika języku. Co warte zauważenia aplikacja ta ma dwa różne sposoby generowania mowy:
 \begin{itemize}
 	\item korzystając z usług udostępnianych przez przykładową implementację systemu integrującego usługi przetwarzania mowy
 	\item korzystając z wbudowanej w system Android funkcjonalności TTS
 \end{itemize} 
-Dzięki wykorzystaniu obu rozwiązań mamy możliwość bezpośredniego porównania. Wybór sposobu generowania dźwięku zależy od dostępności połączenia z internetem, jeżeli takie istnieje to aplikacja korzysta z zewnętrznego systemu, w przeciwnym razie wykorzystuje wbudowany TTS. Oczywiście użytkownik ma możliwość ustawienia dla których numerów aplikacja będzie działać. Działająca aplikacja oprócz generowania głosu czytającego treść wiadomości pokazuje ją również na ekranie, w formie małego prostokąta z tekstem (rys. \ref{fig:SmsReaderScreen}).
+Dzięki wykorzystaniu obu rozwiązań mamy możliwość bezpośredniego porównania. Wybór sposobu generowania dźwięku zależy od dostępności połączenia z internetem, jeżeli takie istnieje to aplikacja korzysta z zewnętrznego systemu, w przeciwnym razie wykorzystuje wbudowany TTS. Do komunikacji z zewnętrznym system wykorzystywana jest biblioteka org.apache.http.client. Tak jak pozostałe aplikacje, Lektor SMS korzysta z technologii REST web services. Możliwa jest również pewna konfiguracja aplikacji, a mianowicie użytkownik ma możliwość ustawienia dla których numerów aplikacja będzie działać oraz możliwośc wybrania języka w którym tekst wiadomości będzie odczytywany. Działająca aplikacja oprócz generowania głosu czytającego treść wiadomości pokazuje ją również na ekranie, w formie małego prostokąta z tekstem (rys. \ref{fig:SmsReaderScreen}).
 \begin{figure}[!h]
 	\centering
 	\includegraphics[scale=0.45]{SmsReaderScreen.png} 
-	\caption{Automatyczne dyktando - wyświetlanie wyników} \label{fig:SmsReaderScreen}
+	\caption{Lektor SMS - otrzymanie wiadomośći SMS} \label{fig:SmsReaderScreen}
 \end{figure}
 \subsubsection{Przypadek użycia}
 \begin{figure}[!h]
@@ -168,13 +168,13 @@ Ponieważ w obu przypadkach wykorzystano ten sam tekst jakość odczytu była ta
 		8 & 1234 & 1503\\ \hline
 		9 & 1184 & 1131\\ \hline
 		10 & 1230 & 1543\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 1256/145 & 1415/84\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 1256$\pm$145 & 1415$\pm$84\\ 
 		\hline
 	\end{tabular}
 	\end{table}
 \end{center}
 \newpage
-Jak łatwo można zaobserwować koszt czasowy użycia prototypowego systemu nie jest duży. Co więcej jest on stabilny, nie odnotowano wystąpień dużych odchyleń. 
+Jak łatwo można zaobserwować koszt czasowy użycia prototypowego systemu nie jest duży. Co więcej jest on stabilny, nie odnotowano wystąpień dużych odchyleń.
 
 \subsection{Usługa Translacji}
 Test dla usługi translacji polegał na tłumaczeniu tekstu z języka polskiego na język angielski. Tekst który posłużył nam w tym teście został zamieszczony na rysunku \ref{fig:translatorExample}.
@@ -208,7 +208,7 @@ Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \re
 		8 & 430 & 501\\ \hline
 		9 & 394 & 578\\ \hline
 		10 & 410 & 618\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 464/38 & 620/41\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 464$\pm$38 & 620$\pm$41\\ 
 		\hline
 	\end{tabular}
 	\caption{Test Translacji}
@@ -249,7 +249,7 @@ Próbę powtórzono dziesięciokrotnie, wyniki można zaobserwować w tabeli \re
 		8 & 4321 & 3632\\ \hline
 		9 & 5363 & 5381\\ \hline
 		10 & 3589 & 3764\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 4101/472 & 4224/457\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 4101$\pm$472 & 4224$\pm$457\\ 
 		\hline
 	\end{tabular}
 	\caption{Test OCR}
@@ -292,7 +292,7 @@ W jego wyniku otrzymano plik dźwiękowy w formacie mp3, zawierający odczyt tek
 		8 & 5985 & 6424\\ \hline
 		9 & 6941 & 5685\\ \hline
 		10 & 5229 & 5234\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 5824/843 & 6147/823\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 5824$\pm$843 & 6147$\pm$823\\ 
 		\hline
 	\end{tabular}
 	\end{table}
@@ -343,7 +343,7 @@ Oczywistym jest, że usługa TTS nie była w stanie wygenerować poprawnego dźw
 		8 & 6423 & 7198\\ \hline
 		9 & 6490 & 7331\\ \hline
 		10 & 7011 & 8098\\ \hline
-		\textbf{Średnia/Odchylenie standardowe} & 7165/563 & 7502/559\\ 
+		\textbf{Średnia/Odchylenie standardowe} & 7165$\pm$563 & 7502$\pm$559\\ 
 		\hline
 	\end{tabular}
 	\end{table}

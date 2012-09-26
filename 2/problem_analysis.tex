@@ -52,7 +52,7 @@ Wraz z rozwojem cywilizacyjnym ewoluował także sposób komunikacji i jej forma
 			\fbox{\includegraphics[scale=0.55]{OCRImage.png} }
 			\caption{Rozpoznawanie tekstu; wejście: plik graficzny z tekstem -\textgreater wyjście: tekst}\label{fig:hub_and_spoke}
 		\end{figure}
-	\item tłumaczenie maszynowe mowy
+	\item maszynowe tłumaczenie mowy
 		\setlength\fboxsep{20pt}
 		\setlength\fboxrule{1pt}
 		\begin{figure}[!h]
@@ -166,7 +166,7 @@ Rozpoznawanie języka \cite{adamsresnik1997}  to proces którego celem jest stwi
 Jak widać przetwarzanie mowy samo w sobie jest bardzo obszernym i skomplikowanym tematem, w skład którego wchodzi wiele różnych procesów które można zintegrować tworząc efektywne i bardzo funkcjonalne systemy.
 
 \section{Paradygmat SOA}
-SOA czyli Service Oriented Architecture(Architektura zorientowana na usługi) to zgodnie z definicją zaproponowaną przez W3C zbiór komponentów dostępnych w sieci posiadających dobrze opisane interfejsy. Opis ten pozwala na rozróżnianie komponentów i ich wyszukiwanie, a następnie wywoływanie. Najbardziej popularną obecnie implementacją tego paradygmatu jest ta opierająca się o technologię web services.  W paradygmacie SOA możemy wyróżnić dwa różne podejścia tworzenia złożonych usług:
+SOA czyli Service Oriented Architecture(Architektura zorientowana na usługi) to zgodnie z definicją zaproponowaną przez W3C\cite{w3cweb} zbiór komponentów dostępnych w sieci posiadających dobrze opisane interfejsy. Opis ten pozwala na rozróżnianie komponentów i ich wyszukiwanie, a następnie wywoływanie. Najbardziej popularną obecnie implementacją tego paradygmatu jest ta opierająca się o technologię web services.  W paradygmacie SOA możemy wyróżnić dwa różne podejścia tworzenia złożonych usług:
  \begin{itemize}
 	\item orkiestracja,
 	\item choreografia.
@@ -185,7 +185,7 @@ Choreografia to sposób współpracy usług, charakteryzujący się tym,  iż ka
 	\caption{Choreografia}
 \end{figure}
 
-\section{Sposoby integracji systemów komputerowych}
+\section{Sposoby integracji rozproszonych systemów komputerowych}
 Dzięki postępowi technologicznemu przepustowość łączy internetowych wciąż wzrasta powodując, bardzo szybki rozwój systemów komputerowych i usług przez nie oferowanych. Powstają nowe rodzaje usług, które kiedyś nie mogły by zostać zrealizowane, przy tworzeniu zaś niektórych aplikacji, to co kiedyś było problemem i na czym skupiali swój wysiłek twórcy oprogramowania, dzisiaj schodzi na drugi plan. Z drugiej jednak strony zwiększają się wymagania użytkowników co do jakości, są wprowadzane coraz to nowe formaty, które wymagają ogromnych przepustowości, przez co mogą zapychać łącza i tworzyć opóźnienia. Jest to szczególnie istotne w systemach czasu rzeczywistego, w których nacisk na jak najmniejsze opóźnienia jest bardzo silny. Czasami jednak aplikacje i ich użytkownicy nie mają takich ścisłych wymagań co do wielkości opóźnienia. W ich przypadku opóźnienie nawet rzędu kilkudziesięciu sekund nie stanowi problemu i jest akceptowalne przez użytkowników. W takim wypadku nie trzeba się skupiać na szukaniu idealnego rozwiązania dla danego problemu, lecz można skupić się na stworzeniu architektury która ułatwi i przyspieszy budowanie systemów spełniających dane wymagania.
 
 Przy takim podejściu do tworzenia systemu zazwyczaj pojawia się problem integracji budowanego systemu z istniejącymi już usługami. Często też, budowany system jest całkowicie problemem integracyjnym, czyli wszystkie składowe usługi potrzebne do realizacji celu biznesowego są dostępne, a jedyne zadanie stawiane budowanemu systemowi to odpowiednia integracja tych usług. Podejście takie ułatwia parę kwestii, ale w zamian wprowadza także nowe, specyficzne dla siebie problemy. Głównym problemem jest różnorodność dostępnych podsystemów. Każdy z nich może być stworzony przy użyciu innych technologii (Java, COM, .Net, CORBA, ICE, itp.) działać na innej platformie (MS WINDOWS, LINUX, SOLARIS) i co najważniejsze mogą wykorzystywać inne protokoły do komunikacji (RPC, SOAP, własnościowe protokoły, itp). Z tego powodu decyzja o sposobie integracji nie może być podejmowana zbyt szybko,  powinna być podjęta bazując na pewnych kryteriach:  \cite{hohpewoolf2003} 
@@ -304,39 +304,3 @@ Kolejną ważną, wartą omówienia kwestią, wynikającą ze specyficznej dzied
 
 \section*{Podsumowanie}
 Biorąc pod uwagę proponowane usługi, format danych wejściowych i wymagania stawiane przed platformą zdecydowanie najlepszym sposobem integracji wydaje się wykorzystanie jednej z istniejących implementacji ESB. Wszystkie one zapewniają routing, dużo różnych rodzajów punktów końcowych, wsparcie dla aplikacji pisanych przy użyciu technologii Spring i wiele innych rzeczy które nie tylko ułatwiają sam proces integracji ale również zapewniają możliwość łatwej rozbudowy w przyszłości.
-
-
-
-%ksiazka ESB strony 4,5 
-
-%opiszemy to podejscie i potem opiszemy, ze jest bardzo fajne, opiszemy rodzaje, jak ewoluowało, i na koncu opiszemy esb, a potem konkrety dla naszej aplikacji. Obrazki w ksiazce ESB
-%ESB strona 34 - czemu własnościowe rozwiązania sa do dupy 
-
-
-
-%\subsection {Szyna} 
-
-%Przedstawienie jak to wyglada( kropki serwisy , komunikują sie z roznymi innymi serwisami, dodatokwe serisy: accounting itd)
-
-%Wymagania stawiane rozwiazaniom integracyjnym , Czy warto integrować ? (book1.pdf chapter 2)
-
-%Integracja systemow multimedialnych ??
-
-%Rozwiazania ?
-
-%Brak integracji
-
-%integracja EAI - hub and spikes (scentralizowany punk, single point of failure. słabo scalowalne)
-
-%SOA - ESB 
-
-
-
-
-%service activator (request od clienta)
-
-
-% ---------------------------------------------------------------------------
-%: ----------------------- end of thesis sub-document ------------------------
-% ---------------------------------------------------------------------------
-

@@ -4,6 +4,7 @@
 \backcite {och2003}{{12}{2.1.4}{subsection.2.1.4}}
 \backcite {adamsresnik1997}{{13}{2.1.5}{subsection.2.1.5}}
 \backcite {rehurek2009}{{14}{2.1.5}{subsection.2.1.5}}
+\backcite {w3cweb}{{14}{2.2}{section.2.2}}
 \backcite {hohpewoolf2003}{{16}{2.3}{section.2.3}}
 \backcite {chappell2004}{{18}{2.3}{section.2.3}}
 \backcite {chappell2004}{{19}{2.8}{figure.caption.10}}
@@ -19,12 +20,12 @@
 \backcite {ldaprfc1996}{{51}{4.3.4}{subsection.4.3.4}}
 \backcite {hall2011}{{51}{4.3.4}{subsection.4.3.4}}
 \backcite {fusehomepage2012}{{56}{\caption@xref {??}{ on input line 29}}{figure.caption.32}}
-\backcite {fielding2000}{{58}{5.1.2.1}{subsubsection.5.1.2.1}}
+\backcite {fielding2000}{{58}{5.1.2}{section*.34}}
 \backcite {camel2012}{{63}{5.1.4}{subsection.5.1.4}}
 \backcite {ibsen2010}{{63}{5.1.4}{subsection.5.1.4}}
 \backcite {hohpe2003}{{63}{5.1.4}{subsection.5.1.4}}
 \backcite {freettssite}{{64}{5.2.1}{subsection.5.2.1}}
 \backcite {ivonasite}{{65}{5.2.2}{subsection.5.2.2}}
-\backcite {chappell2004}{{99}{8}{chapter*.61}}
-\backcite {googlegoggles}{{99}{8}{chapter*.61}}
-\backcite {oddcasts}{{99}{8}{chapter*.61}}
+\backcite {chappell2004}{{99}{8}{chapter*.63}}
+\backcite {googlegoggles}{{99}{8}{chapter*.63}}
+\backcite {oddcasts}{{99}{8}{chapter*.63}}

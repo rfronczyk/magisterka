@@ -9,7 +9,7 @@
 
 
 % ----------------------- contents from here ------------------------
-W rozdziale tym, zostaną zaprezentowane oraz po krótce opisane najważniejsze technologie wykorzystane przy implementacji systemu SpeechProcessingPlatform. Rysunek \ref{fig:architecture_and_technologies} przedstawia w której części systemu wykorzystywane są poszczególne technologie.
+W rozdziale tym zostaną zaprezentowane oraz po krótce opisane najważniejsze technologie wykorzystane przy implementacji systemu SpeechProcessingPlatform. Rysunek \ref{fig:architecture_and_technologies} przedstawia w której części systemu wykorzystywane są poszczególne technologie.
 
 \begin{figure}[!h]
 	\centering
@@ -65,7 +65,7 @@ Można rozróżnić 2 główne klasy technologii web services :
 	\item technologie web services zgodne z architekturą technologii REST
 	\item technologie arbitrary web services z których każda może udostępniać dowolny zbiór operacji
 \end{itemize}  
-\subsubsection{Technologia REST web services}
+\subsubsection*{Technologia REST web services}
 Usługi z tej grupy \cite{fielding2000} ograniczają swój interfejs do zbioru dobrze znanych i wspieranych przez protokół transportowy operacji takich jak: PUT, GET, POST itd. dla  HTTP. Nacisk jest tutaj skierowany na interakcję z zasobami bezstanowymi. Koncepcja usług technologii REST opiera się na sześciu kluczowych punktach:
 \begin{itemize}
 	\item model klient-serwer - wprowadza rozdzielenie odpowiedzialności, oznacza to, że na przykład klient nie interesuje się przechowywaniem danych, jest to sprawa wewnętrznej implementacji serwera, a serwer nie interesuje się interfejsem użytkownika co wprowadza prostotę i zwiększa skalowalność
@@ -75,7 +75,7 @@ Usługi z tej grupy \cite{fielding2000} ograniczają swój interfejs do zbioru d
 	\item opcjonalnie wykonanie kodu na żądanie - możliwe jest żeby serwer wykonał kod przesłany przez klienta
 	\item jednolity interfejs - upraszcza oraz rozluźnia powiązanie między klientem a serwerem, dzięki temu możliwa jest ich niezależna ewolucja
 \end{itemize}   
-\subsubsection{Technologia arbitrary web services}
+\subsubsection*{Technologia arbitrary web services}
 Usługi z tej grupy reprezentują bardziej klasyczne podejście. Do opisania swoich interfejsów mogą (nie jest to wymagane jednak bardzo popularne, co więcej konieczne jeżeli chce się użyć frameworku do generowania kodu) wykorzystywać WSDL. Jest to skrót od Web Service Description Language, formacie bazującym na XML, wykorzystywanym do opisywania jak wywołać daną usługę, jakie parametry wejściowe przyjmuje i jakie struktury danych zwraca. Inne systemy mogą komunikować się z technologią web serwices za pomocą protokołu SOAP. Skrót pochodzi od angielskiej nazwy Simple Object Access Protocol. Dostarcza on standardowy, rozszerzalny, dobrze zdefiniowany fremwork do wymiany wiadomości XML. Wspiera kilka różnych protokołów transportowych takich jak:
  \begin{itemize}
 	\item HTTP
